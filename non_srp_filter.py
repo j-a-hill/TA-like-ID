@@ -51,3 +51,71 @@ for count, df_group in non_srp_membrane_dfs.items():
 
 # Save full merged df as well
 merged_df.to_csv("non_biogrid_non_SRP_df.csv", index=False)
+
+# ================================
+# IMPROVED CATEGORY COMPARISON FOR NON-SRP PROTEINS
+# ================================
+# Fix for GitHub issue #3 - category comparisons
+
+def analyze_non_srp_by_cterm_distance(df, cterm_threshold=30):
+    """
+    Analyze non-SRP proteins by C-terminal distance to address category comparison issues.
+    Users want to filter by cterm_distance and then compare MD count by localization.
+    """
+    print(f"\n=== Non-SRP Protein Analysis: C-terminal distance <= {cterm_threshold} ===")
+    
+    # Calculate C-terminal distance for non-SRP proteins  
+    def calc_cterm_dist(row):
+        length = row.get('Length', 0)
+        if pd.isna(length) or length == 0:
+            return float('inf')
+        
+        min_dist = float('inf')
+        # Check transmembrane domains
+        if not pd.isna(row.get('Transmembrane', '')):
+            ranges = re.findall(r'(\d+)\.\.(\d+)', str(row['Transmembrane']))
+            for _, end in ranges:
+                dist = length - int(end)
+                min_dist = min(min_dist, dist)
+        
+        return min_dist if min_dist != float('inf') else None
+    
+    # Add C-terminal distance calculation
+    df['cterm_distance'] = df.apply(calc_cterm_dist, axis=1)
+    
+    # Filter by C-terminal distance
+    close_cterm = df[df['cterm_distance'] <= cterm_threshold].copy()
+    
+    print(f"Found {len(close_cterm):,} non-SRP proteins within {cterm_threshold} residues of C-terminus")
+    print(f"({len(close_cterm)/len(df)*100:.1f}% of non-SRP proteins)")
+    
+    # Compare membrane domain counts within filtered non-SRP proteins
+    print(f"\nMembrane domain distribution (non-SRP, cterm <= {cterm_threshold}):")
+    md_dist = close_cterm['Membrane_Domain_Count'].value_counts().sort_index()
+    for count, freq in md_dist.items():
+        pct = freq / len(close_cterm) * 100
+        print(f"  {count:2d} domains: {freq:3d} proteins ({pct:5.1f}%)")
+    
+    # Save filtered non-SRP proteins for further analysis
+    close_cterm.to_csv(f"non_srp_cterm_{cterm_threshold}.csv", index=False)
+    print(f"\nSaved filtered non-SRP proteins to non_srp_cterm_{cterm_threshold}.csv")
+    
+    return close_cterm
+
+# Apply improved analysis to non-SRP proteins
+if 'non_srp_df' in locals() and len(non_srp_df) > 0:
+    non_srp_analyzed = analyze_non_srp_by_cterm_distance(non_srp_df, cterm_threshold=30)
+    
+    # Test multiple thresholds
+    print(f"\n=== Non-SRP Protein Count by C-terminal Distance Threshold ===")
+    for threshold in [10, 20, 30, 50, 100]:
+        if 'cterm_distance' in non_srp_df.columns:
+            count = len(non_srp_df[non_srp_df['cterm_distance'] <= threshold])
+            pct = count / len(non_srp_df) * 100
+            print(f"Within {threshold:3d} residues: {count:3d} proteins ({pct:5.1f}%)")
+
+print("\n=== Non-SRP Filter Analysis Complete ===")
+print("Improved workflow allows:")
+print("- Filter non-SRP proteins by cterm_distance")
+print("- Compare MD counts within filtered subset")
+print("- Easy threshold testing")

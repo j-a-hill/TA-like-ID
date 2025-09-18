@@ -93,3 +93,88 @@ membrane_dfs = {
 #for tmd_count, df in tmd_dfs.items():
     #df.to_csv(f'non_overlap_TMDcount_{tmd_count}.tsv', sep='\t', index=False)
 
+# ================================
+# IMPROVED CATEGORY COMPARISON WORKFLOW
+# ================================
+# Fix for the category comparison issues mentioned in GitHub issue #3
+
+def analyze_filtered_proteins(df, cterm_threshold=30):
+    """
+    Improved function to filter by cterm_distance and compare categories within subset.
+    This addresses the workflow issue where users want to filter by cterm_distance 
+    and then compare MD count by localization.
+    """
+    print(f"\n=== Analysis for proteins with C-terminal domains within {cterm_threshold} residues ===")
+    
+    # Calculate C-terminal distance for each protein
+    def calculate_cterm_distance(row):
+        """Calculate distance from C-terminus for the closest membrane domain."""
+        length = row['Length']
+        if pd.isna(length):
+            return float('inf')
+        
+        min_distance = float('inf')
+        
+        # Check transmembrane domains
+        if not pd.isna(row['Transmembrane']):
+            ranges = re.findall(r'(\d+)\.\.(\d+)', str(row['Transmembrane']))
+            for _, end in ranges:
+                distance = length - int(end)
+                min_distance = min(min_distance, distance)
+        
+        # Check intramembrane domains  
+        if not pd.isna(row['Intramembrane']):
+            ranges = re.findall(r'(\d+)\.\.(\d+)', str(row['Intramembrane']))
+            for _, end in ranges:
+                distance = length - int(end)
+                min_distance = min(min_distance, distance)
+        
+        return min_distance if min_distance != float('inf') else None
+    
+    # Add C-terminal distance column
+    df['cterm_distance'] = df.apply(calculate_cterm_distance, axis=1)
+    
+    # Filter by C-terminal distance
+    filtered_df = df[df['cterm_distance'] <= cterm_threshold].copy()
+    
+    print(f"Found {len(filtered_df):,} proteins with membrane domains within {cterm_threshold} residues of C-terminus")
+    print(f"({len(filtered_df)/len(df)*100:.1f}% of total dataset)")
+    
+    # Compare membrane domain counts within filtered set
+    print(f"\nMembrane domain count distribution (within {cterm_threshold} residues of C-term):")
+    md_counts = filtered_df['Membrane_Domain_Count'].value_counts().sort_index()
+    for count, frequency in md_counts.items():
+        percentage = frequency / len(filtered_df) * 100
+        print(f"  {count:2d} domains: {frequency:4d} proteins ({percentage:5.1f}%)")
+    
+    # Compare BioGRID status within filtered set
+    print(f"\nBioGRID interaction status (within {cterm_threshold} residues of C-term):")
+    biogrid_comparison = filtered_df.apply(token_match, axis=1).value_counts()
+    for status, count in biogrid_comparison.items():
+        status_label = "In BioGRID" if status else "Not in BioGRID"
+        percentage = count / len(filtered_df) * 100
+        print(f"  {status_label}: {count:4d} proteins ({percentage:5.1f}%)")
+    
+    return filtered_df
+
+# Apply the improved analysis
+if 'filtered_df' in locals():
+    analyzed_df = analyze_filtered_proteins(filtered_df, cterm_threshold=30)
+    
+    # Save the analyzed results with C-terminal distance information
+    analyzed_df.to_csv('analyzed_cterm_proteins.tsv', sep='\t', index=False)
+    print(f"\nSaved analysis results to 'analyzed_cterm_proteins.tsv'")
+    
+    # Also test with different thresholds
+    print(f"\n=== Comparison across different C-terminal distance thresholds ===")
+    for threshold in [10, 20, 30, 50]:
+        subset = analyzed_df[analyzed_df['cterm_distance'] <= threshold]
+        print(f"Within {threshold:2d} residues: {len(subset):4d} proteins ({len(subset)/len(analyzed_df)*100:5.1f}%)")
+
+print(f"\n=== Category comparison workflow improved ===")
+print("Users can now:")
+print("1. Filter by cterm_distance threshold") 
+print("2. Compare MD count by localization within that filtered set")
+print("3. Compare other categories (BioGRID status, etc.) within filtered set")
+print("4. Test multiple thresholds easily")
+
