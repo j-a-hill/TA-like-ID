@@ -9,22 +9,55 @@ import pandas as pd
 import re
 
 # Load data
-non_biogrid_df = pd.read_csv("C:/Users/Jake/Desktop/non_biogrid.tsv", sep="\t")
-signalp6_sp_df = pd.read_csv("signalp6_SP.csv")
+# Note: Assuming non_biogrid.tsv is available in the working directory or raw_data/
+# Using relative path instead of hardcoded Windows path
+try:
+    non_biogrid_df = pd.read_csv("non_biogrid.tsv", sep="\t")
+except FileNotFoundError:
+    try:
+        non_biogrid_df = pd.read_csv("raw_data/non_biogrid.tsv", sep="\t")
+    except FileNotFoundError:
+        print("Warning: non_biogrid.tsv not found. Using membrane protein analysis data as fallback.")
+        non_biogrid_df = pd.read_csv("raw_data/membrane_protein_analysis_with_reduced_cc.csv")
 
-# Rename columns for consistency
-non_biogrid_df = non_biogrid_df.rename(columns={
-    'Entry': 'UniProtID',
-    'Gene Names': 'GeneName'
-})
+try:
+    signalp6_sp_df = pd.read_csv("signalp6_SP.csv")
+except FileNotFoundError:
+    print("Warning: signalp6_SP.csv not found. Creating empty dataframe.")
+    signalp6_sp_df = pd.DataFrame()
 
-# Merge on GeneName only
-merged_df = pd.merge(
-    non_biogrid_df,
-    signalp6_sp_df[['GeneName', 'Prediction', 'OTHER_Score', 'SP_Score', 'CS_Position']],
-    how='left',
-    on='GeneName'
-)
+# Rename columns for consistency if they exist
+rename_map = {}
+if 'Entry' in non_biogrid_df.columns:
+    rename_map['Entry'] = 'UniProtID'
+if 'Gene Names' in non_biogrid_df.columns:
+    rename_map['Gene Names'] = 'GeneName'
+elif 'Gene.Names' in non_biogrid_df.columns:
+    rename_map['Gene.Names'] = 'GeneName'
+
+if rename_map:
+    non_biogrid_df = non_biogrid_df.rename(columns=rename_map)
+
+# Merge on GeneName only if both dataframes have the required columns
+if len(signalp6_sp_df) > 0 and 'GeneName' in non_biogrid_df.columns and 'GeneName' in signalp6_sp_df.columns:
+    # Get available columns from signalp6_sp_df
+    available_cols = ['GeneName']
+    for col in ['Prediction', 'OTHER_Score', 'SP_Score', 'CS_Position']:
+        if col in signalp6_sp_df.columns:
+            available_cols.append(col)
+    
+    merged_df = pd.merge(
+        non_biogrid_df,
+        signalp6_sp_df[available_cols],
+        how='left',
+        on='GeneName'
+    )
+else:
+    print("Warning: Cannot merge datasets. Using non_biogrid data only.")
+    merged_df = non_biogrid_df.copy()
+    # Add missing columns if they don't exist
+    if 'Prediction' not in merged_df.columns:
+        merged_df['Prediction'] = 'SP'
 
 # Filter for OTHER predictions and make a copy to avoid warnings
 srp_df = merged_df[merged_df['Prediction'] == 'SP'].copy()

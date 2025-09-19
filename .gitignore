@@ -86,6 +86,12 @@ dmypy.json
 .idea/
 
 # Data files (optional - uncomment if needed)
-# *.csv
-# *.tsv
-# *.xlsx
+*.csv
+*.tsv
+*.xlsx
+
+# Except for preserved data files in raw_data and filtered_datasets
+!raw_data/*.csv
+!raw_data/*.tsv
+!raw_data/*.xlsx
+!filtered_datasets/*.csv

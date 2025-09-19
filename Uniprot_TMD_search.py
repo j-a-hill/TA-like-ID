@@ -42,7 +42,19 @@ filtered_df = extract_near_c_terminus_domains(uniprot_df, N=30)
 # filtered_df.to_csv('near_c_terminal_domains.tsv', sep='\t', index=False)
 
 # Load the second gene name file
-biogrid_df = pd.read_csv("C:/Users/Jake/Desktop/BIOGRID_SGTA.csv")
+# Using relative path instead of hardcoded Windows path
+try:
+    biogrid_df = pd.read_csv("BIOGRID_SGTA.csv")
+except FileNotFoundError:
+    try:
+        biogrid_df = pd.read_csv("raw_data/BIOGRID_SGTA.csv")
+    except FileNotFoundError:
+        print("Warning: BIOGRID_SGTA.csv not found. Using available SGTA data as fallback.")
+        # Try using one of the available SGTA files
+        try:
+            biogrid_df = pd.read_csv("raw_data/SGTA and OP91 MS.csv")
+        except FileNotFoundError:
+            biogrid_df = pd.read_csv("raw_data/SGTA KD Prot Inhibition(ORIGINAL).csv")
 
 # Columns that may contain gene names
 columns_to_use = ['official_symbol_for_interactor_a', 'official_symbol_for_interactor_b', 'synonyms/aliases_for_interactor_a', 'synonyms/aliases_for_interactor_b' ]
