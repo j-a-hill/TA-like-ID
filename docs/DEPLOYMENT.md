@@ -1,102 +1,95 @@
-# Deployment Guide for PythonAnywhere
+# Deployment Guide
 
-## Quick Start
+## Option 1: Shinylive (Recommended — no server needed)
 
-1. **Create a PythonAnywhere account** at https://www.pythonanywhere.com
+The app can run entirely in the browser via [Shinylive](https://shiny.posit.co/py/docs/shinylive.html).
 
-2. **Upload files via Git**:
-   ```bash
-   # In PythonAnywhere console:
-   git clone https://github.com/j-a-hill/TA-like-ID.git
-   cd TA-like-ID/app
-   ```
+### Export and deploy
 
-3. **Create a virtual environment**:
-   ```bash
-   mkvirtualenv --python=/usr/bin/python3.10 ta-like-id
-   workon ta-like-id
-   ```
-
-4. **Install dependencies** (from the app directory):
-   ```bash
-   pip install -r requirements.txt
-   ```
-
-5. **Test locally** (in PythonAnywhere console):
-   ```bash
-   cd /home/username/TA-like-ID/app
-   python app.py
-   ```
-
-## Configuring PythonAnywhere Web App
-
-1. Go to **Web** tab → **Add a new web app**
-2. Choose **Manual configuration** → **Python 3.10**
-3. Set the **WSGI configuration file** using the one in the project:
-   - Find your WSGI file path (usually `/var/www/username_pythonanywhere_com_wsgi.py`)
-   - Copy contents from: `app/wsgi_pythonanywhere.py`
-   - Just remember to **replace 'username' with your actual PythonAnywhere username**
-
-4. **Set working directory** in Web tab:
-   - Source code: `/home/username/TA-like-ID`
-   - WSGI file: `/var/www/username_pythonanywhere_com_wsgi.py`
-
-5. **Reload web app** and visit your URL (e.g., `https://username.pythonanywhere.com`)
-
-## Environment Configuration
-
-Make sure your data files are in the correct locations:
-- Raw data: `raw_data/membrane_protein_analysis_with_reduced_cc.csv`
-- Output: `filtered_datasets/` (will be created automatically)
-
-## Features
-
-✅ **Filter by C-terminal distance** with operators (≤, ≥, ==, <, >)
-✅ **Compare by categories** (Membrane Domain Count, Prediction, Localization)
-✅ **Interactive bar charts** showing category distributions
-✅ **CSV download** of filtered results
-✅ **Real-time statistics** showing filtering results
-
-## Sharing with Colleagues
-
-Simply send them the PythonAnywhere URL. No Python installation required!
-
-They can:
-1. View the data summary
-2. Adjust filter criteria with simple controls
-3. See category distributions in real-time
-4. Download filtered results as CSV for use in Excel or other tools
-
-## Customization
-
-### Add More Filter Options
-
-Edit the `buildFilterControls()` function in the JavaScript section to add more columns:
-
-```javascript
-<option value="your_column">Your Column Name</option>
+```bash
+# From the project root
+pip install shinylive
+shinylive export app site
 ```
 
-### Change Chart Type
+Then deploy the generated `site/` folder to any static host:
 
-Modify the `updateChart()` function to use different Plotly chart types (line, pie, scatter, etc.)
+| Host | How |
+|------|-----|
+| **GitHub Pages** | Push `site/` contents to a `gh-pages` branch |
+| **Netlify** | Drag-and-drop the `site/` folder |
+| **Vercel** | Deploy the `site/` folder |
+| **Any web server** | Upload `site/` folder contents |
 
-### Add More Statistics
+After deployment your app is available at e.g. `https://yourusername.github.io/TA-like-ID/`.
 
-Extend the stats display by adding more stat items in `updateStats()`
+### Data loading
+
+The app loads its data from GitHub at startup using a public URL, so no additional file hosting is required.
+
+---
+
+## Option 2: PythonAnywhere (server-based)
+
+### 1. Clone the repository
+
+In the PythonAnywhere Bash console:
+
+```bash
+git clone https://github.com/j-a-hill/TA-like-ID.git
+cd TA-like-ID
+```
+
+### 2. Create a virtual environment and install dependencies
+
+```bash
+mkvirtualenv --python=/usr/bin/python3.10 ta-like-id
+workon ta-like-id
+pip install -r app/requirements.txt
+```
+
+### 3. Configure the WSGI file
+
+Go to **Web** tab → **Add a new web app** → **Manual configuration** → Python 3.10.
+
+Find your WSGI file (usually `/var/www/username_pythonanywhere_com_wsgi.py`) and replace its contents with the contents of `app/wsgi_pythonanywhere.py`, then replace `username` with your PythonAnywhere username.
+
+### 4. Set paths in the Web tab
+
+| Setting | Value |
+|---------|-------|
+| Source code | `/home/username/TA-like-ID` |
+| Working directory | `/home/username/TA-like-ID` |
+| Virtualenv | `/home/username/.virtualenvs/ta-like-id` |
+
+### 5. Reload and visit
+
+Click the green **Reload** button. Your app will be at `https://username.pythonanywhere.com`.
+
+---
+
+## Local development
+
+```bash
+cd app
+pip install -r requirements.txt
+bash start_local.sh
+# Visit http://localhost:8000
+```
+
+## Sharing with colleagues
+
+Send them:
+1. **The deployed URL**
+2. **[docs/USER_GUIDE.md](USER_GUIDE.md)** — non-technical usage instructions
+
+They need no Python installation — the app runs entirely in the browser (Shinylive) or on your server (PythonAnywhere).
 
 ## Troubleshooting
 
-**"Data file not found"**: Ensure CSV files are uploaded to the correct paths
-**"Module not found"**: Run `pip install -r requirements.txt` in the virtualenv
-**"Port already in use"**: Change the port number in `app.run()` or restart web app
+| Problem | Fix |
+|---------|-----|
+| `ModuleNotFoundError` | Run `pip install -r app/requirements.txt` in the virtualenv |
+| Data not loading | Check internet connection; the app loads from GitHub |
+| App won't start locally | Ensure `shiny` is installed: `pip install shiny` |
 
-## Local Development
-
-To test locally before deploying:
-
-```bash
-pip install -r requirements.txt
-python app.py
-# Visit http://localhost:8080
-```
