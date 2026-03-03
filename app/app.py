@@ -5,17 +5,19 @@ Interactive filtering and data exploration with column visibility controls
 Designed for Shinylive deployment
 """
 
-from shiny import App, render, ui, reactive
+from shiny import App, render, ui, reactive, Inputs, Outputs, Session
 import pandas as pd
 import io
 from urllib import request
 
+_DATA_URL = "https://raw.githubusercontent.com/j-a-hill/TA-like-ID/main/raw_data/membrane_protein_analysis_with_reduced_cc.csv"
+
+
 # Load data from GitHub
-def load_data():
+def load_data() -> pd.DataFrame:
     """Load the CSV data from GitHub"""
-    url = "https://raw.githubusercontent.com/j-a-hill/TA-like-ID/main/raw_data/membrane_protein_analysis_with_reduced_cc.csv"
     try:
-        df = pd.read_csv(url)
+        df = pd.read_csv(_DATA_URL)
         return df
     except Exception as e:
         print(f"Error loading data: {e}")
@@ -133,11 +135,11 @@ app_ui = ui.page_fillable(
 
 
 # Server logic
-def server(input, output, session):
+def server(input: Inputs, output: Outputs, session: Session) -> None:
     
     @output
     @render.ui
-    def column_toggles():
+    def column_toggles() -> ui.Tag:
         """Create checkboxes for column visibility"""
         checkboxes = []
         for col in ALL_COLUMNS:
@@ -147,7 +149,7 @@ def server(input, output, session):
         return ui.div({"class": "column-toggles"}, *checkboxes)
     
     @reactive.Calc
-    def visible_columns():
+    def visible_columns() -> list[str]:
         """Get list of visible columns based on checkboxes"""
         visible = []
         for col in ALL_COLUMNS:
@@ -157,7 +159,7 @@ def server(input, output, session):
         return visible if visible else ALL_COLUMNS
     
     @reactive.Calc
-    def filtered_data():
+    def filtered_data() -> pd.DataFrame:
         """Apply all filters to the data"""
         if len(df) == 0:
             return pd.DataFrame()
@@ -228,7 +230,7 @@ def server(input, output, session):
     
     @output
     @render.data_frame
-    def data_grid():
+    def data_grid() -> render.DataGrid | pd.DataFrame:
         """Render the filtered data grid with selected columns"""
         fdf = filtered_data()
         visible_cols = visible_columns()

@@ -12,7 +12,6 @@ This replaces the problematic workflow from the Jupyter notebook.
 """
 
 import pandas as pd
-import sys
 from pathlib import Path
 
 # Import our custom utilities
@@ -26,87 +25,59 @@ from protein_analysis_utils import (
     quick_localization_analysis
 )
 
+_DATA_FILE = 'raw_data/membrane_protein_analysis_with_reduced_cc.csv'
 
-def main():
-    """Main analysis workflow with improved category comparisons."""
-    
-    # Load the data
-    data_file = 'raw_data/membrane_protein_analysis_with_reduced_cc.csv'
-    if not Path(data_file).exists():
-        print(f"Error: Data file {data_file} not found.")
-        print("Please ensure the membrane protein analysis data is available.")
-        return
-    
-    df = pd.read_csv(data_file)
-    print(f"Loaded membrane protein data: {len(df):,} proteins")
-    print(f"Columns: {', '.join(df.columns)}")
-    print()
-    
-    # ================================
-    # FIXED WORKFLOW: Filter by cterm_distance, then compare within subset
-    # ================================
-    
+
+def _run_basic_comparisons(df: pd.DataFrame) -> None:
+    """Run the three basic filter-and-compare examples."""
     print("=== IMPROVED CATEGORY COMPARISON WORKFLOW ===")
     print()
-    
-    # Example 1: Filter by cterm_distance <= 30, then compare MD counts
+
     print("1. Filter by cterm_distance <= 30, compare membrane domain counts:")
     print("-" * 70)
     filtered_df, md_counts = filter_by_cterm_distance(df, max_distance=30, compare_by='membrane_domain_count')
-    
     print(f"Found {len(filtered_df):,} proteins within 30 residues of C-terminus")
     print("Membrane domain count distribution:")
     for count, frequency in md_counts.head(10).items():
         percentage = frequency / len(filtered_df) * 100
         print(f"  {count:2d} domains: {frequency:4d} proteins ({percentage:5.1f}%)")
     print()
-    
-    # Example 2: Filter by cterm_distance <= 50, then compare by prediction type  
+
     print("2. Filter by cterm_distance <= 50, compare by prediction type:")
     print("-" * 70)
-    filtered_df2, pred_counts = filter_and_compare(
-        df, 'cterm_distance', 50, 'Prediction', operator='<='
-    )
-    
+    filtered_df2, pred_counts = filter_and_compare(df, 'cterm_distance', 50, 'Prediction', operator='<=')
     print(f"Found {len(filtered_df2):,} proteins within 50 residues of C-terminus")
     print("Prediction type distribution:")
     for pred_type, count in pred_counts.items():
         percentage = count / len(filtered_df2) * 100
         print(f"  {pred_type:10s}: {count:4d} proteins ({percentage:5.1f}%)")
     print()
-    
-    # Example 3: Filter by membrane domain count, then compare localization
+
     print("3. Filter by membrane_domain_count == 1, compare localization:")
     print("-" * 70)
-    filtered_df3, loc_counts = filter_and_compare(
-        df, 'membrane_domain_count', 1, 'Reduced.CC.Terms', operator='=='
-    )
-    
+    filtered_df3, loc_counts = filter_and_compare(df, 'membrane_domain_count', 1, 'Reduced.CC.Terms', operator='==')
     print(f"Found {len(filtered_df3):,} proteins with exactly 1 membrane domain")
     print("Top localizations:")
     for loc, count in loc_counts.head(15).items():
         percentage = count / len(filtered_df3) * 100
         print(f"  {count:3d} ({percentage:4.1f}%): {loc}")
     print()
-    
-    # ================================
-    # ADVANCED COMPARISONS  
-    # ================================
-    
+
+
+def _run_advanced_analysis(df: pd.DataFrame) -> None:
+    """Run advanced cross-tabulation and threshold analysis."""
     print("=== ADVANCED ANALYSIS EXAMPLES ===")
     print()
-    
-    # Cross-tabulation: Compare prediction type vs in_biogrid for close C-term proteins
+
     print("4. Cross-tabulation: Prediction type vs BioGRID status (cterm_distance <= 30):")
     print("-" * 80)
     crosstab = cross_tabulate_categories(
-        df, 'Prediction', 'in_biogrid', 
+        df, 'Prediction', 'in_biogrid',
         filter_column='cterm_distance', filter_value=30
     )
     print(crosstab)
     print()
-    
-    # Effect of different distance thresholds on membrane domain distribution
+
     print("5. Effect of C-terminal distance thresholds on membrane domain counts:")
     print("-" * 80)
     threshold_analysis = analyze_cterm_distance_effects(
@@ -114,24 +85,21 @@ def main():
     )
     print(threshold_analysis.head(15))
     print()
-    
-    # ================================
-    # COMPREHENSIVE SUMMARY REPORTS
-    # ================================
-    
+
+
+def _run_summary_reports(df: pd.DataFrame) -> None:
+    """Generate comprehensive summary reports."""
     print("=== COMPREHENSIVE SUMMARY REPORTS ===")
     print()
-    
-    # Summary for proteins close to C-terminus
+
     summary_report(
-        df, 
-        filter_column='cterm_distance', 
-        filter_value=30, 
+        df,
+        filter_column='cterm_distance',
+        filter_value=30,
         operator='<=',
         compare_columns=['membrane_domain_count', 'Prediction', 'in_biogrid', 'in_massspec']
     )
-    
-    # Summary for high membrane domain count proteins
+
     print("Summary for proteins with many membrane domains:")
     print("-" * 60)
     summary_report(
@@ -141,36 +109,50 @@ def main():
         operator='>=',
         compare_columns=['cterm_distance', 'Prediction', 'Reduced.CC.Terms']
     )
-    
-    # ================================
-    # SAVE FILTERED DATASETS FOR FURTHER ANALYSIS
-    # ================================
-    
+
+
+def _save_filtered_datasets(df: pd.DataFrame) -> None:
+    """Save commonly used filtered datasets to disk."""
     print("=== SAVING FILTERED DATASETS ===")
     print()
-    
-    # Save commonly used filtered datasets
+
     output_dir = Path('filtered_datasets')
     output_dir.mkdir(exist_ok=True)
-    
-    # Dataset 1: Close to C-terminus
+
     close_cterm = df[df['cterm_distance'] <= 30].copy()
     output_file1 = output_dir / 'proteins_cterm_distance_30.csv'
     close_cterm.to_csv(output_file1, index=False)
     print(f"Saved {len(close_cterm):,} proteins with cterm_distance <= 30 to {output_file1}")
-    
-    # Dataset 2: High membrane domain count
+
     high_md = df[df['membrane_domain_count'] >= 5].copy()
     output_file2 = output_dir / 'proteins_high_membrane_domains.csv'
     high_md.to_csv(output_file2, index=False)
     print(f"Saved {len(high_md):,} proteins with membrane_domain_count >= 5 to {output_file2}")
-    
-    # Dataset 3: Close to C-terminus AND in mass spec data
-    close_and_ms = df[(df['cterm_distance'] <= 30) & (df['in_massspec'] == True)].copy()
+
+    close_and_ms = df[(df['cterm_distance'] <= 30) & (df['in_massspec'])].copy()
     output_file3 = output_dir / 'proteins_cterm_30_in_massspec.csv'
     close_and_ms.to_csv(output_file3, index=False)
     print(f"Saved {len(close_and_ms):,} proteins with cterm_distance <= 30 AND in mass spec to {output_file3}")
-    
+
+
+def main() -> None:
+    """Main analysis workflow with improved category comparisons."""
+    if not Path(_DATA_FILE).exists():
+        raise FileNotFoundError(
+            f"Data file {_DATA_FILE} not found. "
+            "Please ensure the membrane protein analysis data is available."
+        )
+
+    df = pd.read_csv(_DATA_FILE)
+    print(f"Loaded membrane protein data: {len(df):,} proteins")
+    print(f"Columns: {', '.join(df.columns)}")
+    print()
+
+    _run_basic_comparisons(df)
+    _run_advanced_analysis(df)
+    _run_summary_reports(df)
+    _save_filtered_datasets(df)
+
     print()
     print("=== ANALYSIS COMPLETE ===")
     print()

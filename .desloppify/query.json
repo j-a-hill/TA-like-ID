@@ -1,177 +1,419 @@
 {
-  "command": "show",
-  "query": "test_coverage",
-  "status_filter": "open",
-  "total": 10,
-  "summary": {
-    "by_tier": {
-      "T2": 5,
-      "T3": 5
+  "command": "next",
+  "items": [
+    {
+      "id": "test_coverage::STANDALONE_APP.py::untested_critical",
+      "kind": "finding",
+      "tier": 2,
+      "effective_tier": 2,
+      "confidence": "high",
+      "detector": "test_coverage",
+      "file": "STANDALONE_APP.py",
+      "summary": "Untested critical module (268 LOC, 0 importers) \u2014 high blast radius",
+      "detail": {
+        "kind": "untested_critical",
+        "loc": 268,
+        "importer_count": 0,
+        "loc_weight": 16.3707055437449,
+        "complexity_score": 35
+      },
+      "status": "open",
+      "primary_command": "desloppify resolve fixed \"test_coverage::STANDALONE_APP.py::untested_critical\" --note \"<what you did>\" --attest \"I have actually [DESCRIBE THE CONCRETE CHANGE YOU MADE] and I am not gaming the score by resolving without fixing.\""
     },
-    "by_detector": {
-      "test_coverage": 10
+    {
+      "id": "test_coverage::analysis/Uniprot_TMD_search.py::untested_critical",
+      "kind": "finding",
+      "tier": 2,
+      "effective_tier": 2,
+      "confidence": "high",
+      "detector": "test_coverage",
+      "file": "analysis/Uniprot_TMD_search.py",
+      "summary": "Untested critical module (180 LOC, 0 importers) \u2014 high blast radius",
+      "detail": {
+        "kind": "untested_critical",
+        "loc": 180,
+        "importer_count": 0,
+        "loc_weight": 13.416407864998739,
+        "complexity_score": 36
+      },
+      "status": "open",
+      "primary_command": "desloppify resolve fixed \"test_coverage::analysis/Uniprot_TMD_search.py::untested_critical\" --note \"<what you did>\" --attest \"I have actually [DESCRIBE THE CONCRETE CHANGE YOU MADE] and I am not gaming the score by resolving without fixing.\""
     },
-    "files": 10
-  },
-  "by_file": {
-    "STANDALONE_APP.py": [
-      {
-        "id": "test_coverage::STANDALONE_APP.py::untested_critical",
-        "tier": 2,
-        "confidence": "high",
-        "summary": "Untested critical module (266 LOC, 0 importers) \u2014 high blast radius",
-        "detail": {
-          "kind": "untested_critical",
-          "loc": 266,
-          "importer_count": 0,
-          "loc_weight": 16.30950643030009,
-          "complexity_score": 35
-        }
-      }
-    ],
-    "analysis/Uniprot_TMD_search.py": [
-      {
-        "id": "test_coverage::analysis/Uniprot_TMD_search.py::untested_critical",
-        "tier": 2,
-        "confidence": "high",
-        "summary": "Untested critical module (180 LOC, 0 importers) \u2014 high blast radius",
-        "detail": {
-          "kind": "untested_critical",
-          "loc": 180,
-          "importer_count": 0,
-          "loc_weight": 13.416407864998739,
-          "complexity_score": 36
-        }
-      }
-    ],
-    "analysis/demo_fixed_workflow.py": [
-      {
-        "id": "test_coverage::analysis/demo_fixed_workflow.py::untested_critical",
-        "tier": 2,
-        "confidence": "high",
-        "summary": "Untested critical module (189 LOC, 0 importers) \u2014 high blast radius",
-        "detail": {
-          "kind": "untested_critical",
-          "loc": 189,
-          "importer_count": 0,
-          "loc_weight": 13.74772708486752,
-          "complexity_score": 84
-        }
-      }
-    ],
-    "analysis/improved_analysis.py": [
-      {
-        "id": "test_coverage::analysis/improved_analysis.py::untested_critical",
-        "tier": 2,
-        "confidence": "high",
-        "summary": "Untested critical module (187 LOC, 0 importers) \u2014 high blast radius",
-        "detail": {
-          "kind": "untested_critical",
-          "loc": 187,
-          "importer_count": 0,
-          "loc_weight": 13.674794331177344,
-          "complexity_score": 76
-        }
-      }
-    ],
-    "analysis/non_srp_filter.py": [
-      {
-        "id": "test_coverage::analysis/non_srp_filter.py::untested_module",
-        "tier": 3,
-        "confidence": "high",
-        "summary": "Untested module (121 LOC, 0 importers)",
-        "detail": {
-          "kind": "untested_module",
-          "loc": 121,
-          "importer_count": 0,
-          "loc_weight": 11.0
-        }
-      }
-    ],
-    "analysis/protein_analysis_utils.py": [
-      {
-        "id": "test_coverage::analysis/protein_analysis_utils.py::untested_module",
-        "tier": 3,
-        "confidence": "high",
-        "summary": "Untested module (302 LOC, 0 importers)",
-        "detail": {
-          "kind": "untested_module",
-          "loc": 302,
-          "importer_count": 0,
-          "loc_weight": 17.378147196982766
-        }
-      }
-    ],
-    "analysis/srp_filter.py": [
-      {
-        "id": "test_coverage::analysis/srp_filter.py::untested_module",
-        "tier": 3,
-        "confidence": "high",
-        "summary": "Untested module (128 LOC, 0 importers)",
-        "detail": {
-          "kind": "untested_module",
-          "loc": 128,
-          "importer_count": 0,
-          "loc_weight": 11.313708498984761
-        }
-      }
-    ],
-    "analysis/tmd_count.py": [
-      {
-        "id": "test_coverage::analysis/tmd_count.py::untested_module",
-        "tier": 3,
-        "confidence": "high",
-        "summary": "Untested module (23 LOC, 0 importers)",
-        "detail": {
-          "kind": "untested_module",
-          "loc": 23,
-          "importer_count": 0,
-          "loc_weight": 4.795831523312719
-        }
-      }
-    ],
-    "app/app.py": [
-      {
-        "id": "test_coverage::app/app.py::untested_critical",
-        "tier": 2,
-        "confidence": "high",
-        "summary": "Untested critical module (259 LOC, 0 importers) \u2014 high blast radius",
-        "detail": {
-          "kind": "untested_critical",
-          "loc": 259,
-          "importer_count": 0,
-          "loc_weight": 16.09347693943108,
-          "complexity_score": 51
-        }
-      }
-    ],
-    "app/protein_analysis_utils.py": [
-      {
-        "id": "test_coverage::app/protein_analysis_utils.py::untested_module",
-        "tier": 3,
-        "confidence": "high",
-        "summary": "Untested module (302 LOC, 0 importers)",
-        "detail": {
-          "kind": "untested_module",
-          "loc": 302,
-          "importer_count": 0,
-          "loc_weight": 17.378147196982766
-        }
-      }
-    ]
-  },
-  "total_matching": 11,
-  "hidden": {
-    "by_detector": {
-      "test_coverage": 1
+    {
+      "id": "test_coverage::app/app.py::untested_critical",
+      "kind": "finding",
+      "tier": 2,
+      "effective_tier": 2,
+      "confidence": "high",
+      "detector": "test_coverage",
+      "file": "app/app.py",
+      "summary": "Untested critical module (259 LOC, 0 importers) \u2014 high blast radius",
+      "detail": {
+        "kind": "untested_critical",
+        "loc": 259,
+        "importer_count": 0,
+        "loc_weight": 16.09347693943108,
+        "complexity_score": 51
+      },
+      "status": "open",
+      "primary_command": "desloppify resolve fixed \"test_coverage::app/app.py::untested_critical\" --note \"<what you did>\" --attest \"I have actually [DESCRIBE THE CONCRETE CHANGE YOU MADE] and I am not gaming the score by resolving without fixing.\""
     },
-    "total": 1
+    {
+      "id": "smells::analysis/demo_fixed_workflow.py::noop_function",
+      "kind": "finding",
+      "tier": 2,
+      "effective_tier": 2,
+      "confidence": "medium",
+      "detector": "smells",
+      "file": "analysis/demo_fixed_workflow.py",
+      "summary": "2x Non-trivial function whose body does nothing",
+      "detail": {
+        "smell_id": "noop_function",
+        "severity": "high",
+        "count": 2,
+        "lines": [
+          23,
+          131
+        ]
+      },
+      "status": "open",
+      "primary_command": "desloppify resolve fixed \"smells::analysis/demo_fixed_workflow.py::noop_function\" --note \"<what you did>\" --attest \"I have actually [DESCRIBE THE CONCRETE CHANGE YOU MADE] and I am not gaming the score by resolving without fixing.\""
+    },
+    {
+      "id": "smells::analysis/improved_analysis.py::sys_exit_in_library",
+      "kind": "finding",
+      "tier": 2,
+      "effective_tier": 2,
+      "confidence": "medium",
+      "detector": "smells",
+      "file": "analysis/improved_analysis.py",
+      "summary": "1x sys.exit() outside CLI entry point \u2014 use exceptions",
+      "detail": {
+        "smell_id": "sys_exit_in_library",
+        "severity": "high",
+        "count": 1,
+        "lines": [
+          144
+        ]
+      },
+      "status": "open",
+      "primary_command": "desloppify resolve fixed \"smells::analysis/improved_analysis.py::sys_exit_in_library\" --note \"<what you did>\" --attest \"I have actually [DESCRIBE THE CONCRETE CHANGE YOU MADE] and I am not gaming the score by resolving without fixing.\""
+    },
+    {
+      "id": "smells::protein_analysis_utils.py::sys_exit_in_library",
+      "kind": "finding",
+      "tier": 2,
+      "effective_tier": 2,
+      "confidence": "medium",
+      "detector": "smells",
+      "file": "protein_analysis_utils.py",
+      "summary": "1x sys.exit() outside CLI entry point \u2014 use exceptions",
+      "detail": {
+        "smell_id": "sys_exit_in_library",
+        "severity": "high",
+        "count": 1,
+        "lines": [
+          302
+        ]
+      },
+      "status": "open",
+      "primary_command": "desloppify resolve fixed \"smells::protein_analysis_utils.py::sys_exit_in_library\" --note \"<what you did>\" --attest \"I have actually [DESCRIBE THE CONCRETE CHANGE YOU MADE] and I am not gaming the score by resolving without fixing.\""
+    },
+    {
+      "id": "test_coverage::analysis/demo_fixed_workflow.py::untested_module",
+      "kind": "finding",
+      "tier": 3,
+      "effective_tier": 3,
+      "confidence": "high",
+      "detector": "test_coverage",
+      "file": "analysis/demo_fixed_workflow.py",
+      "summary": "Untested module (176 LOC, 0 importers)",
+      "detail": {
+        "kind": "untested_module",
+        "loc": 176,
+        "importer_count": 0,
+        "loc_weight": 13.2664991614216
+      },
+      "status": "open",
+      "primary_command": "desloppify resolve fixed \"test_coverage::analysis/demo_fixed_workflow.py::untested_module\" --note \"<what you did>\" --attest \"I have actually [DESCRIBE THE CONCRETE CHANGE YOU MADE] and I am not gaming the score by resolving without fixing.\""
+    },
+    {
+      "id": "test_coverage::analysis/improved_analysis.py::untested_module",
+      "kind": "finding",
+      "tier": 3,
+      "effective_tier": 3,
+      "confidence": "high",
+      "detector": "test_coverage",
+      "file": "analysis/improved_analysis.py",
+      "summary": "Untested module (169 LOC, 0 importers)",
+      "detail": {
+        "kind": "untested_module",
+        "loc": 169,
+        "importer_count": 0,
+        "loc_weight": 13.0
+      },
+      "status": "open",
+      "primary_command": "desloppify resolve fixed \"test_coverage::analysis/improved_analysis.py::untested_module\" --note \"<what you did>\" --attest \"I have actually [DESCRIBE THE CONCRETE CHANGE YOU MADE] and I am not gaming the score by resolving without fixing.\""
+    },
+    {
+      "id": "test_coverage::analysis/non_srp_filter.py::untested_module",
+      "kind": "finding",
+      "tier": 3,
+      "effective_tier": 3,
+      "confidence": "high",
+      "detector": "test_coverage",
+      "file": "analysis/non_srp_filter.py",
+      "summary": "Untested module (121 LOC, 0 importers)",
+      "detail": {
+        "kind": "untested_module",
+        "loc": 121,
+        "importer_count": 0,
+        "loc_weight": 11.0
+      },
+      "status": "open",
+      "primary_command": "desloppify resolve fixed \"test_coverage::analysis/non_srp_filter.py::untested_module\" --note \"<what you did>\" --attest \"I have actually [DESCRIBE THE CONCRETE CHANGE YOU MADE] and I am not gaming the score by resolving without fixing.\""
+    },
+    {
+      "id": "test_coverage::analysis/srp_filter.py::untested_module",
+      "kind": "finding",
+      "tier": 3,
+      "effective_tier": 3,
+      "confidence": "high",
+      "detector": "test_coverage",
+      "file": "analysis/srp_filter.py",
+      "summary": "Untested module (128 LOC, 0 importers)",
+      "detail": {
+        "kind": "untested_module",
+        "loc": 128,
+        "importer_count": 0,
+        "loc_weight": 11.313708498984761
+      },
+      "status": "open",
+      "primary_command": "desloppify resolve fixed \"test_coverage::analysis/srp_filter.py::untested_module\" --note \"<what you did>\" --attest \"I have actually [DESCRIBE THE CONCRETE CHANGE YOU MADE] and I am not gaming the score by resolving without fixing.\""
+    },
+    {
+      "id": "test_coverage::analysis/tmd_count.py::untested_module",
+      "kind": "finding",
+      "tier": 3,
+      "effective_tier": 3,
+      "confidence": "high",
+      "detector": "test_coverage",
+      "file": "analysis/tmd_count.py",
+      "summary": "Untested module (23 LOC, 0 importers)",
+      "detail": {
+        "kind": "untested_module",
+        "loc": 23,
+        "importer_count": 0,
+        "loc_weight": 4.795831523312719
+      },
+      "status": "open",
+      "primary_command": "desloppify resolve fixed \"test_coverage::analysis/tmd_count.py::untested_module\" --note \"<what you did>\" --attest \"I have actually [DESCRIBE THE CONCRETE CHANGE YOU MADE] and I am not gaming the score by resolving without fixing.\""
+    },
+    {
+      "id": "test_coverage::app/wsgi_pythonanywhere.py::untested_module",
+      "kind": "finding",
+      "tier": 3,
+      "effective_tier": 3,
+      "confidence": "high",
+      "detector": "test_coverage",
+      "file": "app/wsgi_pythonanywhere.py",
+      "summary": "Untested module (23 LOC, 0 importers)",
+      "detail": {
+        "kind": "untested_module",
+        "loc": 23,
+        "importer_count": 0,
+        "loc_weight": 4.795831523312719
+      },
+      "status": "open",
+      "primary_command": "desloppify resolve fixed \"test_coverage::app/wsgi_pythonanywhere.py::untested_module\" --note \"<what you did>\" --attest \"I have actually [DESCRIBE THE CONCRETE CHANGE YOU MADE] and I am not gaming the score by resolving without fixing.\""
+    },
+    {
+      "id": "smells::app/app.py::annotation_quality",
+      "kind": "finding",
+      "tier": 3,
+      "effective_tier": 3,
+      "confidence": "medium",
+      "detector": "smells",
+      "file": "app/app.py",
+      "summary": "3x Loose type annotation \u2014 use specific types",
+      "detail": {
+        "smell_id": "annotation_quality",
+        "severity": "medium",
+        "count": 3,
+        "lines": [
+          136,
+          160,
+          231
+        ]
+      },
+      "status": "open",
+      "primary_command": "desloppify resolve fixed \"smells::app/app.py::annotation_quality\" --note \"<what you did>\" --attest \"I have actually [DESCRIBE THE CONCRETE CHANGE YOU MADE] and I am not gaming the score by resolving without fixing.\""
+    },
+    {
+      "id": "smells::analysis/non_srp_filter.py::annotation_quality",
+      "kind": "finding",
+      "tier": 3,
+      "effective_tier": 3,
+      "confidence": "medium",
+      "detector": "smells",
+      "file": "analysis/non_srp_filter.py",
+      "summary": "2x Loose type annotation \u2014 use specific types",
+      "detail": {
+        "smell_id": "annotation_quality",
+        "severity": "medium",
+        "count": 2,
+        "lines": [
+          60,
+          68
+        ]
+      },
+      "status": "open",
+      "primary_command": "desloppify resolve fixed \"smells::analysis/non_srp_filter.py::annotation_quality\" --note \"<what you did>\" --attest \"I have actually [DESCRIBE THE CONCRETE CHANGE YOU MADE] and I am not gaming the score by resolving without fixing.\""
+    },
+    {
+      "id": "smells::analysis/srp_filter.py::annotation_quality",
+      "kind": "finding",
+      "tier": 3,
+      "effective_tier": 3,
+      "confidence": "medium",
+      "detector": "smells",
+      "file": "analysis/srp_filter.py",
+      "summary": "2x Loose type annotation \u2014 use specific types",
+      "detail": {
+        "smell_id": "annotation_quality",
+        "severity": "medium",
+        "count": 2,
+        "lines": [
+          67,
+          75
+        ]
+      },
+      "status": "open",
+      "primary_command": "desloppify resolve fixed \"smells::analysis/srp_filter.py::annotation_quality\" --note \"<what you did>\" --attest \"I have actually [DESCRIBE THE CONCRETE CHANGE YOU MADE] and I am not gaming the score by resolving without fixing.\""
+    },
+    {
+      "id": "smells::app/app.py::hardcoded_url",
+      "kind": "finding",
+      "tier": 3,
+      "effective_tier": 3,
+      "confidence": "medium",
+      "detector": "smells",
+      "file": "app/app.py",
+      "summary": "1x Hardcoded URL in source code",
+      "detail": {
+        "smell_id": "hardcoded_url",
+        "severity": "medium",
+        "count": 1,
+        "lines": [
+          16
+        ]
+      },
+      "status": "open",
+      "primary_command": "desloppify resolve fixed \"smells::app/app.py::hardcoded_url\" --note \"<what you did>\" --attest \"I have actually [DESCRIBE THE CONCRETE CHANGE YOU MADE] and I am not gaming the score by resolving without fixing.\""
+    },
+    {
+      "id": "smells::protein_analysis_utils.py::optional_param_sprawl",
+      "kind": "finding",
+      "tier": 3,
+      "effective_tier": 3,
+      "confidence": "medium",
+      "detector": "smells",
+      "file": "protein_analysis_utils.py",
+      "summary": "1x Too many optional params \u2014 consider a config object",
+      "detail": {
+        "smell_id": "optional_param_sprawl",
+        "severity": "medium",
+        "count": 1,
+        "lines": [
+          133
+        ]
+      },
+      "status": "open",
+      "primary_command": "desloppify resolve fixed \"smells::protein_analysis_utils.py::optional_param_sprawl\" --note \"<what you did>\" --attest \"I have actually [DESCRIBE THE CONCRETE CHANGE YOU MADE] and I am not gaming the score by resolving without fixing.\""
+    },
+    {
+      "id": "boilerplate_duplication::analysis/non_srp_filter.py::f3ed55c7c5d1e284",
+      "kind": "finding",
+      "tier": 3,
+      "effective_tier": 3,
+      "confidence": "medium",
+      "detector": "boilerplate_duplication",
+      "file": "analysis/non_srp_filter.py",
+      "summary": "Boilerplate block repeated across 2 files (window 22 lines): analysis/non_srp_filter.py:68, analysis/srp_filter.py:75",
+      "detail": {
+        "distinct_files": 2,
+        "window_size": 22,
+        "locations": [
+          {
+            "file": "analysis/non_srp_filter.py",
+            "line": 68
+          },
+          {
+            "file": "analysis/srp_filter.py",
+            "line": 75
+          }
+        ],
+        "sample": [
+          "def calc_cterm_dist(row):",
+          "        length = row.get('Length', 0)",
+          "        if pd.isna(length) or length == 0:",
+          "            return float('inf')"
+        ]
+      },
+      "status": "open",
+      "primary_command": "desloppify resolve fixed \"boilerplate_duplication::analysis/non_srp_filter.py::f3ed55c7c5d1e284\" --note \"<what you did>\" --attest \"I have actually [DESCRIBE THE CONCRETE CHANGE YOU MADE] and I am not gaming the score by resolving without fixing.\""
+    },
+    {
+      "id": "orphaned::STANDALONE_APP.py",
+      "kind": "finding",
+      "tier": 3,
+      "effective_tier": 3,
+      "confidence": "medium",
+      "detector": "orphaned",
+      "file": "STANDALONE_APP.py",
+      "summary": "Orphaned file (268 LOC): zero importers, not an entry point",
+      "detail": {
+        "loc": 268
+      },
+      "status": "open",
+      "primary_command": "desloppify resolve fixed \"orphaned::STANDALONE_APP.py\" --note \"<what you did>\" --attest \"I have actually [DESCRIBE THE CONCRETE CHANGE YOU MADE] and I am not gaming the score by resolving without fixing.\""
+    },
+    {
+      "id": "orphaned::analysis/Uniprot_TMD_search.py",
+      "kind": "finding",
+      "tier": 3,
+      "effective_tier": 3,
+      "confidence": "medium",
+      "detector": "orphaned",
+      "file": "analysis/Uniprot_TMD_search.py",
+      "summary": "Orphaned file (180 LOC): zero importers, not an entry point",
+      "detail": {
+        "loc": 180
+      },
+      "status": "open",
+      "primary_command": "desloppify resolve fixed \"orphaned::analysis/Uniprot_TMD_search.py\" --note \"<what you did>\" --attest \"I have actually [DESCRIBE THE CONCRETE CHANGE YOU MADE] and I am not gaming the score by resolving without fixing.\""
+    }
+  ],
+  "queue": {
+    "tier_counts": {
+      "1": 0,
+      "2": 6,
+      "3": 59,
+      "4": 13
+    },
+    "requested_tier": null,
+    "selected_tier": null,
+    "fallback_reason": null,
+    "available_tiers": [
+      2,
+      3,
+      4
+    ],
+    "total": 78
   },
-  "noise_budget": 10,
-  "noise_global_budget": 0,
   "narrative": {
-    "phase": "first_scan",
-    "headline": "First scan complete. 78 open findings across 3 dimensions.",
+    "phase": "early_momentum",
+    "headline": "\u26a0 30 security findings \u2014 review before other cleanup. Score 23.3/100 with 78 findings open. Keep the momentum going.",
     "dimensions": {
       "lowest_dimensions": [
         {
@@ -206,8 +448,8 @@
       {
         "type": "reorganize",
         "detector": "orphaned",
-        "count": 13,
-        "description": "13 orphaned findings \u2014 delete dead files or relocate with `desloppify move`",
+        "count": 11,
+        "description": "11 orphaned findings \u2014 delete dead files or relocate with `desloppify move`",
         "command": "desloppify show orphaned --status open",
         "impact": 0.0,
         "dimension": "Code quality",
@@ -217,79 +459,79 @@
       {
         "type": "refactor",
         "detector": "structural",
-        "count": 8,
-        "description": "8 structural findings \u2014 decompose large files \u2014 extract logic into focused modules",
+        "count": 4,
+        "description": "4 structural findings \u2014 decompose large files \u2014 extract logic into focused modules",
         "command": "desloppify show structural --status open",
         "impact": 0.0,
         "dimension": "File health",
         "priority": 2,
-        "lane": "refactor"
-      },
-      {
-        "type": "refactor",
-        "detector": "dupes",
-        "count": 8,
-        "description": "8 dupes findings \u2014 extract shared utility or consolidate duplicates",
-        "command": "desloppify show dupes --status open",
-        "impact": 0.0,
-        "dimension": "Duplication",
-        "priority": 3,
-        "lane": "refactor"
+        "lane": "refactor_0"
       },
       {
         "type": "refactor",
         "detector": "test_coverage",
-        "count": 11,
-        "description": "11 test_coverage findings \u2014 add tests for untested production modules \u2014 prioritize by import count",
+        "count": 9,
+        "description": "9 test_coverage findings \u2014 add tests for untested production modules \u2014 prioritize by import count",
         "command": "desloppify show test_coverage --status open",
         "impact": 0.0,
         "dimension": "Test health",
-        "priority": 4,
+        "priority": 3,
         "lane": "test_coverage"
       },
       {
         "type": "refactor",
         "detector": "responsibility_cohesion",
-        "count": 3,
-        "description": "3 responsibility_cohesion findings \u2014 split modules with too many responsibilities \u2014 extract focused sub-modules",
+        "count": 1,
+        "description": "1 responsibility_cohesion findings \u2014 split modules with too many responsibilities \u2014 extract focused sub-modules",
         "command": "desloppify show responsibility_cohesion --status open",
         "impact": 0.0,
         "dimension": "Code quality",
-        "priority": 5,
-        "lane": "refactor"
+        "priority": 4,
+        "lane": "refactor_0"
       },
       {
         "type": "refactor",
         "detector": "boilerplate_duplication",
-        "count": 2,
-        "description": "2 boilerplate_duplication findings \u2014 extract shared boilerplate into reusable helpers or base classes",
+        "count": 1,
+        "description": "1 boilerplate_duplication findings \u2014 extract shared boilerplate into reusable helpers or base classes",
         "command": "desloppify show boilerplate_duplication --status open",
         "impact": 0.0,
         "dimension": "Duplication",
-        "priority": 6,
-        "lane": "refactor"
+        "priority": 5,
+        "lane": "refactor_0"
       },
       {
         "type": "manual_fix",
         "detector": "smells",
-        "count": 18,
-        "description": "18 smells findings \u2014 inspect with `desloppify next` and fix manually",
+        "count": 9,
+        "description": "9 smells findings \u2014 inspect with `desloppify next` and fix manually",
         "command": "desloppify show smells --status open",
         "impact": 0.0,
         "dimension": "Code quality",
+        "priority": 6,
+        "lane": "refactor_0"
+      },
+      {
+        "type": "manual_fix",
+        "detector": "security",
+        "count": 30,
+        "description": "30 security findings \u2014 review and fix security findings \u2014 prioritize by severity",
+        "command": "desloppify show security --status open",
+        "impact": 0.0,
+        "dimension": "Security",
         "priority": 7,
-        "lane": "refactor"
+        "lane": "refactor_1"
       },
       {
         "type": "manual_fix",
         "detector": "subjective_review",
-        "count": 15,
-        "description": "15 files need design review \u2014 run design review with dimension templates",
+        "count": 13,
+        "description": "13 files need design review \u2014 run design review with dimension templates",
         "command": "desloppify fix review",
         "impact": 0.0,
         "dimension": "Test health",
         "priority": 8,
-        "lane": "refactor"
+        "lane": "refactor_0"
       }
     ],
     "strategy": {
@@ -305,44 +547,52 @@
           "actions": [
             1
           ],
-          "file_count": 13,
+          "file_count": 11,
           "total_impact": 0.0,
           "automation": "manual",
           "run_first": false
         },
-        "refactor": {
+        "refactor_0": {
           "actions": [
             2,
-            3,
+            4,
             5,
             6,
-            7,
             8
           ],
-          "file_count": 16,
+          "file_count": 14,
+          "total_impact": 0.0,
+          "automation": "manual",
+          "run_first": false
+        },
+        "refactor_1": {
+          "actions": [
+            7
+          ],
+          "file_count": 1,
           "total_impact": 0.0,
           "automation": "manual",
           "run_first": false
         },
         "test_coverage": {
           "actions": [
-            4
+            3
           ],
-          "file_count": 11,
+          "file_count": 9,
           "total_impact": 0.0,
           "automation": "manual",
           "run_first": false
         }
       },
       "can_parallelize": true,
-      "hint": "3 independent workstreams, safe to parallelize. Rescan after each phase to verify."
+      "hint": "4 independent workstreams, safe to parallelize. Rescan after each phase to verify."
     },
     "tools": {
       "fixers": [],
       "move": {
         "available": true,
         "relevant": true,
-        "reason": "13 orphaned files",
+        "reason": "11 orphaned files",
         "usage": "desloppify move <source> <dest> [--dry-run]"
       },
       "plan": {
@@ -366,9 +616,9 @@
     "milestone": null,
     "primary_action": {
       "command": "desloppify show orphaned --status open",
-      "description": "13 orphaned findings \u2014 delete dead files or relocate with `desloppify move`"
+      "description": "11 orphaned findings \u2014 delete dead files or relocate with `desloppify move`"
     },
-    "why_now": "3 independent workstreams, safe to parallelize. Rescan after each phase to verify.",
+    "why_now": "4 independent workstreams, safe to parallelize. Rescan after each phase to verify.",
     "verification_step": {
       "command": "desloppify scan",
       "reason": "revalidate after changes"
@@ -376,25 +626,77 @@
     "risk_flags": [],
     "strict_target": {
       "target": 95.0,
-      "current": 18.5,
-      "gap": 76.5,
+      "current": 23.3,
+      "gap": 71.7,
       "state": "below",
       "warning": null
     },
     "reminders": [
       {
         "type": "zone_classification",
-        "message": "1 of 15 files classified as non-production (1 test). Override with `desloppify zone set <file> production` if any are misclassified.",
+        "message": "2 of 14 files classified as non-production (2 test). Override with `desloppify zone set <file> production` if any are misclassified.",
         "command": "desloppify zone show",
         "priority": 2,
         "severity": "medium"
       }
     ],
     "reminder_history": {
-      "zone_classification": 2,
-      "report_scores": 1
+      "zone_classification": 3,
+      "report_scores": 2,
+      "feedback_nudge": 1
     }
   },
+  "overall_score": 23.3,
+  "objective_score": 58.2,
+  "strict_score": 23.3,
+  "scorecard_dimensions": [
+    {
+      "name": "File health",
+      "score": 76.7,
+      "strict": 76.7,
+      "checks": 12,
+      "issues": 4,
+      "tier": 3,
+      "subjective": false
+    },
+    {
+      "name": "Code quality",
+      "score": 86.0,
+      "strict": 86.0,
+      "checks": 89,
+      "issues": 19,
+      "tier": 3,
+      "subjective": false
+    },
+    {
+      "name": "Duplication",
+      "score": 97.9,
+      "strict": 97.9,
+      "checks": 33,
+      "issues": 1,
+      "tier": 3,
+      "subjective": false
+    },
+    {
+      "name": "Security",
+      "score": 100.0,
+      "strict": 100.0,
+      "checks": 24,
+      "issues": 0,
+      "tier": 4,
+      "subjective": false
+    },
+    {
+      "name": "Test health",
+      "score": 18.8,
+      "strict": 18.8,
+      "checks": 133,
+      "issues": 22,
+      "tier": 4,
+      "subjective": false
+    }
+  ],
+  "subjective_measures": [],
   "config": {
     "target_strict_score": 95,
     "review_max_age_days": 30,

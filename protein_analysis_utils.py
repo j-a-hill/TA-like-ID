@@ -15,19 +15,38 @@ Functions:
 """
 
 import pandas as pd
-import numpy as np
-from typing import Union, Dict, List, Tuple, Optional
+import re
+from dataclasses import dataclass, field
+
+
+@dataclass
+class FilterConfig:
+    """Configuration for filtering and reporting operations.
+
+    Attributes:
+        filter_column: Column to filter on.
+        filter_value: Threshold value for the filter.
+        operator: Comparison operator (``<=``, ``>=``, ``==``, ``!=``, ``<``, ``>``).
+        compare_columns: Columns to include in summary comparisons.
+    """
+
+    filter_column: str = 'cterm_distance'
+    filter_value: int | float = 30
+    operator: str = '<='
+    compare_columns: list[str] = field(
+        default_factory=lambda: ['membrane_domain_count', 'Prediction', 'in_biogrid', 'in_massspec']
+    )
 
 
 def filter_and_compare(
     df: pd.DataFrame,
     filter_column: str,
-    filter_value: Union[int, float, str],
+    filter_value: int | float | str,
     compare_column: str,
     operator: str = '<=',
     sort_by_count: bool = True,
-    top_n: Optional[int] = None
-) -> Tuple[pd.DataFrame, pd.Series]:
+    top_n: int | None = None
+) -> tuple[pd.DataFrame, pd.Series]:
     """
     Filter a DataFrame by one column and then compare counts within that filtered set.
     
@@ -80,7 +99,7 @@ def filter_by_cterm_distance(
     df: pd.DataFrame,
     max_distance: int = 30,
     compare_by: str = 'membrane_domain_count'
-) -> Tuple[pd.DataFrame, pd.Series]:
+) -> tuple[pd.DataFrame, pd.Series]:
     """
     Convenience function for the common use case of filtering by C-terminal distance
     and comparing within that subset.
@@ -105,9 +124,9 @@ def filter_by_cterm_distance(
 def compare_categories(
     df: pd.DataFrame,
     category_column: str,
-    group_by: Optional[str] = None,
+    group_by: str | None = None,
     normalize: bool = False
-) -> Union[pd.Series, pd.DataFrame]:
+) -> pd.Series | pd.DataFrame:
     """
     Compare categories within a dataset, optionally grouped by another column.
     
@@ -133,22 +152,35 @@ def compare_categories(
 
 def summary_report(
     df: pd.DataFrame,
+    config: FilterConfig | None = None,
+    *,
     filter_column: str = 'cterm_distance',
-    filter_value: Union[int, float] = 30,
+    filter_value: int | float = 30,
     operator: str = '<=',
-    compare_columns: List[str] = None
+    compare_columns: list[str] | None = None
 ) -> None:
     """
     Generate a comprehensive summary report for filtered data.
-    
+
+    Can be called with an explicit ``FilterConfig`` object, or with the legacy
+    keyword arguments for backward compatibility.
+
     Args:
-        df: Input DataFrame
-        filter_column: Column to filter on
-        filter_value: Value to filter by
-        operator: Comparison operator
-        compare_columns: List of columns to compare within filtered data
+        df: Input DataFrame.
+        config: Optional :class:`FilterConfig`.  When provided the individual
+            keyword arguments (``filter_column``, ``filter_value``,
+            ``operator``, ``compare_columns``) are ignored.
+        filter_column: Column to filter on.
+        filter_value: Value to filter by.
+        operator: Comparison operator.
+        compare_columns: List of columns to compare within filtered data.
     """
-    if compare_columns is None:
+    if config is not None:
+        filter_column = config.filter_column
+        filter_value = config.filter_value
+        operator = config.operator
+        compare_columns = config.compare_columns
+    elif compare_columns is None:
         compare_columns = ['membrane_domain_count', 'Prediction', 'in_biogrid', 'in_massspec']
     
     # Filter the data
@@ -176,7 +208,7 @@ def summary_report(
 
 def analyze_cterm_distance_effects(
     df: pd.DataFrame,
-    distance_thresholds: List[int] = None,
+    distance_thresholds: list[int] | None = None,
     compare_column: str = 'membrane_domain_count'
 ) -> pd.DataFrame:
     """
@@ -209,8 +241,8 @@ def cross_tabulate_categories(
     df: pd.DataFrame,
     column1: str,
     column2: str,
-    filter_column: Optional[str] = None,
-    filter_value: Optional[Union[int, float]] = None,
+    filter_column: str | None = None,
+    filter_value: int | float | None = None,
     operator: str = '<='
 ) -> pd.DataFrame:
     """
@@ -237,6 +269,33 @@ def cross_tabulate_categories(
     crosstab = pd.crosstab(filtered_df[column1], filtered_df[column2], margins=True)
     
     return crosstab
+
+
+import re
+
+
+def calc_min_cterm_distance(row: pd.Series) -> float | None:
+    """Calculate the minimum C-terminal distance across all membrane domains for a protein row.
+
+    Scans the 'Transmembrane' column for domain ranges (e.g. ``82..100``) and
+    returns ``length - end`` for the domain closest to the C-terminus.
+
+    Args:
+        row: A DataFrame row with 'Length', 'Transmembrane' columns.
+
+    Returns:
+        Minimum distance to the C-terminus, or ``None`` if no domain is found.
+    """
+    length = row.get('Length', 0)
+    if pd.isna(length) or length == 0:
+        return None
+
+    min_dist: float = float('inf')
+    if not pd.isna(row.get('Transmembrane', float('nan'))):
+        for _, end in re.findall(r'(\d+)\.\.(\d+)', str(row['Transmembrane'])):
+            min_dist = min(min_dist, int(length) - int(end))
+
+    return min_dist if min_dist != float('inf') else None
 
 
 # Convenience functions for common analysis patterns
@@ -297,6 +356,8 @@ if __name__ == "__main__":
         print()
         quick_localization_analysis(df, 30)
         
-    except FileNotFoundError:
-        print("Sample data not found. This module provides utilities for protein analysis.")
+    except FileNotFoundError as exc:
+        import sys
+        print(f"Sample data not found ({exc}). This module provides utilities for protein analysis.")
         print("Use the functions in your own analysis scripts.")
+        sys.exit(1)

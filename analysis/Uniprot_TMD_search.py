@@ -17,8 +17,8 @@ uniprot_df.columns = uniprot_df.columns.str.strip()  # Remove potential whitespa
 uniprot_df['Length'] = pd.to_numeric(uniprot_df['Length'], errors='coerce')
 
 
-def extract_near_c_terminus_domains(uniprot_df, N=30):
-    def domain_near_c_terminus(domain_str, length, N):
+def extract_near_c_terminus_domains(uniprot_df: pd.DataFrame, N: int = 30) -> pd.DataFrame:
+    def domain_near_c_terminus(domain_str: str | float, length: int | float, N: int) -> bool:
         if pd.isna(domain_str) or pd.isna(length):
             return False
         # Find all ranges like 82..100
@@ -98,7 +98,7 @@ membrane_dfs = {
 # ================================
 # Fix for the category comparison issues mentioned in GitHub issue #3
 
-def analyze_filtered_proteins(df, cterm_threshold=30):
+def analyze_filtered_proteins(df: pd.DataFrame, cterm_threshold: int = 30) -> pd.DataFrame:
     """
     Improved function to filter by cterm_distance and compare categories within subset.
     This addresses the workflow issue where users want to filter by cterm_distance 
@@ -107,7 +107,7 @@ def analyze_filtered_proteins(df, cterm_threshold=30):
     print(f"\n=== Analysis for proteins with C-terminal domains within {cterm_threshold} residues ===")
     
     # Calculate C-terminal distance for each protein
-    def calculate_cterm_distance(row):
+    def calculate_cterm_distance(row: pd.Series) -> float | None:
         """Calculate distance from C-terminus for the closest membrane domain."""
         length = row['Length']
         if pd.isna(length):

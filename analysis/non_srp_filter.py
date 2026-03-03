@@ -1,5 +1,11 @@
 import pandas as pd
 import re
+import sys
+from pathlib import Path
+
+# Allow running from analysis/ directory
+sys.path.insert(0, str(Path(__file__).parent.parent))
+from protein_analysis_utils import calc_min_cterm_distance
 
 # Load data
 non_biogrid_df = pd.read_csv("C:/Users/Jake/Desktop/non_biogrid.tsv", sep="\t")
@@ -22,10 +28,10 @@ merged_df = pd.merge(
 # Filter for OTHER predictions and make a copy to avoid warnings
 non_srp_df = merged_df[merged_df['Prediction'] == 'OTHER'].copy()
 
-def count_domains(domain_str):
+def count_domains(domain_str: str | float) -> int:
     if pd.isna(domain_str):
         return 0
-    return len(re.findall(r'\d+\.\.\d+', domain_str))
+    return len(re.findall(r'\d+\.\.\d+', str(domain_str)))
 
 # Count TMD and IMD domains
 non_srp_df['TMD_count'] = non_srp_df['Transmembrane'].apply(count_domains)
@@ -57,31 +63,14 @@ merged_df.to_csv("non_biogrid_non_SRP_df.csv", index=False)
 # ================================
 # Fix for GitHub issue #3 - category comparisons
 
-def analyze_non_srp_by_cterm_distance(df, cterm_threshold=30):
+def analyze_non_srp_by_cterm_distance(df: pd.DataFrame, cterm_threshold: int = 30) -> pd.DataFrame:
     """
     Analyze non-SRP proteins by C-terminal distance to address category comparison issues.
     Users want to filter by cterm_distance and then compare MD count by localization.
     """
     print(f"\n=== Non-SRP Protein Analysis: C-terminal distance <= {cterm_threshold} ===")
     
-    # Calculate C-terminal distance for non-SRP proteins  
-    def calc_cterm_dist(row):
-        length = row.get('Length', 0)
-        if pd.isna(length) or length == 0:
-            return float('inf')
-        
-        min_dist = float('inf')
-        # Check transmembrane domains
-        if not pd.isna(row.get('Transmembrane', '')):
-            ranges = re.findall(r'(\d+)\.\.(\d+)', str(row['Transmembrane']))
-            for _, end in ranges:
-                dist = length - int(end)
-                min_dist = min(min_dist, dist)
-        
-        return min_dist if min_dist != float('inf') else None
-    
-    # Add C-terminal distance calculation
-    df['cterm_distance'] = df.apply(calc_cterm_dist, axis=1)
+    df['cterm_distance'] = df.apply(calc_min_cterm_distance, axis=1)
     
     # Filter by C-terminal distance
     close_cterm = df[df['cterm_distance'] <= cterm_threshold].copy()

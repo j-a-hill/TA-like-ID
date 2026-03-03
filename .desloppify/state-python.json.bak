@@ -1,38 +1,38 @@
 {
   "version": 1,
   "created": "2026-03-03T12:38:24+00:00",
-  "last_scan": "2026-03-03T12:38:30+00:00",
-  "scan_count": 1,
-  "overall_score": 18.5,
-  "objective_score": 46.2,
-  "strict_score": 18.5,
-  "verified_strict_score": 46.2,
+  "last_scan": "2026-03-03T12:51:11+00:00",
+  "scan_count": 2,
+  "overall_score": 23.3,
+  "objective_score": 58.2,
+  "strict_score": 23.3,
+  "verified_strict_score": 58.2,
   "stats": {
-    "total": 78,
+    "total": 114,
     "open": 78,
     "fixed": 0,
-    "auto_resolved": 0,
+    "auto_resolved": 36,
     "wontfix": 0,
     "false_positive": 0,
     "by_tier": {
       "2": {
-        "open": 19,
+        "open": 6,
         "fixed": 0,
-        "auto_resolved": 0,
+        "auto_resolved": 16,
         "wontfix": 0,
         "false_positive": 0
       },
       "3": {
-        "open": 44,
+        "open": 59,
         "fixed": 0,
-        "auto_resolved": 0,
+        "auto_resolved": 18,
         "wontfix": 0,
         "false_positive": 0
       },
       "4": {
-        "open": 15,
+        "open": 13,
         "fixed": 0,
-        "auto_resolved": 0,
+        "auto_resolved": 2,
         "wontfix": 0,
         "false_positive": 0
       }
@@ -49,17 +49,23 @@
       "detail": {
         "loc": 302
       },
-      "status": "open",
-      "note": null,
+      "status": "auto_resolved",
+      "note": "Disappeared from scan \u2014 likely fixed",
       "first_seen": "2026-03-03T12:38:24+00:00",
       "last_seen": "2026-03-03T12:38:24+00:00",
-      "resolved_at": null,
+      "resolved_at": "2026-03-03T12:51:11+00:00",
       "reopen_count": 0,
       "lang": "python",
       "zone": "production",
       "suppressed": false,
       "suppressed_at": null,
-      "suppression_pattern": null
+      "suppression_pattern": null,
+      "resolution_attestation": {
+        "kind": "scan_verified",
+        "text": "Disappeared from detector output",
+        "attested_at": "2026-03-03T12:51:11+00:00",
+        "scan_verified": true
+      }
     },
     "structural::app/protein_analysis_utils.py": {
       "id": "structural::app/protein_analysis_utils.py",
@@ -71,17 +77,23 @@
       "detail": {
         "loc": 302
       },
-      "status": "open",
-      "note": null,
+      "status": "auto_resolved",
+      "note": "Disappeared from scan \u2014 likely fixed",
       "first_seen": "2026-03-03T12:38:24+00:00",
       "last_seen": "2026-03-03T12:38:24+00:00",
-      "resolved_at": null,
+      "resolved_at": "2026-03-03T12:51:11+00:00",
       "reopen_count": 0,
       "lang": "python",
       "zone": "production",
       "suppressed": false,
       "suppressed_at": null,
-      "suppression_pattern": null
+      "suppression_pattern": null,
+      "resolution_attestation": {
+        "kind": "scan_verified",
+        "text": "Disappeared from detector output",
+        "attested_at": "2026-03-03T12:51:11+00:00",
+        "scan_verified": true
+      }
     },
     "structural::protein_analysis_utils.py": {
       "id": "structural::protein_analysis_utils.py",
@@ -96,7 +108,7 @@
       "status": "open",
       "note": null,
       "first_seen": "2026-03-03T12:38:24+00:00",
-      "last_seen": "2026-03-03T12:38:24+00:00",
+      "last_seen": "2026-03-03T12:51:11+00:00",
       "resolved_at": null,
       "reopen_count": 0,
       "lang": "python",
@@ -119,17 +131,23 @@
         ],
         "loc": 189
       },
-      "status": "open",
-      "note": null,
+      "status": "auto_resolved",
+      "note": "Disappeared from scan \u2014 likely fixed",
       "first_seen": "2026-03-03T12:38:24+00:00",
       "last_seen": "2026-03-03T12:38:24+00:00",
-      "resolved_at": null,
+      "resolved_at": "2026-03-03T12:51:11+00:00",
       "reopen_count": 0,
       "lang": "python",
       "zone": "production",
       "suppressed": false,
       "suppressed_at": null,
-      "suppression_pattern": null
+      "suppression_pattern": null,
+      "resolution_attestation": {
+        "kind": "scan_verified",
+        "text": "Disappeared from detector output",
+        "attested_at": "2026-03-03T12:51:11+00:00",
+        "scan_verified": true
+      }
     },
     "structural::analysis/improved_analysis.py": {
       "id": "structural::analysis/improved_analysis.py",
@@ -145,17 +163,23 @@
         ],
         "loc": 187
       },
-      "status": "open",
-      "note": null,
+      "status": "auto_resolved",
+      "note": "Disappeared from scan \u2014 likely fixed",
       "first_seen": "2026-03-03T12:38:24+00:00",
       "last_seen": "2026-03-03T12:38:24+00:00",
-      "resolved_at": null,
+      "resolved_at": "2026-03-03T12:51:11+00:00",
       "reopen_count": 0,
       "lang": "python",
       "zone": "production",
       "suppressed": false,
       "suppressed_at": null,
-      "suppression_pattern": null
+      "suppression_pattern": null,
+      "resolution_attestation": {
+        "kind": "scan_verified",
+        "text": "Disappeared from detector output",
+        "attested_at": "2026-03-03T12:51:11+00:00",
+        "scan_verified": true
+      }
     },
     "structural::app/app.py": {
       "id": "structural::app/app.py",
@@ -175,7 +199,7 @@
       "status": "open",
       "note": null,
       "first_seen": "2026-03-03T12:38:24+00:00",
-      "last_seen": "2026-03-03T12:38:24+00:00",
+      "last_seen": "2026-03-03T12:51:11+00:00",
       "resolved_at": null,
       "reopen_count": 0,
       "lang": "python",
@@ -201,7 +225,7 @@
       "status": "open",
       "note": null,
       "first_seen": "2026-03-03T12:38:24+00:00",
-      "last_seen": "2026-03-03T12:38:24+00:00",
+      "last_seen": "2026-03-03T12:51:11+00:00",
       "resolved_at": null,
       "reopen_count": 0,
       "lang": "python",
@@ -223,12 +247,12 @@
           "nesting depth 5",
           "long function (server: 112 LOC)"
         ],
-        "loc": 266
+        "loc": 268
       },
       "status": "open",
       "note": null,
       "first_seen": "2026-03-03T12:38:24+00:00",
-      "last_seen": "2026-03-03T12:38:24+00:00",
+      "last_seen": "2026-03-03T12:51:11+00:00",
       "resolved_at": null,
       "reopen_count": 0,
       "lang": "python",
@@ -263,17 +287,23 @@
           "summary"
         ]
       },
-      "status": "open",
-      "note": null,
+      "status": "auto_resolved",
+      "note": "Disappeared from scan \u2014 likely fixed",
       "first_seen": "2026-03-03T12:38:24+00:00",
       "last_seen": "2026-03-03T12:38:24+00:00",
-      "resolved_at": null,
+      "resolved_at": "2026-03-03T12:51:11+00:00",
       "reopen_count": 0,
       "lang": "python",
       "zone": "production",
       "suppressed": false,
       "suppressed_at": null,
-      "suppression_pattern": null
+      "suppression_pattern": null,
+      "resolution_attestation": {
+        "kind": "scan_verified",
+        "text": "Disappeared from detector output",
+        "attested_at": "2026-03-03T12:51:11+00:00",
+        "scan_verified": true
+      }
     },
     "responsibility_cohesion::app/protein_analysis_utils.py": {
       "id": "responsibility_cohesion::app/protein_analysis_utils.py",
@@ -301,17 +331,23 @@
           "summary"
         ]
       },
-      "status": "open",
-      "note": null,
+      "status": "auto_resolved",
+      "note": "Disappeared from scan \u2014 likely fixed",
       "first_seen": "2026-03-03T12:38:24+00:00",
       "last_seen": "2026-03-03T12:38:24+00:00",
-      "resolved_at": null,
+      "resolved_at": "2026-03-03T12:51:11+00:00",
       "reopen_count": 0,
       "lang": "python",
       "zone": "production",
       "suppressed": false,
       "suppressed_at": null,
-      "suppression_pattern": null
+      "suppression_pattern": null,
+      "resolution_attestation": {
+        "kind": "scan_verified",
+        "text": "Disappeared from detector output",
+        "attested_at": "2026-03-03T12:51:11+00:00",
+        "scan_verified": true
+      }
     },
     "responsibility_cohesion::protein_analysis_utils.py": {
       "id": "responsibility_cohesion::protein_analysis_utils.py",
@@ -329,7 +365,7 @@
           1
         ],
         "family_count": 6,
-        "import_cluster_count": 2,
+        "import_cluster_count": 1,
         "families": [
           "analyze",
           "compare",
@@ -342,7 +378,7 @@
       "status": "open",
       "note": null,
       "first_seen": "2026-03-03T12:38:24+00:00",
-      "last_seen": "2026-03-03T12:38:24+00:00",
+      "last_seen": "2026-03-03T12:51:11+00:00",
       "resolved_at": null,
       "reopen_count": 0,
       "lang": "python",
@@ -361,17 +397,23 @@
       "detail": {
         "loc": 302
       },
-      "status": "open",
-      "note": null,
+      "status": "auto_resolved",
+      "note": "Disappeared from scan \u2014 likely fixed",
       "first_seen": "2026-03-03T12:38:24+00:00",
       "last_seen": "2026-03-03T12:38:24+00:00",
-      "resolved_at": null,
+      "resolved_at": "2026-03-03T12:51:11+00:00",
       "reopen_count": 0,
       "lang": "python",
       "zone": "production",
       "suppressed": false,
       "suppressed_at": null,
-      "suppression_pattern": null
+      "suppression_pattern": null,
+      "resolution_attestation": {
+        "kind": "scan_verified",
+        "text": "Disappeared from detector output",
+        "attested_at": "2026-03-03T12:51:11+00:00",
+        "scan_verified": true
+      }
     },
     "orphaned::app/protein_analysis_utils.py": {
       "id": "orphaned::app/protein_analysis_utils.py",
@@ -383,17 +425,23 @@
       "detail": {
         "loc": 302
       },
-      "status": "open",
-      "note": null,
+      "status": "auto_resolved",
+      "note": "Disappeared from scan \u2014 likely fixed",
       "first_seen": "2026-03-03T12:38:24+00:00",
       "last_seen": "2026-03-03T12:38:24+00:00",
-      "resolved_at": null,
+      "resolved_at": "2026-03-03T12:51:11+00:00",
       "reopen_count": 0,
       "lang": "python",
       "zone": "production",
       "suppressed": false,
       "suppressed_at": null,
-      "suppression_pattern": null
+      "suppression_pattern": null,
+      "resolution_attestation": {
+        "kind": "scan_verified",
+        "text": "Disappeared from detector output",
+        "attested_at": "2026-03-03T12:51:11+00:00",
+        "scan_verified": true
+      }
     },
     "orphaned::STANDALONE_APP.py": {
       "id": "orphaned::STANDALONE_APP.py",
@@ -401,14 +449,14 @@
       "file": "STANDALONE_APP.py",
       "tier": 3,
       "confidence": "medium",
-      "summary": "Orphaned file (266 LOC): zero importers, not an entry point",
+      "summary": "Orphaned file (268 LOC): zero importers, not an entry point",
       "detail": {
-        "loc": 266
+        "loc": 268
       },
       "status": "open",
       "note": null,
       "first_seen": "2026-03-03T12:38:24+00:00",
-      "last_seen": "2026-03-03T12:38:24+00:00",
+      "last_seen": "2026-03-03T12:51:11+00:00",
       "resolved_at": null,
       "reopen_count": 0,
       "lang": "python",
@@ -430,7 +478,7 @@
       "status": "open",
       "note": null,
       "first_seen": "2026-03-03T12:38:24+00:00",
-      "last_seen": "2026-03-03T12:38:24+00:00",
+      "last_seen": "2026-03-03T12:51:11+00:00",
       "resolved_at": null,
       "reopen_count": 0,
       "lang": "python",
@@ -452,7 +500,7 @@
       "status": "open",
       "note": null,
       "first_seen": "2026-03-03T12:38:24+00:00",
-      "last_seen": "2026-03-03T12:38:24+00:00",
+      "last_seen": "2026-03-03T12:51:11+00:00",
       "resolved_at": null,
       "reopen_count": 0,
       "lang": "python",
@@ -467,14 +515,14 @@
       "file": "analysis/demo_fixed_workflow.py",
       "tier": 3,
       "confidence": "medium",
-      "summary": "Orphaned file (189 LOC): zero importers, not an entry point",
+      "summary": "Orphaned file (176 LOC): zero importers, not an entry point",
       "detail": {
-        "loc": 189
+        "loc": 176
       },
       "status": "open",
       "note": null,
       "first_seen": "2026-03-03T12:38:24+00:00",
-      "last_seen": "2026-03-03T12:38:24+00:00",
+      "last_seen": "2026-03-03T12:51:11+00:00",
       "resolved_at": null,
       "reopen_count": 0,
       "lang": "python",
@@ -489,14 +537,14 @@
       "file": "analysis/improved_analysis.py",
       "tier": 3,
       "confidence": "medium",
-      "summary": "Orphaned file (187 LOC): zero importers, not an entry point",
+      "summary": "Orphaned file (169 LOC): zero importers, not an entry point",
       "detail": {
-        "loc": 187
+        "loc": 169
       },
       "status": "open",
       "note": null,
       "first_seen": "2026-03-03T12:38:24+00:00",
-      "last_seen": "2026-03-03T12:38:24+00:00",
+      "last_seen": "2026-03-03T12:51:11+00:00",
       "resolved_at": null,
       "reopen_count": 0,
       "lang": "python",
@@ -518,7 +566,7 @@
       "status": "open",
       "note": null,
       "first_seen": "2026-03-03T12:38:24+00:00",
-      "last_seen": "2026-03-03T12:38:24+00:00",
+      "last_seen": "2026-03-03T12:51:11+00:00",
       "resolved_at": null,
       "reopen_count": 0,
       "lang": "python",
@@ -540,7 +588,7 @@
       "status": "open",
       "note": null,
       "first_seen": "2026-03-03T12:38:24+00:00",
-      "last_seen": "2026-03-03T12:38:24+00:00",
+      "last_seen": "2026-03-03T12:51:11+00:00",
       "resolved_at": null,
       "reopen_count": 0,
       "lang": "python",
@@ -562,7 +610,7 @@
       "status": "open",
       "note": null,
       "first_seen": "2026-03-03T12:38:24+00:00",
-      "last_seen": "2026-03-03T12:38:24+00:00",
+      "last_seen": "2026-03-03T12:51:11+00:00",
       "resolved_at": null,
       "reopen_count": 0,
       "lang": "python",
@@ -584,7 +632,7 @@
       "status": "open",
       "note": null,
       "first_seen": "2026-03-03T12:38:24+00:00",
-      "last_seen": "2026-03-03T12:38:24+00:00",
+      "last_seen": "2026-03-03T12:51:11+00:00",
       "resolved_at": null,
       "reopen_count": 0,
       "lang": "python",
@@ -599,14 +647,14 @@
       "file": "app/wsgi_pythonanywhere.py",
       "tier": 3,
       "confidence": "medium",
-      "summary": "Orphaned file (25 LOC): zero importers, not an entry point",
+      "summary": "Orphaned file (23 LOC): zero importers, not an entry point",
       "detail": {
-        "loc": 25
+        "loc": 23
       },
       "status": "open",
       "note": null,
       "first_seen": "2026-03-03T12:38:24+00:00",
-      "last_seen": "2026-03-03T12:38:24+00:00",
+      "last_seen": "2026-03-03T12:51:11+00:00",
       "resolved_at": null,
       "reopen_count": 0,
       "lang": "python",
@@ -628,7 +676,7 @@
       "status": "open",
       "note": null,
       "first_seen": "2026-03-03T12:38:24+00:00",
-      "last_seen": "2026-03-03T12:38:24+00:00",
+      "last_seen": "2026-03-03T12:51:11+00:00",
       "resolved_at": null,
       "reopen_count": 0,
       "lang": "python",
@@ -650,17 +698,23 @@
         "importer_count": 2,
         "loc_weight": 17.378147196982766
       },
-      "status": "open",
-      "note": null,
+      "status": "auto_resolved",
+      "note": "Disappeared from scan \u2014 likely fixed",
       "first_seen": "2026-03-03T12:38:24+00:00",
       "last_seen": "2026-03-03T12:38:24+00:00",
-      "resolved_at": null,
+      "resolved_at": "2026-03-03T12:51:11+00:00",
       "reopen_count": 0,
       "lang": "python",
       "zone": "production",
       "suppressed": false,
       "suppressed_at": null,
-      "suppression_pattern": null
+      "suppression_pattern": null,
+      "resolution_attestation": {
+        "kind": "scan_verified",
+        "text": "Disappeared from detector output",
+        "attested_at": "2026-03-03T12:51:11+00:00",
+        "scan_verified": true
+      }
     },
     "test_coverage::analysis/demo_fixed_workflow.py::untested_critical": {
       "id": "test_coverage::analysis/demo_fixed_workflow.py::untested_critical",
@@ -676,17 +730,23 @@
         "loc_weight": 13.74772708486752,
         "complexity_score": 84
       },
-      "status": "open",
-      "note": null,
+      "status": "auto_resolved",
+      "note": "Disappeared from scan \u2014 likely fixed",
       "first_seen": "2026-03-03T12:38:24+00:00",
       "last_seen": "2026-03-03T12:38:24+00:00",
-      "resolved_at": null,
+      "resolved_at": "2026-03-03T12:51:11+00:00",
       "reopen_count": 0,
       "lang": "python",
       "zone": "production",
       "suppressed": false,
       "suppressed_at": null,
-      "suppression_pattern": null
+      "suppression_pattern": null,
+      "resolution_attestation": {
+        "kind": "scan_verified",
+        "text": "Disappeared from detector output",
+        "attested_at": "2026-03-03T12:51:11+00:00",
+        "scan_verified": true
+      }
     },
     "test_coverage::analysis/tmd_count.py::untested_module": {
       "id": "test_coverage::analysis/tmd_count.py::untested_module",
@@ -704,7 +764,7 @@
       "status": "open",
       "note": null,
       "first_seen": "2026-03-03T12:38:24+00:00",
-      "last_seen": "2026-03-03T12:38:24+00:00",
+      "last_seen": "2026-03-03T12:51:11+00:00",
       "resolved_at": null,
       "reopen_count": 0,
       "lang": "python",
@@ -727,17 +787,23 @@
         "loc_weight": 13.674794331177344,
         "complexity_score": 76
       },
-      "status": "open",
-      "note": null,
+      "status": "auto_resolved",
+      "note": "Disappeared from scan \u2014 likely fixed",
       "first_seen": "2026-03-03T12:38:24+00:00",
       "last_seen": "2026-03-03T12:38:24+00:00",
-      "resolved_at": null,
+      "resolved_at": "2026-03-03T12:51:11+00:00",
       "reopen_count": 0,
       "lang": "python",
       "zone": "production",
       "suppressed": false,
       "suppressed_at": null,
-      "suppression_pattern": null
+      "suppression_pattern": null,
+      "resolution_attestation": {
+        "kind": "scan_verified",
+        "text": "Disappeared from detector output",
+        "attested_at": "2026-03-03T12:51:11+00:00",
+        "scan_verified": true
+      }
     },
     "test_coverage::app/protein_analysis_utils.py::untested_module": {
       "id": "test_coverage::app/protein_analysis_utils.py::untested_module",
@@ -752,17 +818,23 @@
         "importer_count": 0,
         "loc_weight": 17.378147196982766
       },
-      "status": "open",
-      "note": null,
+      "status": "auto_resolved",
+      "note": "Disappeared from scan \u2014 likely fixed",
       "first_seen": "2026-03-03T12:38:24+00:00",
       "last_seen": "2026-03-03T12:38:24+00:00",
-      "resolved_at": null,
+      "resolved_at": "2026-03-03T12:51:11+00:00",
       "reopen_count": 0,
       "lang": "python",
       "zone": "production",
       "suppressed": false,
       "suppressed_at": null,
-      "suppression_pattern": null
+      "suppression_pattern": null,
+      "resolution_attestation": {
+        "kind": "scan_verified",
+        "text": "Disappeared from detector output",
+        "attested_at": "2026-03-03T12:51:11+00:00",
+        "scan_verified": true
+      }
     },
     "test_coverage::analysis/srp_filter.py::untested_module": {
       "id": "test_coverage::analysis/srp_filter.py::untested_module",
@@ -780,7 +852,7 @@
       "status": "open",
       "note": null,
       "first_seen": "2026-03-03T12:38:24+00:00",
-      "last_seen": "2026-03-03T12:38:24+00:00",
+      "last_seen": "2026-03-03T12:51:11+00:00",
       "resolved_at": null,
       "reopen_count": 0,
       "lang": "python",
@@ -795,18 +867,18 @@
       "file": "STANDALONE_APP.py",
       "tier": 2,
       "confidence": "high",
-      "summary": "Untested critical module (266 LOC, 0 importers) \u2014 high blast radius",
+      "summary": "Untested critical module (268 LOC, 0 importers) \u2014 high blast radius",
       "detail": {
         "kind": "untested_critical",
-        "loc": 266,
+        "loc": 268,
         "importer_count": 0,
-        "loc_weight": 16.30950643030009,
+        "loc_weight": 16.3707055437449,
         "complexity_score": 35
       },
       "status": "open",
       "note": null,
       "first_seen": "2026-03-03T12:38:24+00:00",
-      "last_seen": "2026-03-03T12:38:24+00:00",
+      "last_seen": "2026-03-03T12:51:11+00:00",
       "resolved_at": null,
       "reopen_count": 0,
       "lang": "python",
@@ -832,7 +904,7 @@
       "status": "open",
       "note": null,
       "first_seen": "2026-03-03T12:38:24+00:00",
-      "last_seen": "2026-03-03T12:38:24+00:00",
+      "last_seen": "2026-03-03T12:51:11+00:00",
       "resolved_at": null,
       "reopen_count": 0,
       "lang": "python",
@@ -854,17 +926,23 @@
         "importer_count": 0,
         "loc_weight": 17.378147196982766
       },
-      "status": "open",
-      "note": null,
+      "status": "auto_resolved",
+      "note": "Disappeared from scan \u2014 likely fixed",
       "first_seen": "2026-03-03T12:38:24+00:00",
       "last_seen": "2026-03-03T12:38:24+00:00",
-      "resolved_at": null,
+      "resolved_at": "2026-03-03T12:51:11+00:00",
       "reopen_count": 0,
       "lang": "python",
       "zone": "production",
       "suppressed": false,
       "suppressed_at": null,
-      "suppression_pattern": null
+      "suppression_pattern": null,
+      "resolution_attestation": {
+        "kind": "scan_verified",
+        "text": "Disappeared from detector output",
+        "attested_at": "2026-03-03T12:51:11+00:00",
+        "scan_verified": true
+      }
     },
     "test_coverage::analysis/non_srp_filter.py::untested_module": {
       "id": "test_coverage::analysis/non_srp_filter.py::untested_module",
@@ -882,7 +960,7 @@
       "status": "open",
       "note": null,
       "first_seen": "2026-03-03T12:38:24+00:00",
-      "last_seen": "2026-03-03T12:38:24+00:00",
+      "last_seen": "2026-03-03T12:51:11+00:00",
       "resolved_at": null,
       "reopen_count": 0,
       "lang": "python",
@@ -908,7 +986,7 @@
       "status": "open",
       "note": null,
       "first_seen": "2026-03-03T12:38:24+00:00",
-      "last_seen": "2026-03-03T12:38:24+00:00",
+      "last_seen": "2026-03-03T12:51:11+00:00",
       "resolved_at": null,
       "reopen_count": 0,
       "lang": "python",
@@ -932,17 +1010,23 @@
           300
         ]
       },
-      "status": "open",
-      "note": null,
+      "status": "auto_resolved",
+      "note": "Disappeared from scan \u2014 likely fixed",
       "first_seen": "2026-03-03T12:38:24+00:00",
       "last_seen": "2026-03-03T12:38:24+00:00",
-      "resolved_at": null,
+      "resolved_at": "2026-03-03T12:51:11+00:00",
       "reopen_count": 0,
       "lang": "python",
       "zone": "production",
       "suppressed": false,
       "suppressed_at": null,
-      "suppression_pattern": null
+      "suppression_pattern": null,
+      "resolution_attestation": {
+        "kind": "scan_verified",
+        "text": "Disappeared from detector output",
+        "attested_at": "2026-03-03T12:51:11+00:00",
+        "scan_verified": true
+      }
     },
     "smells::app/protein_analysis_utils.py::swallowed_error": {
       "id": "smells::app/protein_analysis_utils.py::swallowed_error",
@@ -959,17 +1043,23 @@
           300
         ]
       },
-      "status": "open",
-      "note": null,
+      "status": "auto_resolved",
+      "note": "Disappeared from scan \u2014 likely fixed",
       "first_seen": "2026-03-03T12:38:24+00:00",
       "last_seen": "2026-03-03T12:38:24+00:00",
-      "resolved_at": null,
+      "resolved_at": "2026-03-03T12:51:11+00:00",
       "reopen_count": 0,
       "lang": "python",
       "zone": "production",
       "suppressed": false,
       "suppressed_at": null,
-      "suppression_pattern": null
+      "suppression_pattern": null,
+      "resolution_attestation": {
+        "kind": "scan_verified",
+        "text": "Disappeared from detector output",
+        "attested_at": "2026-03-03T12:51:11+00:00",
+        "scan_verified": true
+      }
     },
     "smells::protein_analysis_utils.py::swallowed_error": {
       "id": "smells::protein_analysis_utils.py::swallowed_error",
@@ -986,17 +1076,23 @@
           300
         ]
       },
-      "status": "open",
-      "note": null,
+      "status": "auto_resolved",
+      "note": "Disappeared from scan \u2014 likely fixed",
       "first_seen": "2026-03-03T12:38:24+00:00",
       "last_seen": "2026-03-03T12:38:24+00:00",
-      "resolved_at": null,
+      "resolved_at": "2026-03-03T12:51:11+00:00",
       "reopen_count": 0,
       "lang": "python",
       "zone": "production",
       "suppressed": false,
       "suppressed_at": null,
-      "suppression_pattern": null
+      "suppression_pattern": null,
+      "resolution_attestation": {
+        "kind": "scan_verified",
+        "text": "Disappeared from detector output",
+        "attested_at": "2026-03-03T12:51:11+00:00",
+        "scan_verified": true
+      }
     },
     "smells::analysis/demo_fixed_workflow.py::monster_function": {
       "id": "smells::analysis/demo_fixed_workflow.py::monster_function",
@@ -1013,17 +1109,23 @@
           24
         ]
       },
-      "status": "open",
-      "note": null,
+      "status": "auto_resolved",
+      "note": "Disappeared from scan \u2014 likely fixed",
       "first_seen": "2026-03-03T12:38:24+00:00",
       "last_seen": "2026-03-03T12:38:24+00:00",
-      "resolved_at": null,
+      "resolved_at": "2026-03-03T12:51:11+00:00",
       "reopen_count": 0,
       "lang": "python",
       "zone": "production",
       "suppressed": false,
       "suppressed_at": null,
-      "suppression_pattern": null
+      "suppression_pattern": null,
+      "resolution_attestation": {
+        "kind": "scan_verified",
+        "text": "Disappeared from detector output",
+        "attested_at": "2026-03-03T12:51:11+00:00",
+        "scan_verified": true
+      }
     },
     "smells::analysis/improved_analysis.py::monster_function": {
       "id": "smells::analysis/improved_analysis.py::monster_function",
@@ -1040,17 +1142,23 @@
           30
         ]
       },
-      "status": "open",
-      "note": null,
+      "status": "auto_resolved",
+      "note": "Disappeared from scan \u2014 likely fixed",
       "first_seen": "2026-03-03T12:38:24+00:00",
       "last_seen": "2026-03-03T12:38:24+00:00",
-      "resolved_at": null,
+      "resolved_at": "2026-03-03T12:51:11+00:00",
       "reopen_count": 0,
       "lang": "python",
       "zone": "production",
       "suppressed": false,
       "suppressed_at": null,
-      "suppression_pattern": null
+      "suppression_pattern": null,
+      "resolution_attestation": {
+        "kind": "scan_verified",
+        "text": "Disappeared from detector output",
+        "attested_at": "2026-03-03T12:51:11+00:00",
+        "scan_verified": true
+      }
     },
     "smells::app/wsgi_pythonanywhere.py::import_path_mutation": {
       "id": "smells::app/wsgi_pythonanywhere.py::import_path_mutation",
@@ -1068,17 +1176,23 @@
           19
         ]
       },
-      "status": "open",
-      "note": null,
+      "status": "auto_resolved",
+      "note": "Disappeared from scan \u2014 likely fixed",
       "first_seen": "2026-03-03T12:38:24+00:00",
       "last_seen": "2026-03-03T12:38:24+00:00",
-      "resolved_at": null,
+      "resolved_at": "2026-03-03T12:51:11+00:00",
       "reopen_count": 0,
       "lang": "python",
       "zone": "production",
       "suppressed": false,
       "suppressed_at": null,
-      "suppression_pattern": null
+      "suppression_pattern": null,
+      "resolution_attestation": {
+        "kind": "scan_verified",
+        "text": "Disappeared from detector output",
+        "attested_at": "2026-03-03T12:51:11+00:00",
+        "scan_verified": true
+      }
     },
     "smells::STANDALONE_APP.py::annotation_quality": {
       "id": "smells::STANDALONE_APP.py::annotation_quality",
@@ -1098,17 +1212,23 @@
           219
         ]
       },
-      "status": "open",
-      "note": null,
+      "status": "auto_resolved",
+      "note": "Disappeared from scan \u2014 likely fixed",
       "first_seen": "2026-03-03T12:38:24+00:00",
       "last_seen": "2026-03-03T12:38:24+00:00",
-      "resolved_at": null,
+      "resolved_at": "2026-03-03T12:51:11+00:00",
       "reopen_count": 0,
       "lang": "python",
       "zone": "production",
       "suppressed": false,
       "suppressed_at": null,
-      "suppression_pattern": null
+      "suppression_pattern": null,
+      "resolution_attestation": {
+        "kind": "scan_verified",
+        "text": "Disappeared from detector output",
+        "attested_at": "2026-03-03T12:51:11+00:00",
+        "scan_verified": true
+      }
     },
     "smells::analysis/Uniprot_TMD_search.py::annotation_quality": {
       "id": "smells::analysis/Uniprot_TMD_search.py::annotation_quality",
@@ -1127,17 +1247,23 @@
           110
         ]
       },
-      "status": "open",
-      "note": null,
+      "status": "auto_resolved",
+      "note": "Disappeared from scan \u2014 likely fixed",
       "first_seen": "2026-03-03T12:38:24+00:00",
       "last_seen": "2026-03-03T12:38:24+00:00",
-      "resolved_at": null,
+      "resolved_at": "2026-03-03T12:51:11+00:00",
       "reopen_count": 0,
       "lang": "python",
       "zone": "production",
       "suppressed": false,
       "suppressed_at": null,
-      "suppression_pattern": null
+      "suppression_pattern": null,
+      "resolution_attestation": {
+        "kind": "scan_verified",
+        "text": "Disappeared from detector output",
+        "attested_at": "2026-03-03T12:51:11+00:00",
+        "scan_verified": true
+      }
     },
     "smells::analysis/analysis_test.py::annotation_quality": {
       "id": "smells::analysis/analysis_test.py::annotation_quality",
@@ -1158,7 +1284,7 @@
       "status": "open",
       "note": null,
       "first_seen": "2026-03-03T12:38:24+00:00",
-      "last_seen": "2026-03-03T12:38:24+00:00",
+      "last_seen": "2026-03-03T12:51:11+00:00",
       "resolved_at": null,
       "reopen_count": 0,
       "lang": "python",
@@ -1182,17 +1308,23 @@
           24
         ]
       },
-      "status": "open",
-      "note": null,
+      "status": "auto_resolved",
+      "note": "Disappeared from scan \u2014 likely fixed",
       "first_seen": "2026-03-03T12:38:24+00:00",
       "last_seen": "2026-03-03T12:38:24+00:00",
-      "resolved_at": null,
+      "resolved_at": "2026-03-03T12:51:11+00:00",
       "reopen_count": 0,
       "lang": "python",
       "zone": "production",
       "suppressed": false,
       "suppressed_at": null,
-      "suppression_pattern": null
+      "suppression_pattern": null,
+      "resolution_attestation": {
+        "kind": "scan_verified",
+        "text": "Disappeared from detector output",
+        "attested_at": "2026-03-03T12:51:11+00:00",
+        "scan_verified": true
+      }
     },
     "smells::analysis/improved_analysis.py::annotation_quality": {
       "id": "smells::analysis/improved_analysis.py::annotation_quality",
@@ -1209,17 +1341,23 @@
           30
         ]
       },
-      "status": "open",
-      "note": null,
+      "status": "auto_resolved",
+      "note": "Disappeared from scan \u2014 likely fixed",
       "first_seen": "2026-03-03T12:38:24+00:00",
       "last_seen": "2026-03-03T12:38:24+00:00",
-      "resolved_at": null,
+      "resolved_at": "2026-03-03T12:51:11+00:00",
       "reopen_count": 0,
       "lang": "python",
       "zone": "production",
       "suppressed": false,
       "suppressed_at": null,
-      "suppression_pattern": null
+      "suppression_pattern": null,
+      "resolution_attestation": {
+        "kind": "scan_verified",
+        "text": "Disappeared from detector output",
+        "attested_at": "2026-03-03T12:51:11+00:00",
+        "scan_verified": true
+      }
     },
     "smells::analysis/non_srp_filter.py::annotation_quality": {
       "id": "smells::analysis/non_srp_filter.py::annotation_quality",
@@ -1240,7 +1378,7 @@
       "status": "open",
       "note": null,
       "first_seen": "2026-03-03T12:38:24+00:00",
-      "last_seen": "2026-03-03T12:38:24+00:00",
+      "last_seen": "2026-03-03T12:51:11+00:00",
       "resolved_at": null,
       "reopen_count": 0,
       "lang": "python",
@@ -1268,7 +1406,7 @@
       "status": "open",
       "note": null,
       "first_seen": "2026-03-03T12:38:24+00:00",
-      "last_seen": "2026-03-03T12:38:24+00:00",
+      "last_seen": "2026-03-03T12:51:11+00:00",
       "resolved_at": null,
       "reopen_count": 0,
       "lang": "python",
@@ -1297,7 +1435,7 @@
       "status": "open",
       "note": null,
       "first_seen": "2026-03-03T12:38:24+00:00",
-      "last_seen": "2026-03-03T12:38:24+00:00",
+      "last_seen": "2026-03-03T12:51:11+00:00",
       "resolved_at": null,
       "reopen_count": 0,
       "lang": "python",
@@ -1321,17 +1459,23 @@
           134
         ]
       },
-      "status": "open",
-      "note": null,
+      "status": "auto_resolved",
+      "note": "Disappeared from scan \u2014 likely fixed",
       "first_seen": "2026-03-03T12:38:24+00:00",
       "last_seen": "2026-03-03T12:38:24+00:00",
-      "resolved_at": null,
+      "resolved_at": "2026-03-03T12:51:11+00:00",
       "reopen_count": 0,
       "lang": "python",
       "zone": "production",
       "suppressed": false,
       "suppressed_at": null,
-      "suppression_pattern": null
+      "suppression_pattern": null,
+      "resolution_attestation": {
+        "kind": "scan_verified",
+        "text": "Disappeared from detector output",
+        "attested_at": "2026-03-03T12:51:11+00:00",
+        "scan_verified": true
+      }
     },
     "smells::app/protein_analysis_utils.py::optional_param_sprawl": {
       "id": "smells::app/protein_analysis_utils.py::optional_param_sprawl",
@@ -1348,17 +1492,23 @@
           134
         ]
       },
-      "status": "open",
-      "note": null,
+      "status": "auto_resolved",
+      "note": "Disappeared from scan \u2014 likely fixed",
       "first_seen": "2026-03-03T12:38:24+00:00",
       "last_seen": "2026-03-03T12:38:24+00:00",
-      "resolved_at": null,
+      "resolved_at": "2026-03-03T12:51:11+00:00",
       "reopen_count": 0,
       "lang": "python",
       "zone": "production",
       "suppressed": false,
       "suppressed_at": null,
-      "suppression_pattern": null
+      "suppression_pattern": null,
+      "resolution_attestation": {
+        "kind": "scan_verified",
+        "text": "Disappeared from detector output",
+        "attested_at": "2026-03-03T12:51:11+00:00",
+        "scan_verified": true
+      }
     },
     "smells::protein_analysis_utils.py::optional_param_sprawl": {
       "id": "smells::protein_analysis_utils.py::optional_param_sprawl",
@@ -1372,13 +1522,13 @@
         "severity": "medium",
         "count": 1,
         "lines": [
-          134
+          133
         ]
       },
       "status": "open",
       "note": null,
       "first_seen": "2026-03-03T12:38:24+00:00",
-      "last_seen": "2026-03-03T12:38:24+00:00",
+      "last_seen": "2026-03-03T12:51:11+00:00",
       "resolved_at": null,
       "reopen_count": 0,
       "lang": "python",
@@ -1405,7 +1555,7 @@
       "status": "open",
       "note": null,
       "first_seen": "2026-03-03T12:38:24+00:00",
-      "last_seen": "2026-03-03T12:38:24+00:00",
+      "last_seen": "2026-03-03T12:51:11+00:00",
       "resolved_at": null,
       "reopen_count": 0,
       "lang": "python",
@@ -1423,12 +1573,12 @@
       "summary": "No design review on record \u2014 run `desloppify review --prepare`",
       "detail": {
         "reason": "unreviewed",
-        "loc": 266
+        "loc": 268
       },
       "status": "open",
       "note": null,
       "first_seen": "2026-03-03T12:38:25+00:00",
-      "last_seen": "2026-03-03T12:38:25+00:00",
+      "last_seen": "2026-03-03T12:51:11+00:00",
       "resolved_at": null,
       "reopen_count": 0,
       "lang": "python",
@@ -1451,7 +1601,7 @@
       "status": "open",
       "note": null,
       "first_seen": "2026-03-03T12:38:25+00:00",
-      "last_seen": "2026-03-03T12:38:25+00:00",
+      "last_seen": "2026-03-03T12:51:11+00:00",
       "resolved_at": null,
       "reopen_count": 0,
       "lang": "python",
@@ -1469,12 +1619,12 @@
       "summary": "No design review on record \u2014 run `desloppify review --prepare`",
       "detail": {
         "reason": "unreviewed",
-        "loc": 189
+        "loc": 176
       },
       "status": "open",
       "note": null,
       "first_seen": "2026-03-03T12:38:25+00:00",
-      "last_seen": "2026-03-03T12:38:25+00:00",
+      "last_seen": "2026-03-03T12:51:11+00:00",
       "resolved_at": null,
       "reopen_count": 0,
       "lang": "python",
@@ -1492,12 +1642,12 @@
       "summary": "No design review on record \u2014 run `desloppify review --prepare`",
       "detail": {
         "reason": "unreviewed",
-        "loc": 187
+        "loc": 169
       },
       "status": "open",
       "note": null,
       "first_seen": "2026-03-03T12:38:25+00:00",
-      "last_seen": "2026-03-03T12:38:25+00:00",
+      "last_seen": "2026-03-03T12:51:11+00:00",
       "resolved_at": null,
       "reopen_count": 0,
       "lang": "python",
@@ -1520,7 +1670,7 @@
       "status": "open",
       "note": null,
       "first_seen": "2026-03-03T12:38:25+00:00",
-      "last_seen": "2026-03-03T12:38:25+00:00",
+      "last_seen": "2026-03-03T12:51:11+00:00",
       "resolved_at": null,
       "reopen_count": 0,
       "lang": "python",
@@ -1540,17 +1690,23 @@
         "reason": "unreviewed",
         "loc": 302
       },
-      "status": "open",
-      "note": null,
+      "status": "auto_resolved",
+      "note": "Disappeared from scan \u2014 likely fixed",
       "first_seen": "2026-03-03T12:38:25+00:00",
       "last_seen": "2026-03-03T12:38:25+00:00",
-      "resolved_at": null,
+      "resolved_at": "2026-03-03T12:51:11+00:00",
       "reopen_count": 0,
       "lang": "python",
       "zone": "production",
       "suppressed": false,
       "suppressed_at": null,
-      "suppression_pattern": null
+      "suppression_pattern": null,
+      "resolution_attestation": {
+        "kind": "scan_verified",
+        "text": "Disappeared from detector output",
+        "attested_at": "2026-03-03T12:51:11+00:00",
+        "scan_verified": true
+      }
     },
     "subjective_review::analysis/signalp_6_filter.py::unreviewed": {
       "id": "subjective_review::analysis/signalp_6_filter.py::unreviewed",
@@ -1566,7 +1722,7 @@
       "status": "open",
       "note": null,
       "first_seen": "2026-03-03T12:38:25+00:00",
-      "last_seen": "2026-03-03T12:38:25+00:00",
+      "last_seen": "2026-03-03T12:51:11+00:00",
       "resolved_at": null,
       "reopen_count": 0,
       "lang": "python",
@@ -1589,7 +1745,7 @@
       "status": "open",
       "note": null,
       "first_seen": "2026-03-03T12:38:25+00:00",
-      "last_seen": "2026-03-03T12:38:25+00:00",
+      "last_seen": "2026-03-03T12:51:11+00:00",
       "resolved_at": null,
       "reopen_count": 0,
       "lang": "python",
@@ -1612,7 +1768,7 @@
       "status": "open",
       "note": null,
       "first_seen": "2026-03-03T12:38:25+00:00",
-      "last_seen": "2026-03-03T12:38:25+00:00",
+      "last_seen": "2026-03-03T12:51:11+00:00",
       "resolved_at": null,
       "reopen_count": 0,
       "lang": "python",
@@ -1635,7 +1791,7 @@
       "status": "open",
       "note": null,
       "first_seen": "2026-03-03T12:38:25+00:00",
-      "last_seen": "2026-03-03T12:38:25+00:00",
+      "last_seen": "2026-03-03T12:51:11+00:00",
       "resolved_at": null,
       "reopen_count": 0,
       "lang": "python",
@@ -1655,17 +1811,23 @@
         "reason": "unreviewed",
         "loc": 302
       },
-      "status": "open",
-      "note": null,
+      "status": "auto_resolved",
+      "note": "Disappeared from scan \u2014 likely fixed",
       "first_seen": "2026-03-03T12:38:25+00:00",
       "last_seen": "2026-03-03T12:38:25+00:00",
-      "resolved_at": null,
+      "resolved_at": "2026-03-03T12:51:11+00:00",
       "reopen_count": 0,
       "lang": "python",
       "zone": "production",
       "suppressed": false,
       "suppressed_at": null,
-      "suppression_pattern": null
+      "suppression_pattern": null,
+      "resolution_attestation": {
+        "kind": "scan_verified",
+        "text": "Disappeared from detector output",
+        "attested_at": "2026-03-03T12:51:11+00:00",
+        "scan_verified": true
+      }
     },
     "subjective_review::app/wsgi_pythonanywhere.py::unreviewed": {
       "id": "subjective_review::app/wsgi_pythonanywhere.py::unreviewed",
@@ -1676,12 +1838,12 @@
       "summary": "No design review on record \u2014 run `desloppify review --prepare`",
       "detail": {
         "reason": "unreviewed",
-        "loc": 25
+        "loc": 23
       },
       "status": "open",
       "note": null,
       "first_seen": "2026-03-03T12:38:25+00:00",
-      "last_seen": "2026-03-03T12:38:25+00:00",
+      "last_seen": "2026-03-03T12:51:11+00:00",
       "resolved_at": null,
       "reopen_count": 0,
       "lang": "python",
@@ -1704,7 +1866,7 @@
       "status": "open",
       "note": null,
       "first_seen": "2026-03-03T12:38:25+00:00",
-      "last_seen": "2026-03-03T12:38:25+00:00",
+      "last_seen": "2026-03-03T12:51:11+00:00",
       "resolved_at": null,
       "reopen_count": 0,
       "lang": "python",
@@ -1727,7 +1889,7 @@
       "status": "open",
       "note": null,
       "first_seen": "2026-03-03T12:38:25+00:00",
-      "last_seen": "2026-03-03T12:38:25+00:00",
+      "last_seen": "2026-03-03T12:51:11+00:00",
       "resolved_at": null,
       "reopen_count": 0,
       "lang": "python",
@@ -1749,7 +1911,7 @@
       "status": "open",
       "note": null,
       "first_seen": "2026-03-03T12:38:25+00:00",
-      "last_seen": "2026-03-03T12:38:25+00:00",
+      "last_seen": "2026-03-03T12:51:11+00:00",
       "resolved_at": null,
       "reopen_count": 0,
       "lang": "python",
@@ -1789,17 +1951,23 @@
           ""
         ]
       },
-      "status": "open",
-      "note": null,
+      "status": "auto_resolved",
+      "note": "Disappeared from scan \u2014 likely fixed",
       "first_seen": "2026-03-03T12:38:30+00:00",
       "last_seen": "2026-03-03T12:38:30+00:00",
-      "resolved_at": null,
+      "resolved_at": "2026-03-03T12:51:11+00:00",
       "reopen_count": 0,
       "lang": "python",
       "zone": "production",
       "suppressed": false,
       "suppressed_at": null,
-      "suppression_pattern": null
+      "suppression_pattern": null,
+      "resolution_attestation": {
+        "kind": "scan_verified",
+        "text": "Disappeared from detector output",
+        "attested_at": "2026-03-03T12:51:11+00:00",
+        "scan_verified": true
+      }
     },
     "boilerplate_duplication::analysis/non_srp_filter.py::f3ed55c7c5d1e284": {
       "id": "boilerplate_duplication::analysis/non_srp_filter.py::f3ed55c7c5d1e284",
@@ -1831,7 +1999,7 @@
       "status": "open",
       "note": null,
       "first_seen": "2026-03-03T12:38:30+00:00",
-      "last_seen": "2026-03-03T12:38:30+00:00",
+      "last_seen": "2026-03-03T12:51:11+00:00",
       "resolved_at": null,
       "reopen_count": 0,
       "lang": "python",
@@ -1884,17 +2052,23 @@
           }
         ]
       },
-      "status": "open",
-      "note": null,
+      "status": "auto_resolved",
+      "note": "Disappeared from scan \u2014 likely fixed",
       "first_seen": "2026-03-03T12:38:30+00:00",
       "last_seen": "2026-03-03T12:38:30+00:00",
-      "resolved_at": null,
+      "resolved_at": "2026-03-03T12:51:11+00:00",
       "reopen_count": 0,
       "lang": "python",
       "zone": "production",
       "suppressed": false,
       "suppressed_at": null,
-      "suppression_pattern": null
+      "suppression_pattern": null,
+      "resolution_attestation": {
+        "kind": "scan_verified",
+        "text": "Disappeared from detector output",
+        "attested_at": "2026-03-03T12:51:11+00:00",
+        "scan_verified": true
+      }
     },
     "dupes::analysis/protein_analysis_utils.py::filter_by_cterm_distance::app/protein_analysis_utils.py::filter_by_cterm_distance": {
       "id": "dupes::analysis/protein_analysis_utils.py::filter_by_cterm_distance::app/protein_analysis_utils.py::filter_by_cterm_distance",
@@ -1940,17 +2114,23 @@
           }
         ]
       },
-      "status": "open",
-      "note": null,
+      "status": "auto_resolved",
+      "note": "Disappeared from scan \u2014 likely fixed",
       "first_seen": "2026-03-03T12:38:30+00:00",
       "last_seen": "2026-03-03T12:38:30+00:00",
-      "resolved_at": null,
+      "resolved_at": "2026-03-03T12:51:11+00:00",
       "reopen_count": 0,
       "lang": "python",
       "zone": "production",
       "suppressed": false,
       "suppressed_at": null,
-      "suppression_pattern": null
+      "suppression_pattern": null,
+      "resolution_attestation": {
+        "kind": "scan_verified",
+        "text": "Disappeared from detector output",
+        "attested_at": "2026-03-03T12:51:11+00:00",
+        "scan_verified": true
+      }
     },
     "dupes::analysis/protein_analysis_utils.py::compare_categories::app/protein_analysis_utils.py::compare_categories": {
       "id": "dupes::analysis/protein_analysis_utils.py::compare_categories::app/protein_analysis_utils.py::compare_categories",
@@ -1996,17 +2176,23 @@
           }
         ]
       },
-      "status": "open",
-      "note": null,
+      "status": "auto_resolved",
+      "note": "Disappeared from scan \u2014 likely fixed",
       "first_seen": "2026-03-03T12:38:30+00:00",
       "last_seen": "2026-03-03T12:38:30+00:00",
-      "resolved_at": null,
+      "resolved_at": "2026-03-03T12:51:11+00:00",
       "reopen_count": 0,
       "lang": "python",
       "zone": "production",
       "suppressed": false,
       "suppressed_at": null,
-      "suppression_pattern": null
+      "suppression_pattern": null,
+      "resolution_attestation": {
+        "kind": "scan_verified",
+        "text": "Disappeared from detector output",
+        "attested_at": "2026-03-03T12:51:11+00:00",
+        "scan_verified": true
+      }
     },
     "dupes::analysis/protein_analysis_utils.py::summary_report::app/protein_analysis_utils.py::summary_report": {
       "id": "dupes::analysis/protein_analysis_utils.py::summary_report::app/protein_analysis_utils.py::summary_report",
@@ -2052,17 +2238,23 @@
           }
         ]
       },
-      "status": "open",
-      "note": null,
+      "status": "auto_resolved",
+      "note": "Disappeared from scan \u2014 likely fixed",
       "first_seen": "2026-03-03T12:38:30+00:00",
       "last_seen": "2026-03-03T12:38:30+00:00",
-      "resolved_at": null,
+      "resolved_at": "2026-03-03T12:51:11+00:00",
       "reopen_count": 0,
       "lang": "python",
       "zone": "production",
       "suppressed": false,
       "suppressed_at": null,
-      "suppression_pattern": null
+      "suppression_pattern": null,
+      "resolution_attestation": {
+        "kind": "scan_verified",
+        "text": "Disappeared from detector output",
+        "attested_at": "2026-03-03T12:51:11+00:00",
+        "scan_verified": true
+      }
     },
     "dupes::analysis/protein_analysis_utils.py::analyze_cterm_distance_effects::app/protein_analysis_utils.py::analyze_cterm_distance_effects": {
       "id": "dupes::analysis/protein_analysis_utils.py::analyze_cterm_distance_effects::app/protein_analysis_utils.py::analyze_cterm_distance_effects",
@@ -2108,17 +2300,23 @@
           }
         ]
       },
-      "status": "open",
-      "note": null,
+      "status": "auto_resolved",
+      "note": "Disappeared from scan \u2014 likely fixed",
       "first_seen": "2026-03-03T12:38:30+00:00",
       "last_seen": "2026-03-03T12:38:30+00:00",
-      "resolved_at": null,
+      "resolved_at": "2026-03-03T12:51:11+00:00",
       "reopen_count": 0,
       "lang": "python",
       "zone": "production",
       "suppressed": false,
       "suppressed_at": null,
-      "suppression_pattern": null
+      "suppression_pattern": null,
+      "resolution_attestation": {
+        "kind": "scan_verified",
+        "text": "Disappeared from detector output",
+        "attested_at": "2026-03-03T12:51:11+00:00",
+        "scan_verified": true
+      }
     },
     "dupes::analysis/protein_analysis_utils.py::cross_tabulate_categories::app/protein_analysis_utils.py::cross_tabulate_categories": {
       "id": "dupes::analysis/protein_analysis_utils.py::cross_tabulate_categories::app/protein_analysis_utils.py::cross_tabulate_categories",
@@ -2164,17 +2362,23 @@
           }
         ]
       },
-      "status": "open",
-      "note": null,
+      "status": "auto_resolved",
+      "note": "Disappeared from scan \u2014 likely fixed",
       "first_seen": "2026-03-03T12:38:30+00:00",
       "last_seen": "2026-03-03T12:38:30+00:00",
-      "resolved_at": null,
+      "resolved_at": "2026-03-03T12:51:11+00:00",
       "reopen_count": 0,
       "lang": "python",
       "zone": "production",
       "suppressed": false,
       "suppressed_at": null,
-      "suppression_pattern": null
+      "suppression_pattern": null,
+      "resolution_attestation": {
+        "kind": "scan_verified",
+        "text": "Disappeared from detector output",
+        "attested_at": "2026-03-03T12:51:11+00:00",
+        "scan_verified": true
+      }
     },
     "dupes::analysis/protein_analysis_utils.py::quick_cterm_analysis::app/protein_analysis_utils.py::quick_cterm_analysis": {
       "id": "dupes::analysis/protein_analysis_utils.py::quick_cterm_analysis::app/protein_analysis_utils.py::quick_cterm_analysis",
@@ -2220,17 +2424,23 @@
           }
         ]
       },
-      "status": "open",
-      "note": null,
+      "status": "auto_resolved",
+      "note": "Disappeared from scan \u2014 likely fixed",
       "first_seen": "2026-03-03T12:38:30+00:00",
       "last_seen": "2026-03-03T12:38:30+00:00",
-      "resolved_at": null,
+      "resolved_at": "2026-03-03T12:51:11+00:00",
       "reopen_count": 0,
       "lang": "python",
       "zone": "production",
       "suppressed": false,
       "suppressed_at": null,
-      "suppression_pattern": null
+      "suppression_pattern": null,
+      "resolution_attestation": {
+        "kind": "scan_verified",
+        "text": "Disappeared from detector output",
+        "attested_at": "2026-03-03T12:51:11+00:00",
+        "scan_verified": true
+      }
     },
     "dupes::analysis/protein_analysis_utils.py::quick_localization_analysis::app/protein_analysis_utils.py::quick_localization_analysis": {
       "id": "dupes::analysis/protein_analysis_utils.py::quick_localization_analysis::app/protein_analysis_utils.py::quick_localization_analysis",
@@ -2276,14 +2486,1017 @@
           }
         ]
       },
-      "status": "open",
-      "note": null,
+      "status": "auto_resolved",
+      "note": "Disappeared from scan \u2014 likely fixed",
       "first_seen": "2026-03-03T12:38:30+00:00",
       "last_seen": "2026-03-03T12:38:30+00:00",
+      "resolved_at": "2026-03-03T12:51:11+00:00",
+      "reopen_count": 0,
+      "lang": "python",
+      "zone": "production",
+      "suppressed": false,
+      "suppressed_at": null,
+      "suppression_pattern": null,
+      "resolution_attestation": {
+        "kind": "scan_verified",
+        "text": "Disappeared from detector output",
+        "attested_at": "2026-03-03T12:51:11+00:00",
+        "scan_verified": true
+      }
+    },
+    "test_coverage::analysis/demo_fixed_workflow.py::untested_module": {
+      "id": "test_coverage::analysis/demo_fixed_workflow.py::untested_module",
+      "detector": "test_coverage",
+      "file": "analysis/demo_fixed_workflow.py",
+      "tier": 3,
+      "confidence": "high",
+      "summary": "Untested module (176 LOC, 0 importers)",
+      "detail": {
+        "kind": "untested_module",
+        "loc": 176,
+        "importer_count": 0,
+        "loc_weight": 13.2664991614216
+      },
+      "status": "open",
+      "note": null,
+      "first_seen": "2026-03-03T12:51:09+00:00",
+      "last_seen": "2026-03-03T12:51:09+00:00",
       "resolved_at": null,
       "reopen_count": 0,
       "lang": "python",
       "zone": "production",
+      "suppressed": false,
+      "suppressed_at": null,
+      "suppression_pattern": null
+    },
+    "test_coverage::app/wsgi_pythonanywhere.py::untested_module": {
+      "id": "test_coverage::app/wsgi_pythonanywhere.py::untested_module",
+      "detector": "test_coverage",
+      "file": "app/wsgi_pythonanywhere.py",
+      "tier": 3,
+      "confidence": "high",
+      "summary": "Untested module (23 LOC, 0 importers)",
+      "detail": {
+        "kind": "untested_module",
+        "loc": 23,
+        "importer_count": 0,
+        "loc_weight": 4.795831523312719
+      },
+      "status": "open",
+      "note": null,
+      "first_seen": "2026-03-03T12:51:09+00:00",
+      "last_seen": "2026-03-03T12:51:09+00:00",
+      "resolved_at": null,
+      "reopen_count": 0,
+      "lang": "python",
+      "zone": "production",
+      "suppressed": false,
+      "suppressed_at": null,
+      "suppression_pattern": null
+    },
+    "test_coverage::analysis/improved_analysis.py::untested_module": {
+      "id": "test_coverage::analysis/improved_analysis.py::untested_module",
+      "detector": "test_coverage",
+      "file": "analysis/improved_analysis.py",
+      "tier": 3,
+      "confidence": "high",
+      "summary": "Untested module (169 LOC, 0 importers)",
+      "detail": {
+        "kind": "untested_module",
+        "loc": 169,
+        "importer_count": 0,
+        "loc_weight": 13.0
+      },
+      "status": "open",
+      "note": null,
+      "first_seen": "2026-03-03T12:51:09+00:00",
+      "last_seen": "2026-03-03T12:51:09+00:00",
+      "resolved_at": null,
+      "reopen_count": 0,
+      "lang": "python",
+      "zone": "production",
+      "suppressed": false,
+      "suppressed_at": null,
+      "suppression_pattern": null
+    },
+    "smells::analysis/demo_fixed_workflow.py::noop_function": {
+      "id": "smells::analysis/demo_fixed_workflow.py::noop_function",
+      "detector": "smells",
+      "file": "analysis/demo_fixed_workflow.py",
+      "tier": 2,
+      "confidence": "medium",
+      "summary": "2x Non-trivial function whose body does nothing",
+      "detail": {
+        "smell_id": "noop_function",
+        "severity": "high",
+        "count": 2,
+        "lines": [
+          23,
+          131
+        ]
+      },
+      "status": "open",
+      "note": null,
+      "first_seen": "2026-03-03T12:51:09+00:00",
+      "last_seen": "2026-03-03T12:51:09+00:00",
+      "resolved_at": null,
+      "reopen_count": 0,
+      "lang": "python",
+      "zone": "production",
+      "suppressed": false,
+      "suppressed_at": null,
+      "suppression_pattern": null
+    },
+    "smells::analysis/improved_analysis.py::sys_exit_in_library": {
+      "id": "smells::analysis/improved_analysis.py::sys_exit_in_library",
+      "detector": "smells",
+      "file": "analysis/improved_analysis.py",
+      "tier": 2,
+      "confidence": "medium",
+      "summary": "1x sys.exit() outside CLI entry point \u2014 use exceptions",
+      "detail": {
+        "smell_id": "sys_exit_in_library",
+        "severity": "high",
+        "count": 1,
+        "lines": [
+          144
+        ]
+      },
+      "status": "open",
+      "note": null,
+      "first_seen": "2026-03-03T12:51:09+00:00",
+      "last_seen": "2026-03-03T12:51:09+00:00",
+      "resolved_at": null,
+      "reopen_count": 0,
+      "lang": "python",
+      "zone": "production",
+      "suppressed": false,
+      "suppressed_at": null,
+      "suppression_pattern": null
+    },
+    "smells::protein_analysis_utils.py::sys_exit_in_library": {
+      "id": "smells::protein_analysis_utils.py::sys_exit_in_library",
+      "detector": "smells",
+      "file": "protein_analysis_utils.py",
+      "tier": 2,
+      "confidence": "medium",
+      "summary": "1x sys.exit() outside CLI entry point \u2014 use exceptions",
+      "detail": {
+        "smell_id": "sys_exit_in_library",
+        "severity": "high",
+        "count": 1,
+        "lines": [
+          302
+        ]
+      },
+      "status": "open",
+      "note": null,
+      "first_seen": "2026-03-03T12:51:09+00:00",
+      "last_seen": "2026-03-03T12:51:09+00:00",
+      "resolved_at": null,
+      "reopen_count": 0,
+      "lang": "python",
+      "zone": "production",
+      "suppressed": false,
+      "suppressed_at": null,
+      "suppression_pattern": null
+    },
+    "security::tests/test_protein_analysis_utils.py::security::B101::tests/test_protein_analysis_utils.py::32": {
+      "id": "security::tests/test_protein_analysis_utils.py::security::B101::tests/test_protein_analysis_utils.py::32",
+      "detector": "security",
+      "file": "tests/test_protein_analysis_utils.py",
+      "tier": 3,
+      "confidence": "low",
+      "summary": "[B101] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.",
+      "detail": {
+        "kind": "B101",
+        "severity": "low",
+        "line": 32,
+        "content": "31         filtered, counts = filter_and_compare(sample_df, \"cterm_distance\", 30, \"membrane_domain_count\")\n32         assert len(filtered) == 3  # rows with cterm_distance <= 30: 5, 15, 25\n33         ",
+        "remediation": "https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html",
+        "test_name": "assert_used",
+        "source": "bandit"
+      },
+      "status": "open",
+      "note": null,
+      "first_seen": "2026-03-03T12:51:09+00:00",
+      "last_seen": "2026-03-03T12:51:09+00:00",
+      "resolved_at": null,
+      "reopen_count": 0,
+      "zone": "test",
+      "lang": "python",
+      "suppressed": false,
+      "suppressed_at": null,
+      "suppression_pattern": null
+    },
+    "security::tests/test_protein_analysis_utils.py::security::B101::tests/test_protein_analysis_utils.py::33": {
+      "id": "security::tests/test_protein_analysis_utils.py::security::B101::tests/test_protein_analysis_utils.py::33",
+      "detector": "security",
+      "file": "tests/test_protein_analysis_utils.py",
+      "tier": 3,
+      "confidence": "low",
+      "summary": "[B101] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.",
+      "detail": {
+        "kind": "B101",
+        "severity": "low",
+        "line": 33,
+        "content": "32         assert len(filtered) == 3  # rows with cterm_distance <= 30: 5, 15, 25\n33         assert all(filtered[\"cterm_distance\"] <= 30)\n34 \n",
+        "remediation": "https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html",
+        "test_name": "assert_used",
+        "source": "bandit"
+      },
+      "status": "open",
+      "note": null,
+      "first_seen": "2026-03-03T12:51:09+00:00",
+      "last_seen": "2026-03-03T12:51:09+00:00",
+      "resolved_at": null,
+      "reopen_count": 0,
+      "zone": "test",
+      "lang": "python",
+      "suppressed": false,
+      "suppressed_at": null,
+      "suppression_pattern": null
+    },
+    "security::tests/test_protein_analysis_utils.py::security::B101::tests/test_protein_analysis_utils.py::37": {
+      "id": "security::tests/test_protein_analysis_utils.py::security::B101::tests/test_protein_analysis_utils.py::37",
+      "detector": "security",
+      "file": "tests/test_protein_analysis_utils.py",
+      "tier": 3,
+      "confidence": "low",
+      "summary": "[B101] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.",
+      "detail": {
+        "kind": "B101",
+        "severity": "low",
+        "line": 37,
+        "content": "36         filtered, _ = filter_and_compare(sample_df, \"cterm_distance\", 30, \"membrane_domain_count\", operator=\"<\")\n37         assert len(filtered) == 3  # rows strictly < 30\n38 \n",
+        "remediation": "https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html",
+        "test_name": "assert_used",
+        "source": "bandit"
+      },
+      "status": "open",
+      "note": null,
+      "first_seen": "2026-03-03T12:51:09+00:00",
+      "last_seen": "2026-03-03T12:51:09+00:00",
+      "resolved_at": null,
+      "reopen_count": 0,
+      "zone": "test",
+      "lang": "python",
+      "suppressed": false,
+      "suppressed_at": null,
+      "suppression_pattern": null
+    },
+    "security::tests/test_protein_analysis_utils.py::security::B101::tests/test_protein_analysis_utils.py::41": {
+      "id": "security::tests/test_protein_analysis_utils.py::security::B101::tests/test_protein_analysis_utils.py::41",
+      "detector": "security",
+      "file": "tests/test_protein_analysis_utils.py",
+      "tier": 3,
+      "confidence": "low",
+      "summary": "[B101] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.",
+      "detail": {
+        "kind": "B101",
+        "severity": "low",
+        "line": 41,
+        "content": "40         filtered, _ = filter_and_compare(sample_df, \"cterm_distance\", 50, \"membrane_domain_count\", operator=\">=\")\n41         assert len(filtered) == 2\n42 \n",
+        "remediation": "https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html",
+        "test_name": "assert_used",
+        "source": "bandit"
+      },
+      "status": "open",
+      "note": null,
+      "first_seen": "2026-03-03T12:51:09+00:00",
+      "last_seen": "2026-03-03T12:51:09+00:00",
+      "resolved_at": null,
+      "reopen_count": 0,
+      "zone": "test",
+      "lang": "python",
+      "suppressed": false,
+      "suppressed_at": null,
+      "suppression_pattern": null
+    },
+    "security::tests/test_protein_analysis_utils.py::security::B101::tests/test_protein_analysis_utils.py::45": {
+      "id": "security::tests/test_protein_analysis_utils.py::security::B101::tests/test_protein_analysis_utils.py::45",
+      "detector": "security",
+      "file": "tests/test_protein_analysis_utils.py",
+      "tier": 3,
+      "confidence": "low",
+      "summary": "[B101] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.",
+      "detail": {
+        "kind": "B101",
+        "severity": "low",
+        "line": 45,
+        "content": "44         filtered, _ = filter_and_compare(sample_df, \"cterm_distance\", 50, \"membrane_domain_count\", operator=\">\")\n45         assert len(filtered) == 1\n46 \n",
+        "remediation": "https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html",
+        "test_name": "assert_used",
+        "source": "bandit"
+      },
+      "status": "open",
+      "note": null,
+      "first_seen": "2026-03-03T12:51:09+00:00",
+      "last_seen": "2026-03-03T12:51:09+00:00",
+      "resolved_at": null,
+      "reopen_count": 0,
+      "zone": "test",
+      "lang": "python",
+      "suppressed": false,
+      "suppressed_at": null,
+      "suppression_pattern": null
+    },
+    "security::tests/test_protein_analysis_utils.py::security::B101::tests/test_protein_analysis_utils.py::49": {
+      "id": "security::tests/test_protein_analysis_utils.py::security::B101::tests/test_protein_analysis_utils.py::49",
+      "detector": "security",
+      "file": "tests/test_protein_analysis_utils.py",
+      "tier": 3,
+      "confidence": "low",
+      "summary": "[B101] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.",
+      "detail": {
+        "kind": "B101",
+        "severity": "low",
+        "line": 49,
+        "content": "48         filtered, _ = filter_and_compare(sample_df, \"membrane_domain_count\", 1, \"Prediction\", operator=\"==\")\n49         assert len(filtered) == 3\n50 \n",
+        "remediation": "https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html",
+        "test_name": "assert_used",
+        "source": "bandit"
+      },
+      "status": "open",
+      "note": null,
+      "first_seen": "2026-03-03T12:51:09+00:00",
+      "last_seen": "2026-03-03T12:51:09+00:00",
+      "resolved_at": null,
+      "reopen_count": 0,
+      "zone": "test",
+      "lang": "python",
+      "suppressed": false,
+      "suppressed_at": null,
+      "suppression_pattern": null
+    },
+    "security::tests/test_protein_analysis_utils.py::security::B101::tests/test_protein_analysis_utils.py::53": {
+      "id": "security::tests/test_protein_analysis_utils.py::security::B101::tests/test_protein_analysis_utils.py::53",
+      "detector": "security",
+      "file": "tests/test_protein_analysis_utils.py",
+      "tier": 3,
+      "confidence": "low",
+      "summary": "[B101] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.",
+      "detail": {
+        "kind": "B101",
+        "severity": "low",
+        "line": 53,
+        "content": "52         filtered, _ = filter_and_compare(sample_df, \"membrane_domain_count\", 1, \"Prediction\", operator=\"!=\")\n53         assert len(filtered) == 3\n54 \n",
+        "remediation": "https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html",
+        "test_name": "assert_used",
+        "source": "bandit"
+      },
+      "status": "open",
+      "note": null,
+      "first_seen": "2026-03-03T12:51:09+00:00",
+      "last_seen": "2026-03-03T12:51:09+00:00",
+      "resolved_at": null,
+      "reopen_count": 0,
+      "zone": "test",
+      "lang": "python",
+      "suppressed": false,
+      "suppressed_at": null,
+      "suppression_pattern": null
+    },
+    "security::tests/test_protein_analysis_utils.py::security::B101::tests/test_protein_analysis_utils.py::61": {
+      "id": "security::tests/test_protein_analysis_utils.py::security::B101::tests/test_protein_analysis_utils.py::61",
+      "detector": "security",
+      "file": "tests/test_protein_analysis_utils.py",
+      "tier": 3,
+      "confidence": "low",
+      "summary": "[B101] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.",
+      "detail": {
+        "kind": "B101",
+        "severity": "low",
+        "line": 61,
+        "content": "60         _, counts = filter_and_compare(sample_df, \"cterm_distance\", 100, \"membrane_domain_count\")\n61         assert counts.iloc[0] >= counts.iloc[-1]\n62 \n",
+        "remediation": "https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html",
+        "test_name": "assert_used",
+        "source": "bandit"
+      },
+      "status": "open",
+      "note": null,
+      "first_seen": "2026-03-03T12:51:09+00:00",
+      "last_seen": "2026-03-03T12:51:09+00:00",
+      "resolved_at": null,
+      "reopen_count": 0,
+      "zone": "test",
+      "lang": "python",
+      "suppressed": false,
+      "suppressed_at": null,
+      "suppression_pattern": null
+    },
+    "security::tests/test_protein_analysis_utils.py::security::B101::tests/test_protein_analysis_utils.py::65": {
+      "id": "security::tests/test_protein_analysis_utils.py::security::B101::tests/test_protein_analysis_utils.py::65",
+      "detector": "security",
+      "file": "tests/test_protein_analysis_utils.py",
+      "tier": 3,
+      "confidence": "low",
+      "summary": "[B101] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.",
+      "detail": {
+        "kind": "B101",
+        "severity": "low",
+        "line": 65,
+        "content": "64         _, counts = filter_and_compare(sample_df, \"cterm_distance\", 100, \"membrane_domain_count\", top_n=1)\n65         assert len(counts) == 1\n66 \n",
+        "remediation": "https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html",
+        "test_name": "assert_used",
+        "source": "bandit"
+      },
+      "status": "open",
+      "note": null,
+      "first_seen": "2026-03-03T12:51:09+00:00",
+      "last_seen": "2026-03-03T12:51:09+00:00",
+      "resolved_at": null,
+      "reopen_count": 0,
+      "zone": "test",
+      "lang": "python",
+      "suppressed": false,
+      "suppressed_at": null,
+      "suppression_pattern": null
+    },
+    "security::tests/test_protein_analysis_utils.py::security::B101::tests/test_protein_analysis_utils.py::70": {
+      "id": "security::tests/test_protein_analysis_utils.py::security::B101::tests/test_protein_analysis_utils.py::70",
+      "detector": "security",
+      "file": "tests/test_protein_analysis_utils.py",
+      "tier": 3,
+      "confidence": "low",
+      "summary": "[B101] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.",
+      "detail": {
+        "kind": "B101",
+        "severity": "low",
+        "line": 70,
+        "content": "69         filtered[\"cterm_distance\"] = -1\n70         assert sample_df[\"cterm_distance\"].min() > 0\n71 \n",
+        "remediation": "https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html",
+        "test_name": "assert_used",
+        "source": "bandit"
+      },
+      "status": "open",
+      "note": null,
+      "first_seen": "2026-03-03T12:51:09+00:00",
+      "last_seen": "2026-03-03T12:51:09+00:00",
+      "resolved_at": null,
+      "reopen_count": 0,
+      "zone": "test",
+      "lang": "python",
+      "suppressed": false,
+      "suppressed_at": null,
+      "suppression_pattern": null
+    },
+    "security::tests/test_protein_analysis_utils.py::security::B101::tests/test_protein_analysis_utils.py::76": {
+      "id": "security::tests/test_protein_analysis_utils.py::security::B101::tests/test_protein_analysis_utils.py::76",
+      "detector": "security",
+      "file": "tests/test_protein_analysis_utils.py",
+      "tier": 3,
+      "confidence": "low",
+      "summary": "[B101] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.",
+      "detail": {
+        "kind": "B101",
+        "severity": "low",
+        "line": 76,
+        "content": "75         filtered, _ = filter_by_cterm_distance(sample_df)\n76         assert all(filtered[\"cterm_distance\"] <= 30)\n77 \n",
+        "remediation": "https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html",
+        "test_name": "assert_used",
+        "source": "bandit"
+      },
+      "status": "open",
+      "note": null,
+      "first_seen": "2026-03-03T12:51:09+00:00",
+      "last_seen": "2026-03-03T12:51:09+00:00",
+      "resolved_at": null,
+      "reopen_count": 0,
+      "zone": "test",
+      "lang": "python",
+      "suppressed": false,
+      "suppressed_at": null,
+      "suppression_pattern": null
+    },
+    "security::tests/test_protein_analysis_utils.py::security::B101::tests/test_protein_analysis_utils.py::80": {
+      "id": "security::tests/test_protein_analysis_utils.py::security::B101::tests/test_protein_analysis_utils.py::80",
+      "detector": "security",
+      "file": "tests/test_protein_analysis_utils.py",
+      "tier": 3,
+      "confidence": "low",
+      "summary": "[B101] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.",
+      "detail": {
+        "kind": "B101",
+        "severity": "low",
+        "line": 80,
+        "content": "79         filtered, _ = filter_by_cterm_distance(sample_df, max_distance=20)\n80         assert all(filtered[\"cterm_distance\"] <= 20)\n81 \n",
+        "remediation": "https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html",
+        "test_name": "assert_used",
+        "source": "bandit"
+      },
+      "status": "open",
+      "note": null,
+      "first_seen": "2026-03-03T12:51:09+00:00",
+      "last_seen": "2026-03-03T12:51:09+00:00",
+      "resolved_at": null,
+      "reopen_count": 0,
+      "zone": "test",
+      "lang": "python",
+      "suppressed": false,
+      "suppressed_at": null,
+      "suppression_pattern": null
+    },
+    "security::tests/test_protein_analysis_utils.py::security::B101::tests/test_protein_analysis_utils.py::84": {
+      "id": "security::tests/test_protein_analysis_utils.py::security::B101::tests/test_protein_analysis_utils.py::84",
+      "detector": "security",
+      "file": "tests/test_protein_analysis_utils.py",
+      "tier": 3,
+      "confidence": "low",
+      "summary": "[B101] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.",
+      "detail": {
+        "kind": "B101",
+        "severity": "low",
+        "line": 84,
+        "content": "83         _, counts = filter_by_cterm_distance(sample_df, max_distance=100, compare_by=\"Prediction\")\n84         assert set(counts.index).issubset({\"SP\", \"OTHER\"})\n85 \n",
+        "remediation": "https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html",
+        "test_name": "assert_used",
+        "source": "bandit"
+      },
+      "status": "open",
+      "note": null,
+      "first_seen": "2026-03-03T12:51:09+00:00",
+      "last_seen": "2026-03-03T12:51:09+00:00",
+      "resolved_at": null,
+      "reopen_count": 0,
+      "zone": "test",
+      "lang": "python",
+      "suppressed": false,
+      "suppressed_at": null,
+      "suppression_pattern": null
+    },
+    "security::tests/test_protein_analysis_utils.py::security::B101::tests/test_protein_analysis_utils.py::90": {
+      "id": "security::tests/test_protein_analysis_utils.py::security::B101::tests/test_protein_analysis_utils.py::90",
+      "detector": "security",
+      "file": "tests/test_protein_analysis_utils.py",
+      "tier": 3,
+      "confidence": "low",
+      "summary": "[B101] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.",
+      "detail": {
+        "kind": "B101",
+        "severity": "low",
+        "line": 90,
+        "content": "89         result = compare_categories(sample_df, \"Prediction\")\n90         assert isinstance(result, pd.Series)\n91         assert result[\"SP\"] == 3\n",
+        "remediation": "https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html",
+        "test_name": "assert_used",
+        "source": "bandit"
+      },
+      "status": "open",
+      "note": null,
+      "first_seen": "2026-03-03T12:51:09+00:00",
+      "last_seen": "2026-03-03T12:51:09+00:00",
+      "resolved_at": null,
+      "reopen_count": 0,
+      "zone": "test",
+      "lang": "python",
+      "suppressed": false,
+      "suppressed_at": null,
+      "suppression_pattern": null
+    },
+    "security::tests/test_protein_analysis_utils.py::security::B101::tests/test_protein_analysis_utils.py::91": {
+      "id": "security::tests/test_protein_analysis_utils.py::security::B101::tests/test_protein_analysis_utils.py::91",
+      "detector": "security",
+      "file": "tests/test_protein_analysis_utils.py",
+      "tier": 3,
+      "confidence": "low",
+      "summary": "[B101] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.",
+      "detail": {
+        "kind": "B101",
+        "severity": "low",
+        "line": 91,
+        "content": "90         assert isinstance(result, pd.Series)\n91         assert result[\"SP\"] == 3\n92         assert result[\"OTHER\"] == 3\n",
+        "remediation": "https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html",
+        "test_name": "assert_used",
+        "source": "bandit"
+      },
+      "status": "open",
+      "note": null,
+      "first_seen": "2026-03-03T12:51:09+00:00",
+      "last_seen": "2026-03-03T12:51:09+00:00",
+      "resolved_at": null,
+      "reopen_count": 0,
+      "zone": "test",
+      "lang": "python",
+      "suppressed": false,
+      "suppressed_at": null,
+      "suppression_pattern": null
+    },
+    "security::tests/test_protein_analysis_utils.py::security::B101::tests/test_protein_analysis_utils.py::92": {
+      "id": "security::tests/test_protein_analysis_utils.py::security::B101::tests/test_protein_analysis_utils.py::92",
+      "detector": "security",
+      "file": "tests/test_protein_analysis_utils.py",
+      "tier": 3,
+      "confidence": "low",
+      "summary": "[B101] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.",
+      "detail": {
+        "kind": "B101",
+        "severity": "low",
+        "line": 92,
+        "content": "91         assert result[\"SP\"] == 3\n92         assert result[\"OTHER\"] == 3\n93 \n",
+        "remediation": "https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html",
+        "test_name": "assert_used",
+        "source": "bandit"
+      },
+      "status": "open",
+      "note": null,
+      "first_seen": "2026-03-03T12:51:09+00:00",
+      "last_seen": "2026-03-03T12:51:09+00:00",
+      "resolved_at": null,
+      "reopen_count": 0,
+      "zone": "test",
+      "lang": "python",
+      "suppressed": false,
+      "suppressed_at": null,
+      "suppression_pattern": null
+    },
+    "security::tests/test_protein_analysis_utils.py::security::B101::tests/test_protein_analysis_utils.py::96": {
+      "id": "security::tests/test_protein_analysis_utils.py::security::B101::tests/test_protein_analysis_utils.py::96",
+      "detector": "security",
+      "file": "tests/test_protein_analysis_utils.py",
+      "tier": 3,
+      "confidence": "low",
+      "summary": "[B101] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.",
+      "detail": {
+        "kind": "B101",
+        "severity": "low",
+        "line": 96,
+        "content": "95         result = compare_categories(sample_df, \"Prediction\", normalize=True)\n96         assert abs(result.sum() - 1.0) < 1e-9\n97 \n",
+        "remediation": "https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html",
+        "test_name": "assert_used",
+        "source": "bandit"
+      },
+      "status": "open",
+      "note": null,
+      "first_seen": "2026-03-03T12:51:09+00:00",
+      "last_seen": "2026-03-03T12:51:09+00:00",
+      "resolved_at": null,
+      "reopen_count": 0,
+      "zone": "test",
+      "lang": "python",
+      "suppressed": false,
+      "suppressed_at": null,
+      "suppression_pattern": null
+    },
+    "security::tests/test_protein_analysis_utils.py::security::B101::tests/test_protein_analysis_utils.py::100": {
+      "id": "security::tests/test_protein_analysis_utils.py::security::B101::tests/test_protein_analysis_utils.py::100",
+      "detector": "security",
+      "file": "tests/test_protein_analysis_utils.py",
+      "tier": 3,
+      "confidence": "low",
+      "summary": "[B101] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.",
+      "detail": {
+        "kind": "B101",
+        "severity": "low",
+        "line": 100,
+        "content": "99         result = compare_categories(sample_df, \"Prediction\", group_by=\"membrane_domain_count\")\n100         assert isinstance(result, pd.DataFrame)\n101 \n",
+        "remediation": "https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html",
+        "test_name": "assert_used",
+        "source": "bandit"
+      },
+      "status": "open",
+      "note": null,
+      "first_seen": "2026-03-03T12:51:09+00:00",
+      "last_seen": "2026-03-03T12:51:09+00:00",
+      "resolved_at": null,
+      "reopen_count": 0,
+      "zone": "test",
+      "lang": "python",
+      "suppressed": false,
+      "suppressed_at": null,
+      "suppression_pattern": null
+    },
+    "security::tests/test_protein_analysis_utils.py::security::B101::tests/test_protein_analysis_utils.py::104": {
+      "id": "security::tests/test_protein_analysis_utils.py::security::B101::tests/test_protein_analysis_utils.py::104",
+      "detector": "security",
+      "file": "tests/test_protein_analysis_utils.py",
+      "tier": 3,
+      "confidence": "low",
+      "summary": "[B101] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.",
+      "detail": {
+        "kind": "B101",
+        "severity": "low",
+        "line": 104,
+        "content": "103         result = compare_categories(sample_df, \"Prediction\", group_by=\"membrane_domain_count\", normalize=True)\n104         assert isinstance(result, pd.DataFrame)\n105 \n",
+        "remediation": "https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html",
+        "test_name": "assert_used",
+        "source": "bandit"
+      },
+      "status": "open",
+      "note": null,
+      "first_seen": "2026-03-03T12:51:09+00:00",
+      "last_seen": "2026-03-03T12:51:09+00:00",
+      "resolved_at": null,
+      "reopen_count": 0,
+      "zone": "test",
+      "lang": "python",
+      "suppressed": false,
+      "suppressed_at": null,
+      "suppression_pattern": null
+    },
+    "security::tests/test_protein_analysis_utils.py::security::B101::tests/test_protein_analysis_utils.py::111": {
+      "id": "security::tests/test_protein_analysis_utils.py::security::B101::tests/test_protein_analysis_utils.py::111",
+      "detector": "security",
+      "file": "tests/test_protein_analysis_utils.py",
+      "tier": 3,
+      "confidence": "low",
+      "summary": "[B101] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.",
+      "detail": {
+        "kind": "B101",
+        "severity": "low",
+        "line": 111,
+        "content": "110         captured = capsys.readouterr()\n111         assert \"Summary Report\" in captured.out\n112         assert \"Filter:\" in captured.out\n",
+        "remediation": "https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html",
+        "test_name": "assert_used",
+        "source": "bandit"
+      },
+      "status": "open",
+      "note": null,
+      "first_seen": "2026-03-03T12:51:09+00:00",
+      "last_seen": "2026-03-03T12:51:09+00:00",
+      "resolved_at": null,
+      "reopen_count": 0,
+      "zone": "test",
+      "lang": "python",
+      "suppressed": false,
+      "suppressed_at": null,
+      "suppression_pattern": null
+    },
+    "security::tests/test_protein_analysis_utils.py::security::B101::tests/test_protein_analysis_utils.py::112": {
+      "id": "security::tests/test_protein_analysis_utils.py::security::B101::tests/test_protein_analysis_utils.py::112",
+      "detector": "security",
+      "file": "tests/test_protein_analysis_utils.py",
+      "tier": 3,
+      "confidence": "low",
+      "summary": "[B101] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.",
+      "detail": {
+        "kind": "B101",
+        "severity": "low",
+        "line": 112,
+        "content": "111         assert \"Summary Report\" in captured.out\n112         assert \"Filter:\" in captured.out\n113 \n",
+        "remediation": "https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html",
+        "test_name": "assert_used",
+        "source": "bandit"
+      },
+      "status": "open",
+      "note": null,
+      "first_seen": "2026-03-03T12:51:09+00:00",
+      "last_seen": "2026-03-03T12:51:09+00:00",
+      "resolved_at": null,
+      "reopen_count": 0,
+      "zone": "test",
+      "lang": "python",
+      "suppressed": false,
+      "suppressed_at": null,
+      "suppression_pattern": null
+    },
+    "security::tests/test_protein_analysis_utils.py::security::B101::tests/test_protein_analysis_utils.py::122": {
+      "id": "security::tests/test_protein_analysis_utils.py::security::B101::tests/test_protein_analysis_utils.py::122",
+      "detector": "security",
+      "file": "tests/test_protein_analysis_utils.py",
+      "tier": 3,
+      "confidence": "low",
+      "summary": "[B101] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.",
+      "detail": {
+        "kind": "B101",
+        "severity": "low",
+        "line": 122,
+        "content": "121         captured = capsys.readouterr()\n122         assert \"Prediction\" in captured.out\n123 \n",
+        "remediation": "https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html",
+        "test_name": "assert_used",
+        "source": "bandit"
+      },
+      "status": "open",
+      "note": null,
+      "first_seen": "2026-03-03T12:51:09+00:00",
+      "last_seen": "2026-03-03T12:51:09+00:00",
+      "resolved_at": null,
+      "reopen_count": 0,
+      "zone": "test",
+      "lang": "python",
+      "suppressed": false,
+      "suppressed_at": null,
+      "suppression_pattern": null
+    },
+    "security::tests/test_protein_analysis_utils.py::security::B101::tests/test_protein_analysis_utils.py::128": {
+      "id": "security::tests/test_protein_analysis_utils.py::security::B101::tests/test_protein_analysis_utils.py::128",
+      "detector": "security",
+      "file": "tests/test_protein_analysis_utils.py",
+      "tier": 3,
+      "confidence": "low",
+      "summary": "[B101] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.",
+      "detail": {
+        "kind": "B101",
+        "severity": "low",
+        "line": 128,
+        "content": "127         result = analyze_cterm_distance_effects(sample_df, distance_thresholds=[20, 50])\n128         assert isinstance(result, pd.DataFrame)\n129 \n",
+        "remediation": "https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html",
+        "test_name": "assert_used",
+        "source": "bandit"
+      },
+      "status": "open",
+      "note": null,
+      "first_seen": "2026-03-03T12:51:09+00:00",
+      "last_seen": "2026-03-03T12:51:09+00:00",
+      "resolved_at": null,
+      "reopen_count": 0,
+      "zone": "test",
+      "lang": "python",
+      "suppressed": false,
+      "suppressed_at": null,
+      "suppression_pattern": null
+    },
+    "security::tests/test_protein_analysis_utils.py::security::B101::tests/test_protein_analysis_utils.py::132": {
+      "id": "security::tests/test_protein_analysis_utils.py::security::B101::tests/test_protein_analysis_utils.py::132",
+      "detector": "security",
+      "file": "tests/test_protein_analysis_utils.py",
+      "tier": 3,
+      "confidence": "low",
+      "summary": "[B101] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.",
+      "detail": {
+        "kind": "B101",
+        "severity": "low",
+        "line": 132,
+        "content": "131         result = analyze_cterm_distance_effects(sample_df, distance_thresholds=[10, 30])\n132         assert \"<= 10\" in result.columns\n133         assert \"<= 30\" in result.columns\n",
+        "remediation": "https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html",
+        "test_name": "assert_used",
+        "source": "bandit"
+      },
+      "status": "open",
+      "note": null,
+      "first_seen": "2026-03-03T12:51:09+00:00",
+      "last_seen": "2026-03-03T12:51:09+00:00",
+      "resolved_at": null,
+      "reopen_count": 0,
+      "zone": "test",
+      "lang": "python",
+      "suppressed": false,
+      "suppressed_at": null,
+      "suppression_pattern": null
+    },
+    "security::tests/test_protein_analysis_utils.py::security::B101::tests/test_protein_analysis_utils.py::133": {
+      "id": "security::tests/test_protein_analysis_utils.py::security::B101::tests/test_protein_analysis_utils.py::133",
+      "detector": "security",
+      "file": "tests/test_protein_analysis_utils.py",
+      "tier": 3,
+      "confidence": "low",
+      "summary": "[B101] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.",
+      "detail": {
+        "kind": "B101",
+        "severity": "low",
+        "line": 133,
+        "content": "132         assert \"<= 10\" in result.columns\n133         assert \"<= 30\" in result.columns\n134 \n",
+        "remediation": "https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html",
+        "test_name": "assert_used",
+        "source": "bandit"
+      },
+      "status": "open",
+      "note": null,
+      "first_seen": "2026-03-03T12:51:09+00:00",
+      "last_seen": "2026-03-03T12:51:09+00:00",
+      "resolved_at": null,
+      "reopen_count": 0,
+      "zone": "test",
+      "lang": "python",
+      "suppressed": false,
+      "suppressed_at": null,
+      "suppression_pattern": null
+    },
+    "security::tests/test_protein_analysis_utils.py::security::B101::tests/test_protein_analysis_utils.py::137": {
+      "id": "security::tests/test_protein_analysis_utils.py::security::B101::tests/test_protein_analysis_utils.py::137",
+      "detector": "security",
+      "file": "tests/test_protein_analysis_utils.py",
+      "tier": 3,
+      "confidence": "low",
+      "summary": "[B101] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.",
+      "detail": {
+        "kind": "B101",
+        "severity": "low",
+        "line": 137,
+        "content": "136         result = analyze_cterm_distance_effects(sample_df)\n137         assert len(result.columns) == 5\n138 \n",
+        "remediation": "https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html",
+        "test_name": "assert_used",
+        "source": "bandit"
+      },
+      "status": "open",
+      "note": null,
+      "first_seen": "2026-03-03T12:51:09+00:00",
+      "last_seen": "2026-03-03T12:51:09+00:00",
+      "resolved_at": null,
+      "reopen_count": 0,
+      "zone": "test",
+      "lang": "python",
+      "suppressed": false,
+      "suppressed_at": null,
+      "suppression_pattern": null
+    },
+    "security::tests/test_protein_analysis_utils.py::security::B101::tests/test_protein_analysis_utils.py::143": {
+      "id": "security::tests/test_protein_analysis_utils.py::security::B101::tests/test_protein_analysis_utils.py::143",
+      "detector": "security",
+      "file": "tests/test_protein_analysis_utils.py",
+      "tier": 3,
+      "confidence": "low",
+      "summary": "[B101] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.",
+      "detail": {
+        "kind": "B101",
+        "severity": "low",
+        "line": 143,
+        "content": "142         result = cross_tabulate_categories(sample_df, \"Prediction\", \"in_biogrid\")\n143         assert isinstance(result, pd.DataFrame)\n144         assert \"All\" in result.index  # margins=True adds ",
+        "remediation": "https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html",
+        "test_name": "assert_used",
+        "source": "bandit"
+      },
+      "status": "open",
+      "note": null,
+      "first_seen": "2026-03-03T12:51:09+00:00",
+      "last_seen": "2026-03-03T12:51:09+00:00",
+      "resolved_at": null,
+      "reopen_count": 0,
+      "zone": "test",
+      "lang": "python",
+      "suppressed": false,
+      "suppressed_at": null,
+      "suppression_pattern": null
+    },
+    "security::tests/test_protein_analysis_utils.py::security::B101::tests/test_protein_analysis_utils.py::144": {
+      "id": "security::tests/test_protein_analysis_utils.py::security::B101::tests/test_protein_analysis_utils.py::144",
+      "detector": "security",
+      "file": "tests/test_protein_analysis_utils.py",
+      "tier": 3,
+      "confidence": "low",
+      "summary": "[B101] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.",
+      "detail": {
+        "kind": "B101",
+        "severity": "low",
+        "line": 144,
+        "content": "143         assert isinstance(result, pd.DataFrame)\n144         assert \"All\" in result.index  # margins=True adds All row\n145 \n",
+        "remediation": "https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html",
+        "test_name": "assert_used",
+        "source": "bandit"
+      },
+      "status": "open",
+      "note": null,
+      "first_seen": "2026-03-03T12:51:09+00:00",
+      "last_seen": "2026-03-03T12:51:09+00:00",
+      "resolved_at": null,
+      "reopen_count": 0,
+      "zone": "test",
+      "lang": "python",
+      "suppressed": false,
+      "suppressed_at": null,
+      "suppression_pattern": null
+    },
+    "security::tests/test_protein_analysis_utils.py::security::B101::tests/test_protein_analysis_utils.py::151": {
+      "id": "security::tests/test_protein_analysis_utils.py::security::B101::tests/test_protein_analysis_utils.py::151",
+      "detector": "security",
+      "file": "tests/test_protein_analysis_utils.py",
+      "tier": 3,
+      "confidence": "low",
+      "summary": "[B101] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.",
+      "detail": {
+        "kind": "B101",
+        "severity": "low",
+        "line": 151,
+        "content": "150         )\n151         assert isinstance(result, pd.DataFrame)\n152 \n",
+        "remediation": "https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html",
+        "test_name": "assert_used",
+        "source": "bandit"
+      },
+      "status": "open",
+      "note": null,
+      "first_seen": "2026-03-03T12:51:09+00:00",
+      "last_seen": "2026-03-03T12:51:09+00:00",
+      "resolved_at": null,
+      "reopen_count": 0,
+      "zone": "test",
+      "lang": "python",
+      "suppressed": false,
+      "suppressed_at": null,
+      "suppression_pattern": null
+    },
+    "security::tests/test_protein_analysis_utils.py::security::B101::tests/test_protein_analysis_utils.py::156": {
+      "id": "security::tests/test_protein_analysis_utils.py::security::B101::tests/test_protein_analysis_utils.py::156",
+      "detector": "security",
+      "file": "tests/test_protein_analysis_utils.py",
+      "tier": 3,
+      "confidence": "low",
+      "summary": "[B101] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.",
+      "detail": {
+        "kind": "B101",
+        "severity": "low",
+        "line": 156,
+        "content": "155         # All rows total should equal len(sample_df)\n156         assert result.loc[\"All\", \"All\"] == len(sample_df)\n",
+        "remediation": "https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html",
+        "test_name": "assert_used",
+        "source": "bandit"
+      },
+      "status": "open",
+      "note": null,
+      "first_seen": "2026-03-03T12:51:09+00:00",
+      "last_seen": "2026-03-03T12:51:09+00:00",
+      "resolved_at": null,
+      "reopen_count": 0,
+      "zone": "test",
+      "lang": "python",
       "suppressed": false,
       "suppressed_at": null,
       "suppression_pattern": null
@@ -2306,7 +3519,7 @@
         }
       },
       "warnings": [],
-      "updated_at": "2026-03-03T12:38:30+00:00"
+      "updated_at": "2026-03-03T12:51:11+00:00"
     }
   },
   "score_confidence": {
@@ -2330,8 +3543,8 @@
     }
   },
   "zone_distribution": {
-    "production": 14,
-    "test": 1
+    "production": 12,
+    "test": 2
   },
   "scan_history": [
     {
@@ -2430,6 +3643,103 @@
           "strict": 0.0
         }
       }
+    },
+    {
+      "timestamp": "2026-03-03T12:51:11+00:00",
+      "lang": "python",
+      "strict_score": 23.3,
+      "verified_strict_score": 58.2,
+      "objective_score": 58.2,
+      "overall_score": 23.3,
+      "open": 78,
+      "diff_new": 36,
+      "diff_resolved": 36,
+      "ignored": 0,
+      "raw_findings": 78,
+      "suppressed_pct": 0.0,
+      "ignore_patterns": 0,
+      "subjective_integrity": {
+        "status": "pass",
+        "matched_count": 0,
+        "reset_count": 0,
+        "target_score": 95.0
+      },
+      "score_confidence": {
+        "status": "full",
+        "confidence": 1.0,
+        "detector_count": 0,
+        "dimension_count": 0
+      },
+      "dimension_scores": {
+        "File health": {
+          "score": 76.7,
+          "strict": 76.7
+        },
+        "Code quality": {
+          "score": 86.0,
+          "strict": 86.0
+        },
+        "Duplication": {
+          "score": 97.9,
+          "strict": 97.9
+        },
+        "Test health": {
+          "score": 18.8,
+          "strict": 18.8
+        },
+        "Security": {
+          "score": 100.0,
+          "strict": 100.0
+        },
+        "Error consistency": {
+          "score": 0.0,
+          "strict": 0.0
+        },
+        "Abstraction fit": {
+          "score": 0.0,
+          "strict": 0.0
+        },
+        "AI generated debt": {
+          "score": 0.0,
+          "strict": 0.0
+        },
+        "High elegance": {
+          "score": 0.0,
+          "strict": 0.0
+        },
+        "Mid elegance": {
+          "score": 0.0,
+          "strict": 0.0
+        },
+        "Low elegance": {
+          "score": 0.0,
+          "strict": 0.0
+        },
+        "Cross-module arch": {
+          "score": 0.0,
+          "strict": 0.0
+        },
+        "Convention drift": {
+          "score": 0.0,
+          "strict": 0.0
+        },
+        "Dep health": {
+          "score": 0.0,
+          "strict": 0.0
+        },
+        "Test strategy": {
+          "score": 0.0,
+          "strict": 0.0
+        },
+        "Structure nav": {
+          "score": 0.0,
+          "strict": 0.0
+        },
+        "Design coherence": {
+          "score": 0.0,
+          "strict": 0.0
+        }
+      }
     }
   ],
   "tool_hash": "e073c6da67fa",
@@ -2439,181 +3749,175 @@
   },
   "potentials": {
     "python": {
-      "unused": 14,
-      "structural": 14,
-      "flat_dirs": 4,
+      "unused": 12,
+      "structural": 12,
+      "flat_dirs": 5,
       "props": 0,
-      "responsibility_cohesion": 2,
+      "responsibility_cohesion": 0,
       "single_use": 0,
-      "cycles": 14,
-      "orphaned": 14,
-      "facade": 14,
+      "cycles": 12,
+      "orphaned": 12,
+      "facade": 12,
       "coupling": 0,
-      "uncalled_functions": 0,
-      "test_coverage": 152,
-      "smells": 14,
-      "global_mutable_config": 14,
-      "security": 14,
-      "private_imports": 14,
-      "dict_keys": 14,
-      "subjective_review": 14,
-      "boilerplate_duplication": 5,
-      "dupes": 38,
+      "uncalled_functions": 9,
+      "test_coverage": 121,
+      "smells": 12,
+      "global_mutable_config": 12,
+      "security": 12,
+      "private_imports": 12,
+      "dict_keys": 12,
+      "subjective_review": 12,
+      "boilerplate_duplication": 2,
+      "dupes": 31,
       "stale_wontfix": 0
     }
   },
   "codebase_metrics": {
     "python": {
-      "total_files": 15,
-      "total_loc": 2657,
-      "total_directories": 4
+      "total_files": 14,
+      "total_loc": 2178,
+      "total_directories": 5
     }
   },
   "dimension_scores": {
     "File health": {
-      "score": 60.0,
-      "strict_score": 60.0,
-      "verified_strict_score": 60.0,
-      "checks": 14,
-      "issues": 8,
+      "score": 76.7,
+      "strict_score": 76.7,
+      "verified_strict_score": 76.7,
+      "checks": 12,
+      "issues": 4,
       "tier": 3,
       "detectors": {
         "structural": {
-          "potential": 14,
-          "pass_rate": 0.5999999999999999,
-          "issues": 8,
-          "weighted_failures": 5.6000000000000005
+          "potential": 12,
+          "pass_rate": 0.7666666666666666,
+          "issues": 4,
+          "weighted_failures": 2.8
         }
       },
-      "strict": 60.0
+      "strict": 76.7
     },
     "Code quality": {
-      "score": 80.1,
-      "strict_score": 80.1,
-      "verified_strict_score": 80.1,
-      "checks": 104,
-      "issues": 33,
+      "score": 86.0,
+      "strict_score": 86.0,
+      "verified_strict_score": 86.0,
+      "checks": 89,
+      "issues": 19,
       "tier": 3,
       "detectors": {
         "unused": {
-          "potential": 14,
+          "potential": 12,
           "pass_rate": 1.0,
           "issues": 0,
           "weighted_failures": 0.0
         },
         "smells": {
-          "potential": 14,
-          "pass_rate": 0.32142857142857145,
-          "issues": 17,
-          "weighted_failures": 9.5
+          "potential": 12,
+          "pass_rate": 0.6,
+          "issues": 8,
+          "weighted_failures": 4.8
         },
         "dict_keys": {
-          "potential": 14,
+          "potential": 12,
           "pass_rate": 1.0,
           "issues": 0,
           "weighted_failures": 0.0
         },
         "global_mutable_config": {
-          "potential": 14,
+          "potential": 12,
           "pass_rate": 1.0,
           "issues": 0,
           "weighted_failures": 0.0
         },
         "orphaned": {
-          "potential": 14,
-          "pass_rate": 0.35000000000000003,
-          "issues": 13,
-          "weighted_failures": 9.1
+          "potential": 12,
+          "pass_rate": 0.3583333333333332,
+          "issues": 11,
+          "weighted_failures": 7.700000000000001
         },
         "flat_dirs": {
-          "potential": 4,
+          "potential": 5,
           "pass_rate": 1.0,
           "issues": 0,
           "weighted_failures": 0.0
         },
         "facade": {
-          "potential": 14,
+          "potential": 12,
           "pass_rate": 1.0,
           "issues": 0,
           "weighted_failures": 0.0
         },
-        "responsibility_cohesion": {
-          "potential": 2,
-          "pass_rate": 0.0,
-          "issues": 3,
-          "weighted_failures": 2.0999999999999996
-        },
         "private_imports": {
-          "potential": 14,
+          "potential": 12,
           "pass_rate": 1.0,
           "issues": 0,
           "weighted_failures": 0.0
         }
       },
-      "strict": 80.1
+      "strict": 86.0
     },
     "Duplication": {
-      "score": 78.1,
-      "strict_score": 78.1,
-      "verified_strict_score": 78.1,
-      "checks": 43,
-      "issues": 10,
+      "score": 97.9,
+      "strict_score": 97.9,
+      "verified_strict_score": 97.9,
+      "checks": 33,
+      "issues": 1,
       "tier": 3,
       "detectors": {
         "dupes": {
-          "potential": 38,
-          "pass_rate": 0.7894736842105263,
-          "issues": 8,
-          "weighted_failures": 8.0
+          "potential": 31,
+          "pass_rate": 1.0,
+          "issues": 0,
+          "weighted_failures": 0.0
         },
         "boilerplate_duplication": {
-          "potential": 5,
-          "pass_rate": 0.72,
-          "issues": 2,
-          "weighted_failures": 1.4
+          "potential": 2,
+          "pass_rate": 0.65,
+          "issues": 1,
+          "weighted_failures": 0.7
         }
       },
-      "strict": 78.1
+      "strict": 97.9
     },
     "Test health": {
-      "score": 5.4,
-      "strict_score": 5.4,
-      "verified_strict_score": 5.4,
-      "checks": 166,
-      "issues": 26,
+      "score": 18.8,
+      "strict_score": 18.8,
+      "verified_strict_score": 18.8,
+      "checks": 133,
+      "issues": 22,
       "tier": 4,
       "detectors": {
         "test_coverage": {
-          "potential": 152,
-          "pass_rate": 0.0,
-          "issues": 11,
-          "weighted_failures": 152.48589426402054
+          "potential": 121,
+          "pass_rate": 0.14006230532887173,
+          "issues": 9,
+          "weighted_failures": 104.05246105520652
         },
         "subjective_review": {
-          "potential": 14,
-          "pass_rate": 0.6785714285714286,
-          "issues": 15,
-          "weighted_failures": 4.5
+          "potential": 12,
+          "pass_rate": 0.6749999999999999,
+          "issues": 13,
+          "weighted_failures": 3.9
         }
       },
-      "strict": 5.4
+      "strict": 18.8
     },
     "Security": {
       "score": 100.0,
       "strict_score": 100.0,
       "verified_strict_score": 100.0,
-      "checks": 28,
+      "checks": 24,
       "issues": 0,
       "tier": 4,
       "detectors": {
         "security": {
-          "potential": 14,
+          "potential": 12,
           "pass_rate": 1.0,
           "issues": 0,
           "weighted_failures": 0.0
         },
         "cycles": {
-          "potential": 14,
+          "potential": 12,
           "pass_rate": 1.0,
           "issues": 0,
           "weighted_failures": 0.0
@@ -2885,5 +4189,9 @@
       },
       "strict": 0.0
     }
+  },
+  "reminder_history": {
+    "zone_classification": 1,
+    "report_scores": 1
   }
 }
