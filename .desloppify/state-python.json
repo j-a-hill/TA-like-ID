@@ -1,0 +1,2893 @@
+{
+  "version": 1,
+  "created": "2026-03-03T12:38:24+00:00",
+  "last_scan": "2026-03-03T12:38:30+00:00",
+  "scan_count": 1,
+  "overall_score": 18.5,
+  "objective_score": 46.2,
+  "strict_score": 18.5,
+  "verified_strict_score": 46.2,
+  "stats": {
+    "total": 78,
+    "open": 78,
+    "fixed": 0,
+    "auto_resolved": 0,
+    "wontfix": 0,
+    "false_positive": 0,
+    "by_tier": {
+      "2": {
+        "open": 19,
+        "fixed": 0,
+        "auto_resolved": 0,
+        "wontfix": 0,
+        "false_positive": 0
+      },
+      "3": {
+        "open": 44,
+        "fixed": 0,
+        "auto_resolved": 0,
+        "wontfix": 0,
+        "false_positive": 0
+      },
+      "4": {
+        "open": 15,
+        "fixed": 0,
+        "auto_resolved": 0,
+        "wontfix": 0,
+        "false_positive": 0
+      }
+    }
+  },
+  "findings": {
+    "structural::analysis/protein_analysis_utils.py": {
+      "id": "structural::analysis/protein_analysis_utils.py",
+      "detector": "structural",
+      "file": "analysis/protein_analysis_utils.py",
+      "tier": 3,
+      "confidence": "medium",
+      "summary": "Needs decomposition: large (302 LOC)",
+      "detail": {
+        "loc": 302
+      },
+      "status": "open",
+      "note": null,
+      "first_seen": "2026-03-03T12:38:24+00:00",
+      "last_seen": "2026-03-03T12:38:24+00:00",
+      "resolved_at": null,
+      "reopen_count": 0,
+      "lang": "python",
+      "zone": "production",
+      "suppressed": false,
+      "suppressed_at": null,
+      "suppression_pattern": null
+    },
+    "structural::app/protein_analysis_utils.py": {
+      "id": "structural::app/protein_analysis_utils.py",
+      "detector": "structural",
+      "file": "app/protein_analysis_utils.py",
+      "tier": 3,
+      "confidence": "medium",
+      "summary": "Needs decomposition: large (302 LOC)",
+      "detail": {
+        "loc": 302
+      },
+      "status": "open",
+      "note": null,
+      "first_seen": "2026-03-03T12:38:24+00:00",
+      "last_seen": "2026-03-03T12:38:24+00:00",
+      "resolved_at": null,
+      "reopen_count": 0,
+      "lang": "python",
+      "zone": "production",
+      "suppressed": false,
+      "suppressed_at": null,
+      "suppression_pattern": null
+    },
+    "structural::protein_analysis_utils.py": {
+      "id": "structural::protein_analysis_utils.py",
+      "detector": "structural",
+      "file": "protein_analysis_utils.py",
+      "tier": 3,
+      "confidence": "medium",
+      "summary": "Needs decomposition: large (302 LOC)",
+      "detail": {
+        "loc": 302
+      },
+      "status": "open",
+      "note": null,
+      "first_seen": "2026-03-03T12:38:24+00:00",
+      "last_seen": "2026-03-03T12:38:24+00:00",
+      "resolved_at": null,
+      "reopen_count": 0,
+      "lang": "python",
+      "zone": "production",
+      "suppressed": false,
+      "suppressed_at": null,
+      "suppression_pattern": null
+    },
+    "structural::analysis/demo_fixed_workflow.py": {
+      "id": "structural::analysis/demo_fixed_workflow.py",
+      "detector": "structural",
+      "file": "analysis/demo_fixed_workflow.py",
+      "tier": 3,
+      "confidence": "medium",
+      "summary": "Needs decomposition: complexity score 84",
+      "detail": {
+        "complexity_score": 84,
+        "complexity_signals": [
+          "long function (demonstrate_fixed_workflow: 164 LOC)"
+        ],
+        "loc": 189
+      },
+      "status": "open",
+      "note": null,
+      "first_seen": "2026-03-03T12:38:24+00:00",
+      "last_seen": "2026-03-03T12:38:24+00:00",
+      "resolved_at": null,
+      "reopen_count": 0,
+      "lang": "python",
+      "zone": "production",
+      "suppressed": false,
+      "suppressed_at": null,
+      "suppression_pattern": null
+    },
+    "structural::analysis/improved_analysis.py": {
+      "id": "structural::analysis/improved_analysis.py",
+      "detector": "structural",
+      "file": "analysis/improved_analysis.py",
+      "tier": 3,
+      "confidence": "medium",
+      "summary": "Needs decomposition: complexity score 76",
+      "detail": {
+        "complexity_score": 76,
+        "complexity_signals": [
+          "long function (main: 156 LOC)"
+        ],
+        "loc": 187
+      },
+      "status": "open",
+      "note": null,
+      "first_seen": "2026-03-03T12:38:24+00:00",
+      "last_seen": "2026-03-03T12:38:24+00:00",
+      "resolved_at": null,
+      "reopen_count": 0,
+      "lang": "python",
+      "zone": "production",
+      "suppressed": false,
+      "suppressed_at": null,
+      "suppression_pattern": null
+    },
+    "structural::app/app.py": {
+      "id": "structural::app/app.py",
+      "detector": "structural",
+      "file": "app/app.py",
+      "tier": 3,
+      "confidence": "medium",
+      "summary": "Needs decomposition: complexity score 51",
+      "detail": {
+        "complexity_score": 51,
+        "complexity_signals": [
+          "nesting depth 7",
+          "long function (server: 122 LOC)"
+        ],
+        "loc": 259
+      },
+      "status": "open",
+      "note": null,
+      "first_seen": "2026-03-03T12:38:24+00:00",
+      "last_seen": "2026-03-03T12:38:24+00:00",
+      "resolved_at": null,
+      "reopen_count": 0,
+      "lang": "python",
+      "zone": "production",
+      "suppressed": false,
+      "suppressed_at": null,
+      "suppression_pattern": null
+    },
+    "structural::analysis/Uniprot_TMD_search.py": {
+      "id": "structural::analysis/Uniprot_TMD_search.py",
+      "detector": "structural",
+      "file": "analysis/Uniprot_TMD_search.py",
+      "tier": 3,
+      "confidence": "medium",
+      "summary": "Needs decomposition: complexity score 36",
+      "detail": {
+        "complexity_score": 36,
+        "complexity_signals": [
+          "nesting depth 16"
+        ],
+        "loc": 180
+      },
+      "status": "open",
+      "note": null,
+      "first_seen": "2026-03-03T12:38:24+00:00",
+      "last_seen": "2026-03-03T12:38:24+00:00",
+      "resolved_at": null,
+      "reopen_count": 0,
+      "lang": "python",
+      "zone": "production",
+      "suppressed": false,
+      "suppressed_at": null,
+      "suppression_pattern": null
+    },
+    "structural::STANDALONE_APP.py": {
+      "id": "structural::STANDALONE_APP.py",
+      "detector": "structural",
+      "file": "STANDALONE_APP.py",
+      "tier": 3,
+      "confidence": "medium",
+      "summary": "Needs decomposition: complexity score 35",
+      "detail": {
+        "complexity_score": 35,
+        "complexity_signals": [
+          "nesting depth 5",
+          "long function (server: 112 LOC)"
+        ],
+        "loc": 266
+      },
+      "status": "open",
+      "note": null,
+      "first_seen": "2026-03-03T12:38:24+00:00",
+      "last_seen": "2026-03-03T12:38:24+00:00",
+      "resolved_at": null,
+      "reopen_count": 0,
+      "lang": "python",
+      "zone": "production",
+      "suppressed": false,
+      "suppressed_at": null,
+      "suppression_pattern": null
+    },
+    "responsibility_cohesion::analysis/protein_analysis_utils.py": {
+      "id": "responsibility_cohesion::analysis/protein_analysis_utils.py",
+      "detector": "responsibility_cohesion",
+      "file": "analysis/protein_analysis_utils.py",
+      "tier": 3,
+      "confidence": "medium",
+      "summary": "Mixed responsibilities: 8 top-level funcs across 2 disconnected clusters (7, 1)",
+      "detail": {
+        "loc": 302,
+        "function_count": 8,
+        "component_count": 2,
+        "component_sizes": [
+          7,
+          1
+        ],
+        "family_count": 6,
+        "import_cluster_count": 2,
+        "families": [
+          "analyze",
+          "compare",
+          "cross",
+          "filter",
+          "quick",
+          "summary"
+        ]
+      },
+      "status": "open",
+      "note": null,
+      "first_seen": "2026-03-03T12:38:24+00:00",
+      "last_seen": "2026-03-03T12:38:24+00:00",
+      "resolved_at": null,
+      "reopen_count": 0,
+      "lang": "python",
+      "zone": "production",
+      "suppressed": false,
+      "suppressed_at": null,
+      "suppression_pattern": null
+    },
+    "responsibility_cohesion::app/protein_analysis_utils.py": {
+      "id": "responsibility_cohesion::app/protein_analysis_utils.py",
+      "detector": "responsibility_cohesion",
+      "file": "app/protein_analysis_utils.py",
+      "tier": 3,
+      "confidence": "medium",
+      "summary": "Mixed responsibilities: 8 top-level funcs across 2 disconnected clusters (7, 1)",
+      "detail": {
+        "loc": 302,
+        "function_count": 8,
+        "component_count": 2,
+        "component_sizes": [
+          7,
+          1
+        ],
+        "family_count": 6,
+        "import_cluster_count": 2,
+        "families": [
+          "analyze",
+          "compare",
+          "cross",
+          "filter",
+          "quick",
+          "summary"
+        ]
+      },
+      "status": "open",
+      "note": null,
+      "first_seen": "2026-03-03T12:38:24+00:00",
+      "last_seen": "2026-03-03T12:38:24+00:00",
+      "resolved_at": null,
+      "reopen_count": 0,
+      "lang": "python",
+      "zone": "production",
+      "suppressed": false,
+      "suppressed_at": null,
+      "suppression_pattern": null
+    },
+    "responsibility_cohesion::protein_analysis_utils.py": {
+      "id": "responsibility_cohesion::protein_analysis_utils.py",
+      "detector": "responsibility_cohesion",
+      "file": "protein_analysis_utils.py",
+      "tier": 3,
+      "confidence": "medium",
+      "summary": "Mixed responsibilities: 8 top-level funcs across 2 disconnected clusters (7, 1)",
+      "detail": {
+        "loc": 302,
+        "function_count": 8,
+        "component_count": 2,
+        "component_sizes": [
+          7,
+          1
+        ],
+        "family_count": 6,
+        "import_cluster_count": 2,
+        "families": [
+          "analyze",
+          "compare",
+          "cross",
+          "filter",
+          "quick",
+          "summary"
+        ]
+      },
+      "status": "open",
+      "note": null,
+      "first_seen": "2026-03-03T12:38:24+00:00",
+      "last_seen": "2026-03-03T12:38:24+00:00",
+      "resolved_at": null,
+      "reopen_count": 0,
+      "lang": "python",
+      "zone": "production",
+      "suppressed": false,
+      "suppressed_at": null,
+      "suppression_pattern": null
+    },
+    "orphaned::analysis/protein_analysis_utils.py": {
+      "id": "orphaned::analysis/protein_analysis_utils.py",
+      "detector": "orphaned",
+      "file": "analysis/protein_analysis_utils.py",
+      "tier": 3,
+      "confidence": "medium",
+      "summary": "Orphaned file (302 LOC): zero importers, not an entry point",
+      "detail": {
+        "loc": 302
+      },
+      "status": "open",
+      "note": null,
+      "first_seen": "2026-03-03T12:38:24+00:00",
+      "last_seen": "2026-03-03T12:38:24+00:00",
+      "resolved_at": null,
+      "reopen_count": 0,
+      "lang": "python",
+      "zone": "production",
+      "suppressed": false,
+      "suppressed_at": null,
+      "suppression_pattern": null
+    },
+    "orphaned::app/protein_analysis_utils.py": {
+      "id": "orphaned::app/protein_analysis_utils.py",
+      "detector": "orphaned",
+      "file": "app/protein_analysis_utils.py",
+      "tier": 3,
+      "confidence": "medium",
+      "summary": "Orphaned file (302 LOC): zero importers, not an entry point",
+      "detail": {
+        "loc": 302
+      },
+      "status": "open",
+      "note": null,
+      "first_seen": "2026-03-03T12:38:24+00:00",
+      "last_seen": "2026-03-03T12:38:24+00:00",
+      "resolved_at": null,
+      "reopen_count": 0,
+      "lang": "python",
+      "zone": "production",
+      "suppressed": false,
+      "suppressed_at": null,
+      "suppression_pattern": null
+    },
+    "orphaned::STANDALONE_APP.py": {
+      "id": "orphaned::STANDALONE_APP.py",
+      "detector": "orphaned",
+      "file": "STANDALONE_APP.py",
+      "tier": 3,
+      "confidence": "medium",
+      "summary": "Orphaned file (266 LOC): zero importers, not an entry point",
+      "detail": {
+        "loc": 266
+      },
+      "status": "open",
+      "note": null,
+      "first_seen": "2026-03-03T12:38:24+00:00",
+      "last_seen": "2026-03-03T12:38:24+00:00",
+      "resolved_at": null,
+      "reopen_count": 0,
+      "lang": "python",
+      "zone": "production",
+      "suppressed": false,
+      "suppressed_at": null,
+      "suppression_pattern": null
+    },
+    "orphaned::app/app.py": {
+      "id": "orphaned::app/app.py",
+      "detector": "orphaned",
+      "file": "app/app.py",
+      "tier": 3,
+      "confidence": "medium",
+      "summary": "Orphaned file (259 LOC): zero importers, not an entry point",
+      "detail": {
+        "loc": 259
+      },
+      "status": "open",
+      "note": null,
+      "first_seen": "2026-03-03T12:38:24+00:00",
+      "last_seen": "2026-03-03T12:38:24+00:00",
+      "resolved_at": null,
+      "reopen_count": 0,
+      "lang": "python",
+      "zone": "production",
+      "suppressed": false,
+      "suppressed_at": null,
+      "suppression_pattern": null
+    },
+    "orphaned::docs/QUICK_START.py": {
+      "id": "orphaned::docs/QUICK_START.py",
+      "detector": "orphaned",
+      "file": "docs/QUICK_START.py",
+      "tier": 3,
+      "confidence": "medium",
+      "summary": "Orphaned file (213 LOC): zero importers, not an entry point",
+      "detail": {
+        "loc": 213
+      },
+      "status": "open",
+      "note": null,
+      "first_seen": "2026-03-03T12:38:24+00:00",
+      "last_seen": "2026-03-03T12:38:24+00:00",
+      "resolved_at": null,
+      "reopen_count": 0,
+      "lang": "python",
+      "zone": "production",
+      "suppressed": false,
+      "suppressed_at": null,
+      "suppression_pattern": null
+    },
+    "orphaned::analysis/demo_fixed_workflow.py": {
+      "id": "orphaned::analysis/demo_fixed_workflow.py",
+      "detector": "orphaned",
+      "file": "analysis/demo_fixed_workflow.py",
+      "tier": 3,
+      "confidence": "medium",
+      "summary": "Orphaned file (189 LOC): zero importers, not an entry point",
+      "detail": {
+        "loc": 189
+      },
+      "status": "open",
+      "note": null,
+      "first_seen": "2026-03-03T12:38:24+00:00",
+      "last_seen": "2026-03-03T12:38:24+00:00",
+      "resolved_at": null,
+      "reopen_count": 0,
+      "lang": "python",
+      "zone": "production",
+      "suppressed": false,
+      "suppressed_at": null,
+      "suppression_pattern": null
+    },
+    "orphaned::analysis/improved_analysis.py": {
+      "id": "orphaned::analysis/improved_analysis.py",
+      "detector": "orphaned",
+      "file": "analysis/improved_analysis.py",
+      "tier": 3,
+      "confidence": "medium",
+      "summary": "Orphaned file (187 LOC): zero importers, not an entry point",
+      "detail": {
+        "loc": 187
+      },
+      "status": "open",
+      "note": null,
+      "first_seen": "2026-03-03T12:38:24+00:00",
+      "last_seen": "2026-03-03T12:38:24+00:00",
+      "resolved_at": null,
+      "reopen_count": 0,
+      "lang": "python",
+      "zone": "production",
+      "suppressed": false,
+      "suppressed_at": null,
+      "suppression_pattern": null
+    },
+    "orphaned::analysis/Uniprot_TMD_search.py": {
+      "id": "orphaned::analysis/Uniprot_TMD_search.py",
+      "detector": "orphaned",
+      "file": "analysis/Uniprot_TMD_search.py",
+      "tier": 3,
+      "confidence": "medium",
+      "summary": "Orphaned file (180 LOC): zero importers, not an entry point",
+      "detail": {
+        "loc": 180
+      },
+      "status": "open",
+      "note": null,
+      "first_seen": "2026-03-03T12:38:24+00:00",
+      "last_seen": "2026-03-03T12:38:24+00:00",
+      "resolved_at": null,
+      "reopen_count": 0,
+      "lang": "python",
+      "zone": "production",
+      "suppressed": false,
+      "suppressed_at": null,
+      "suppression_pattern": null
+    },
+    "orphaned::analysis/srp_filter.py": {
+      "id": "orphaned::analysis/srp_filter.py",
+      "detector": "orphaned",
+      "file": "analysis/srp_filter.py",
+      "tier": 3,
+      "confidence": "medium",
+      "summary": "Orphaned file (128 LOC): zero importers, not an entry point",
+      "detail": {
+        "loc": 128
+      },
+      "status": "open",
+      "note": null,
+      "first_seen": "2026-03-03T12:38:24+00:00",
+      "last_seen": "2026-03-03T12:38:24+00:00",
+      "resolved_at": null,
+      "reopen_count": 0,
+      "lang": "python",
+      "zone": "production",
+      "suppressed": false,
+      "suppressed_at": null,
+      "suppression_pattern": null
+    },
+    "orphaned::analysis/non_srp_filter.py": {
+      "id": "orphaned::analysis/non_srp_filter.py",
+      "detector": "orphaned",
+      "file": "analysis/non_srp_filter.py",
+      "tier": 3,
+      "confidence": "medium",
+      "summary": "Orphaned file (121 LOC): zero importers, not an entry point",
+      "detail": {
+        "loc": 121
+      },
+      "status": "open",
+      "note": null,
+      "first_seen": "2026-03-03T12:38:24+00:00",
+      "last_seen": "2026-03-03T12:38:24+00:00",
+      "resolved_at": null,
+      "reopen_count": 0,
+      "lang": "python",
+      "zone": "production",
+      "suppressed": false,
+      "suppressed_at": null,
+      "suppression_pattern": null
+    },
+    "orphaned::analysis/signalp_6_filter.py": {
+      "id": "orphaned::analysis/signalp_6_filter.py",
+      "detector": "orphaned",
+      "file": "analysis/signalp_6_filter.py",
+      "tier": 3,
+      "confidence": "medium",
+      "summary": "Orphaned file (57 LOC): zero importers, not an entry point",
+      "detail": {
+        "loc": 57
+      },
+      "status": "open",
+      "note": null,
+      "first_seen": "2026-03-03T12:38:24+00:00",
+      "last_seen": "2026-03-03T12:38:24+00:00",
+      "resolved_at": null,
+      "reopen_count": 0,
+      "lang": "python",
+      "zone": "production",
+      "suppressed": false,
+      "suppressed_at": null,
+      "suppression_pattern": null
+    },
+    "orphaned::app/wsgi_pythonanywhere.py": {
+      "id": "orphaned::app/wsgi_pythonanywhere.py",
+      "detector": "orphaned",
+      "file": "app/wsgi_pythonanywhere.py",
+      "tier": 3,
+      "confidence": "medium",
+      "summary": "Orphaned file (25 LOC): zero importers, not an entry point",
+      "detail": {
+        "loc": 25
+      },
+      "status": "open",
+      "note": null,
+      "first_seen": "2026-03-03T12:38:24+00:00",
+      "last_seen": "2026-03-03T12:38:24+00:00",
+      "resolved_at": null,
+      "reopen_count": 0,
+      "lang": "python",
+      "zone": "production",
+      "suppressed": false,
+      "suppressed_at": null,
+      "suppression_pattern": null
+    },
+    "orphaned::analysis/tmd_count.py": {
+      "id": "orphaned::analysis/tmd_count.py",
+      "detector": "orphaned",
+      "file": "analysis/tmd_count.py",
+      "tier": 3,
+      "confidence": "medium",
+      "summary": "Orphaned file (23 LOC): zero importers, not an entry point",
+      "detail": {
+        "loc": 23
+      },
+      "status": "open",
+      "note": null,
+      "first_seen": "2026-03-03T12:38:24+00:00",
+      "last_seen": "2026-03-03T12:38:24+00:00",
+      "resolved_at": null,
+      "reopen_count": 0,
+      "lang": "python",
+      "zone": "production",
+      "suppressed": false,
+      "suppressed_at": null,
+      "suppression_pattern": null
+    },
+    "test_coverage::protein_analysis_utils.py::untested_module": {
+      "id": "test_coverage::protein_analysis_utils.py::untested_module",
+      "detector": "test_coverage",
+      "file": "protein_analysis_utils.py",
+      "tier": 3,
+      "confidence": "high",
+      "summary": "Untested module (302 LOC, 2 importers)",
+      "detail": {
+        "kind": "untested_module",
+        "loc": 302,
+        "importer_count": 2,
+        "loc_weight": 17.378147196982766
+      },
+      "status": "open",
+      "note": null,
+      "first_seen": "2026-03-03T12:38:24+00:00",
+      "last_seen": "2026-03-03T12:38:24+00:00",
+      "resolved_at": null,
+      "reopen_count": 0,
+      "lang": "python",
+      "zone": "production",
+      "suppressed": false,
+      "suppressed_at": null,
+      "suppression_pattern": null
+    },
+    "test_coverage::analysis/demo_fixed_workflow.py::untested_critical": {
+      "id": "test_coverage::analysis/demo_fixed_workflow.py::untested_critical",
+      "detector": "test_coverage",
+      "file": "analysis/demo_fixed_workflow.py",
+      "tier": 2,
+      "confidence": "high",
+      "summary": "Untested critical module (189 LOC, 0 importers) \u2014 high blast radius",
+      "detail": {
+        "kind": "untested_critical",
+        "loc": 189,
+        "importer_count": 0,
+        "loc_weight": 13.74772708486752,
+        "complexity_score": 84
+      },
+      "status": "open",
+      "note": null,
+      "first_seen": "2026-03-03T12:38:24+00:00",
+      "last_seen": "2026-03-03T12:38:24+00:00",
+      "resolved_at": null,
+      "reopen_count": 0,
+      "lang": "python",
+      "zone": "production",
+      "suppressed": false,
+      "suppressed_at": null,
+      "suppression_pattern": null
+    },
+    "test_coverage::analysis/tmd_count.py::untested_module": {
+      "id": "test_coverage::analysis/tmd_count.py::untested_module",
+      "detector": "test_coverage",
+      "file": "analysis/tmd_count.py",
+      "tier": 3,
+      "confidence": "high",
+      "summary": "Untested module (23 LOC, 0 importers)",
+      "detail": {
+        "kind": "untested_module",
+        "loc": 23,
+        "importer_count": 0,
+        "loc_weight": 4.795831523312719
+      },
+      "status": "open",
+      "note": null,
+      "first_seen": "2026-03-03T12:38:24+00:00",
+      "last_seen": "2026-03-03T12:38:24+00:00",
+      "resolved_at": null,
+      "reopen_count": 0,
+      "lang": "python",
+      "zone": "production",
+      "suppressed": false,
+      "suppressed_at": null,
+      "suppression_pattern": null
+    },
+    "test_coverage::analysis/improved_analysis.py::untested_critical": {
+      "id": "test_coverage::analysis/improved_analysis.py::untested_critical",
+      "detector": "test_coverage",
+      "file": "analysis/improved_analysis.py",
+      "tier": 2,
+      "confidence": "high",
+      "summary": "Untested critical module (187 LOC, 0 importers) \u2014 high blast radius",
+      "detail": {
+        "kind": "untested_critical",
+        "loc": 187,
+        "importer_count": 0,
+        "loc_weight": 13.674794331177344,
+        "complexity_score": 76
+      },
+      "status": "open",
+      "note": null,
+      "first_seen": "2026-03-03T12:38:24+00:00",
+      "last_seen": "2026-03-03T12:38:24+00:00",
+      "resolved_at": null,
+      "reopen_count": 0,
+      "lang": "python",
+      "zone": "production",
+      "suppressed": false,
+      "suppressed_at": null,
+      "suppression_pattern": null
+    },
+    "test_coverage::app/protein_analysis_utils.py::untested_module": {
+      "id": "test_coverage::app/protein_analysis_utils.py::untested_module",
+      "detector": "test_coverage",
+      "file": "app/protein_analysis_utils.py",
+      "tier": 3,
+      "confidence": "high",
+      "summary": "Untested module (302 LOC, 0 importers)",
+      "detail": {
+        "kind": "untested_module",
+        "loc": 302,
+        "importer_count": 0,
+        "loc_weight": 17.378147196982766
+      },
+      "status": "open",
+      "note": null,
+      "first_seen": "2026-03-03T12:38:24+00:00",
+      "last_seen": "2026-03-03T12:38:24+00:00",
+      "resolved_at": null,
+      "reopen_count": 0,
+      "lang": "python",
+      "zone": "production",
+      "suppressed": false,
+      "suppressed_at": null,
+      "suppression_pattern": null
+    },
+    "test_coverage::analysis/srp_filter.py::untested_module": {
+      "id": "test_coverage::analysis/srp_filter.py::untested_module",
+      "detector": "test_coverage",
+      "file": "analysis/srp_filter.py",
+      "tier": 3,
+      "confidence": "high",
+      "summary": "Untested module (128 LOC, 0 importers)",
+      "detail": {
+        "kind": "untested_module",
+        "loc": 128,
+        "importer_count": 0,
+        "loc_weight": 11.313708498984761
+      },
+      "status": "open",
+      "note": null,
+      "first_seen": "2026-03-03T12:38:24+00:00",
+      "last_seen": "2026-03-03T12:38:24+00:00",
+      "resolved_at": null,
+      "reopen_count": 0,
+      "lang": "python",
+      "zone": "production",
+      "suppressed": false,
+      "suppressed_at": null,
+      "suppression_pattern": null
+    },
+    "test_coverage::STANDALONE_APP.py::untested_critical": {
+      "id": "test_coverage::STANDALONE_APP.py::untested_critical",
+      "detector": "test_coverage",
+      "file": "STANDALONE_APP.py",
+      "tier": 2,
+      "confidence": "high",
+      "summary": "Untested critical module (266 LOC, 0 importers) \u2014 high blast radius",
+      "detail": {
+        "kind": "untested_critical",
+        "loc": 266,
+        "importer_count": 0,
+        "loc_weight": 16.30950643030009,
+        "complexity_score": 35
+      },
+      "status": "open",
+      "note": null,
+      "first_seen": "2026-03-03T12:38:24+00:00",
+      "last_seen": "2026-03-03T12:38:24+00:00",
+      "resolved_at": null,
+      "reopen_count": 0,
+      "lang": "python",
+      "zone": "production",
+      "suppressed": false,
+      "suppressed_at": null,
+      "suppression_pattern": null
+    },
+    "test_coverage::app/app.py::untested_critical": {
+      "id": "test_coverage::app/app.py::untested_critical",
+      "detector": "test_coverage",
+      "file": "app/app.py",
+      "tier": 2,
+      "confidence": "high",
+      "summary": "Untested critical module (259 LOC, 0 importers) \u2014 high blast radius",
+      "detail": {
+        "kind": "untested_critical",
+        "loc": 259,
+        "importer_count": 0,
+        "loc_weight": 16.09347693943108,
+        "complexity_score": 51
+      },
+      "status": "open",
+      "note": null,
+      "first_seen": "2026-03-03T12:38:24+00:00",
+      "last_seen": "2026-03-03T12:38:24+00:00",
+      "resolved_at": null,
+      "reopen_count": 0,
+      "lang": "python",
+      "zone": "production",
+      "suppressed": false,
+      "suppressed_at": null,
+      "suppression_pattern": null
+    },
+    "test_coverage::analysis/protein_analysis_utils.py::untested_module": {
+      "id": "test_coverage::analysis/protein_analysis_utils.py::untested_module",
+      "detector": "test_coverage",
+      "file": "analysis/protein_analysis_utils.py",
+      "tier": 3,
+      "confidence": "high",
+      "summary": "Untested module (302 LOC, 0 importers)",
+      "detail": {
+        "kind": "untested_module",
+        "loc": 302,
+        "importer_count": 0,
+        "loc_weight": 17.378147196982766
+      },
+      "status": "open",
+      "note": null,
+      "first_seen": "2026-03-03T12:38:24+00:00",
+      "last_seen": "2026-03-03T12:38:24+00:00",
+      "resolved_at": null,
+      "reopen_count": 0,
+      "lang": "python",
+      "zone": "production",
+      "suppressed": false,
+      "suppressed_at": null,
+      "suppression_pattern": null
+    },
+    "test_coverage::analysis/non_srp_filter.py::untested_module": {
+      "id": "test_coverage::analysis/non_srp_filter.py::untested_module",
+      "detector": "test_coverage",
+      "file": "analysis/non_srp_filter.py",
+      "tier": 3,
+      "confidence": "high",
+      "summary": "Untested module (121 LOC, 0 importers)",
+      "detail": {
+        "kind": "untested_module",
+        "loc": 121,
+        "importer_count": 0,
+        "loc_weight": 11.0
+      },
+      "status": "open",
+      "note": null,
+      "first_seen": "2026-03-03T12:38:24+00:00",
+      "last_seen": "2026-03-03T12:38:24+00:00",
+      "resolved_at": null,
+      "reopen_count": 0,
+      "lang": "python",
+      "zone": "production",
+      "suppressed": false,
+      "suppressed_at": null,
+      "suppression_pattern": null
+    },
+    "test_coverage::analysis/Uniprot_TMD_search.py::untested_critical": {
+      "id": "test_coverage::analysis/Uniprot_TMD_search.py::untested_critical",
+      "detector": "test_coverage",
+      "file": "analysis/Uniprot_TMD_search.py",
+      "tier": 2,
+      "confidence": "high",
+      "summary": "Untested critical module (180 LOC, 0 importers) \u2014 high blast radius",
+      "detail": {
+        "kind": "untested_critical",
+        "loc": 180,
+        "importer_count": 0,
+        "loc_weight": 13.416407864998739,
+        "complexity_score": 36
+      },
+      "status": "open",
+      "note": null,
+      "first_seen": "2026-03-03T12:38:24+00:00",
+      "last_seen": "2026-03-03T12:38:24+00:00",
+      "resolved_at": null,
+      "reopen_count": 0,
+      "lang": "python",
+      "zone": "production",
+      "suppressed": false,
+      "suppressed_at": null,
+      "suppression_pattern": null
+    },
+    "smells::analysis/protein_analysis_utils.py::swallowed_error": {
+      "id": "smells::analysis/protein_analysis_utils.py::swallowed_error",
+      "detector": "smells",
+      "file": "analysis/protein_analysis_utils.py",
+      "tier": 2,
+      "confidence": "medium",
+      "summary": "1x Catch block that only logs (swallowed error)",
+      "detail": {
+        "smell_id": "swallowed_error",
+        "severity": "high",
+        "count": 1,
+        "lines": [
+          300
+        ]
+      },
+      "status": "open",
+      "note": null,
+      "first_seen": "2026-03-03T12:38:24+00:00",
+      "last_seen": "2026-03-03T12:38:24+00:00",
+      "resolved_at": null,
+      "reopen_count": 0,
+      "lang": "python",
+      "zone": "production",
+      "suppressed": false,
+      "suppressed_at": null,
+      "suppression_pattern": null
+    },
+    "smells::app/protein_analysis_utils.py::swallowed_error": {
+      "id": "smells::app/protein_analysis_utils.py::swallowed_error",
+      "detector": "smells",
+      "file": "app/protein_analysis_utils.py",
+      "tier": 2,
+      "confidence": "medium",
+      "summary": "1x Catch block that only logs (swallowed error)",
+      "detail": {
+        "smell_id": "swallowed_error",
+        "severity": "high",
+        "count": 1,
+        "lines": [
+          300
+        ]
+      },
+      "status": "open",
+      "note": null,
+      "first_seen": "2026-03-03T12:38:24+00:00",
+      "last_seen": "2026-03-03T12:38:24+00:00",
+      "resolved_at": null,
+      "reopen_count": 0,
+      "lang": "python",
+      "zone": "production",
+      "suppressed": false,
+      "suppressed_at": null,
+      "suppression_pattern": null
+    },
+    "smells::protein_analysis_utils.py::swallowed_error": {
+      "id": "smells::protein_analysis_utils.py::swallowed_error",
+      "detector": "smells",
+      "file": "protein_analysis_utils.py",
+      "tier": 2,
+      "confidence": "medium",
+      "summary": "1x Catch block that only logs (swallowed error)",
+      "detail": {
+        "smell_id": "swallowed_error",
+        "severity": "high",
+        "count": 1,
+        "lines": [
+          300
+        ]
+      },
+      "status": "open",
+      "note": null,
+      "first_seen": "2026-03-03T12:38:24+00:00",
+      "last_seen": "2026-03-03T12:38:24+00:00",
+      "resolved_at": null,
+      "reopen_count": 0,
+      "lang": "python",
+      "zone": "production",
+      "suppressed": false,
+      "suppressed_at": null,
+      "suppression_pattern": null
+    },
+    "smells::analysis/demo_fixed_workflow.py::monster_function": {
+      "id": "smells::analysis/demo_fixed_workflow.py::monster_function",
+      "detector": "smells",
+      "file": "analysis/demo_fixed_workflow.py",
+      "tier": 2,
+      "confidence": "medium",
+      "summary": "1x Monster function (>150 LOC)",
+      "detail": {
+        "smell_id": "monster_function",
+        "severity": "high",
+        "count": 1,
+        "lines": [
+          24
+        ]
+      },
+      "status": "open",
+      "note": null,
+      "first_seen": "2026-03-03T12:38:24+00:00",
+      "last_seen": "2026-03-03T12:38:24+00:00",
+      "resolved_at": null,
+      "reopen_count": 0,
+      "lang": "python",
+      "zone": "production",
+      "suppressed": false,
+      "suppressed_at": null,
+      "suppression_pattern": null
+    },
+    "smells::analysis/improved_analysis.py::monster_function": {
+      "id": "smells::analysis/improved_analysis.py::monster_function",
+      "detector": "smells",
+      "file": "analysis/improved_analysis.py",
+      "tier": 2,
+      "confidence": "medium",
+      "summary": "1x Monster function (>150 LOC)",
+      "detail": {
+        "smell_id": "monster_function",
+        "severity": "high",
+        "count": 1,
+        "lines": [
+          30
+        ]
+      },
+      "status": "open",
+      "note": null,
+      "first_seen": "2026-03-03T12:38:24+00:00",
+      "last_seen": "2026-03-03T12:38:24+00:00",
+      "resolved_at": null,
+      "reopen_count": 0,
+      "lang": "python",
+      "zone": "production",
+      "suppressed": false,
+      "suppressed_at": null,
+      "suppression_pattern": null
+    },
+    "smells::app/wsgi_pythonanywhere.py::import_path_mutation": {
+      "id": "smells::app/wsgi_pythonanywhere.py::import_path_mutation",
+      "detector": "smells",
+      "file": "app/wsgi_pythonanywhere.py",
+      "tier": 2,
+      "confidence": "medium",
+      "summary": "2x sys.path mutation at import time (boundary purity leak)",
+      "detail": {
+        "smell_id": "import_path_mutation",
+        "severity": "high",
+        "count": 2,
+        "lines": [
+          14,
+          19
+        ]
+      },
+      "status": "open",
+      "note": null,
+      "first_seen": "2026-03-03T12:38:24+00:00",
+      "last_seen": "2026-03-03T12:38:24+00:00",
+      "resolved_at": null,
+      "reopen_count": 0,
+      "lang": "python",
+      "zone": "production",
+      "suppressed": false,
+      "suppressed_at": null,
+      "suppression_pattern": null
+    },
+    "smells::STANDALONE_APP.py::annotation_quality": {
+      "id": "smells::STANDALONE_APP.py::annotation_quality",
+      "detector": "smells",
+      "file": "STANDALONE_APP.py",
+      "tier": 3,
+      "confidence": "medium",
+      "summary": "4x Loose type annotation \u2014 use specific types",
+      "detail": {
+        "smell_id": "annotation_quality",
+        "severity": "medium",
+        "count": 4,
+        "lines": [
+          153,
+          156,
+          188,
+          219
+        ]
+      },
+      "status": "open",
+      "note": null,
+      "first_seen": "2026-03-03T12:38:24+00:00",
+      "last_seen": "2026-03-03T12:38:24+00:00",
+      "resolved_at": null,
+      "reopen_count": 0,
+      "lang": "python",
+      "zone": "production",
+      "suppressed": false,
+      "suppressed_at": null,
+      "suppression_pattern": null
+    },
+    "smells::analysis/Uniprot_TMD_search.py::annotation_quality": {
+      "id": "smells::analysis/Uniprot_TMD_search.py::annotation_quality",
+      "detector": "smells",
+      "file": "analysis/Uniprot_TMD_search.py",
+      "tier": 3,
+      "confidence": "medium",
+      "summary": "3x Loose type annotation \u2014 use specific types",
+      "detail": {
+        "smell_id": "annotation_quality",
+        "severity": "medium",
+        "count": 3,
+        "lines": [
+          20,
+          101,
+          110
+        ]
+      },
+      "status": "open",
+      "note": null,
+      "first_seen": "2026-03-03T12:38:24+00:00",
+      "last_seen": "2026-03-03T12:38:24+00:00",
+      "resolved_at": null,
+      "reopen_count": 0,
+      "lang": "python",
+      "zone": "production",
+      "suppressed": false,
+      "suppressed_at": null,
+      "suppression_pattern": null
+    },
+    "smells::analysis/analysis_test.py::annotation_quality": {
+      "id": "smells::analysis/analysis_test.py::annotation_quality",
+      "detector": "smells",
+      "file": "analysis/analysis_test.py",
+      "tier": 3,
+      "confidence": "low",
+      "summary": "2x Loose type annotation \u2014 use specific types",
+      "detail": {
+        "smell_id": "annotation_quality",
+        "severity": "medium",
+        "count": 2,
+        "lines": [
+          10,
+          67
+        ]
+      },
+      "status": "open",
+      "note": null,
+      "first_seen": "2026-03-03T12:38:24+00:00",
+      "last_seen": "2026-03-03T12:38:24+00:00",
+      "resolved_at": null,
+      "reopen_count": 0,
+      "lang": "python",
+      "zone": "test",
+      "suppressed": false,
+      "suppressed_at": null,
+      "suppression_pattern": null
+    },
+    "smells::analysis/demo_fixed_workflow.py::annotation_quality": {
+      "id": "smells::analysis/demo_fixed_workflow.py::annotation_quality",
+      "detector": "smells",
+      "file": "analysis/demo_fixed_workflow.py",
+      "tier": 3,
+      "confidence": "medium",
+      "summary": "1x Loose type annotation \u2014 use specific types",
+      "detail": {
+        "smell_id": "annotation_quality",
+        "severity": "medium",
+        "count": 1,
+        "lines": [
+          24
+        ]
+      },
+      "status": "open",
+      "note": null,
+      "first_seen": "2026-03-03T12:38:24+00:00",
+      "last_seen": "2026-03-03T12:38:24+00:00",
+      "resolved_at": null,
+      "reopen_count": 0,
+      "lang": "python",
+      "zone": "production",
+      "suppressed": false,
+      "suppressed_at": null,
+      "suppression_pattern": null
+    },
+    "smells::analysis/improved_analysis.py::annotation_quality": {
+      "id": "smells::analysis/improved_analysis.py::annotation_quality",
+      "detector": "smells",
+      "file": "analysis/improved_analysis.py",
+      "tier": 3,
+      "confidence": "medium",
+      "summary": "1x Loose type annotation \u2014 use specific types",
+      "detail": {
+        "smell_id": "annotation_quality",
+        "severity": "medium",
+        "count": 1,
+        "lines": [
+          30
+        ]
+      },
+      "status": "open",
+      "note": null,
+      "first_seen": "2026-03-03T12:38:24+00:00",
+      "last_seen": "2026-03-03T12:38:24+00:00",
+      "resolved_at": null,
+      "reopen_count": 0,
+      "lang": "python",
+      "zone": "production",
+      "suppressed": false,
+      "suppressed_at": null,
+      "suppression_pattern": null
+    },
+    "smells::analysis/non_srp_filter.py::annotation_quality": {
+      "id": "smells::analysis/non_srp_filter.py::annotation_quality",
+      "detector": "smells",
+      "file": "analysis/non_srp_filter.py",
+      "tier": 3,
+      "confidence": "medium",
+      "summary": "2x Loose type annotation \u2014 use specific types",
+      "detail": {
+        "smell_id": "annotation_quality",
+        "severity": "medium",
+        "count": 2,
+        "lines": [
+          60,
+          68
+        ]
+      },
+      "status": "open",
+      "note": null,
+      "first_seen": "2026-03-03T12:38:24+00:00",
+      "last_seen": "2026-03-03T12:38:24+00:00",
+      "resolved_at": null,
+      "reopen_count": 0,
+      "lang": "python",
+      "zone": "production",
+      "suppressed": false,
+      "suppressed_at": null,
+      "suppression_pattern": null
+    },
+    "smells::analysis/srp_filter.py::annotation_quality": {
+      "id": "smells::analysis/srp_filter.py::annotation_quality",
+      "detector": "smells",
+      "file": "analysis/srp_filter.py",
+      "tier": 3,
+      "confidence": "medium",
+      "summary": "2x Loose type annotation \u2014 use specific types",
+      "detail": {
+        "smell_id": "annotation_quality",
+        "severity": "medium",
+        "count": 2,
+        "lines": [
+          67,
+          75
+        ]
+      },
+      "status": "open",
+      "note": null,
+      "first_seen": "2026-03-03T12:38:24+00:00",
+      "last_seen": "2026-03-03T12:38:24+00:00",
+      "resolved_at": null,
+      "reopen_count": 0,
+      "lang": "python",
+      "zone": "production",
+      "suppressed": false,
+      "suppressed_at": null,
+      "suppression_pattern": null
+    },
+    "smells::app/app.py::annotation_quality": {
+      "id": "smells::app/app.py::annotation_quality",
+      "detector": "smells",
+      "file": "app/app.py",
+      "tier": 3,
+      "confidence": "medium",
+      "summary": "3x Loose type annotation \u2014 use specific types",
+      "detail": {
+        "smell_id": "annotation_quality",
+        "severity": "medium",
+        "count": 3,
+        "lines": [
+          136,
+          160,
+          231
+        ]
+      },
+      "status": "open",
+      "note": null,
+      "first_seen": "2026-03-03T12:38:24+00:00",
+      "last_seen": "2026-03-03T12:38:24+00:00",
+      "resolved_at": null,
+      "reopen_count": 0,
+      "lang": "python",
+      "zone": "production",
+      "suppressed": false,
+      "suppressed_at": null,
+      "suppression_pattern": null
+    },
+    "smells::analysis/protein_analysis_utils.py::optional_param_sprawl": {
+      "id": "smells::analysis/protein_analysis_utils.py::optional_param_sprawl",
+      "detector": "smells",
+      "file": "analysis/protein_analysis_utils.py",
+      "tier": 3,
+      "confidence": "medium",
+      "summary": "1x Too many optional params \u2014 consider a config object",
+      "detail": {
+        "smell_id": "optional_param_sprawl",
+        "severity": "medium",
+        "count": 1,
+        "lines": [
+          134
+        ]
+      },
+      "status": "open",
+      "note": null,
+      "first_seen": "2026-03-03T12:38:24+00:00",
+      "last_seen": "2026-03-03T12:38:24+00:00",
+      "resolved_at": null,
+      "reopen_count": 0,
+      "lang": "python",
+      "zone": "production",
+      "suppressed": false,
+      "suppressed_at": null,
+      "suppression_pattern": null
+    },
+    "smells::app/protein_analysis_utils.py::optional_param_sprawl": {
+      "id": "smells::app/protein_analysis_utils.py::optional_param_sprawl",
+      "detector": "smells",
+      "file": "app/protein_analysis_utils.py",
+      "tier": 3,
+      "confidence": "medium",
+      "summary": "1x Too many optional params \u2014 consider a config object",
+      "detail": {
+        "smell_id": "optional_param_sprawl",
+        "severity": "medium",
+        "count": 1,
+        "lines": [
+          134
+        ]
+      },
+      "status": "open",
+      "note": null,
+      "first_seen": "2026-03-03T12:38:24+00:00",
+      "last_seen": "2026-03-03T12:38:24+00:00",
+      "resolved_at": null,
+      "reopen_count": 0,
+      "lang": "python",
+      "zone": "production",
+      "suppressed": false,
+      "suppressed_at": null,
+      "suppression_pattern": null
+    },
+    "smells::protein_analysis_utils.py::optional_param_sprawl": {
+      "id": "smells::protein_analysis_utils.py::optional_param_sprawl",
+      "detector": "smells",
+      "file": "protein_analysis_utils.py",
+      "tier": 3,
+      "confidence": "medium",
+      "summary": "1x Too many optional params \u2014 consider a config object",
+      "detail": {
+        "smell_id": "optional_param_sprawl",
+        "severity": "medium",
+        "count": 1,
+        "lines": [
+          134
+        ]
+      },
+      "status": "open",
+      "note": null,
+      "first_seen": "2026-03-03T12:38:24+00:00",
+      "last_seen": "2026-03-03T12:38:24+00:00",
+      "resolved_at": null,
+      "reopen_count": 0,
+      "lang": "python",
+      "zone": "production",
+      "suppressed": false,
+      "suppressed_at": null,
+      "suppression_pattern": null
+    },
+    "smells::app/app.py::hardcoded_url": {
+      "id": "smells::app/app.py::hardcoded_url",
+      "detector": "smells",
+      "file": "app/app.py",
+      "tier": 3,
+      "confidence": "medium",
+      "summary": "1x Hardcoded URL in source code",
+      "detail": {
+        "smell_id": "hardcoded_url",
+        "severity": "medium",
+        "count": 1,
+        "lines": [
+          16
+        ]
+      },
+      "status": "open",
+      "note": null,
+      "first_seen": "2026-03-03T12:38:24+00:00",
+      "last_seen": "2026-03-03T12:38:24+00:00",
+      "resolved_at": null,
+      "reopen_count": 0,
+      "lang": "python",
+      "zone": "production",
+      "suppressed": false,
+      "suppressed_at": null,
+      "suppression_pattern": null
+    },
+    "subjective_review::STANDALONE_APP.py::unreviewed": {
+      "id": "subjective_review::STANDALONE_APP.py::unreviewed",
+      "detector": "subjective_review",
+      "file": "STANDALONE_APP.py",
+      "tier": 4,
+      "confidence": "low",
+      "summary": "No design review on record \u2014 run `desloppify review --prepare`",
+      "detail": {
+        "reason": "unreviewed",
+        "loc": 266
+      },
+      "status": "open",
+      "note": null,
+      "first_seen": "2026-03-03T12:38:25+00:00",
+      "last_seen": "2026-03-03T12:38:25+00:00",
+      "resolved_at": null,
+      "reopen_count": 0,
+      "lang": "python",
+      "zone": "production",
+      "suppressed": false,
+      "suppressed_at": null,
+      "suppression_pattern": null
+    },
+    "subjective_review::analysis/Uniprot_TMD_search.py::unreviewed": {
+      "id": "subjective_review::analysis/Uniprot_TMD_search.py::unreviewed",
+      "detector": "subjective_review",
+      "file": "analysis/Uniprot_TMD_search.py",
+      "tier": 4,
+      "confidence": "low",
+      "summary": "No design review on record \u2014 run `desloppify review --prepare`",
+      "detail": {
+        "reason": "unreviewed",
+        "loc": 180
+      },
+      "status": "open",
+      "note": null,
+      "first_seen": "2026-03-03T12:38:25+00:00",
+      "last_seen": "2026-03-03T12:38:25+00:00",
+      "resolved_at": null,
+      "reopen_count": 0,
+      "lang": "python",
+      "zone": "production",
+      "suppressed": false,
+      "suppressed_at": null,
+      "suppression_pattern": null
+    },
+    "subjective_review::analysis/demo_fixed_workflow.py::unreviewed": {
+      "id": "subjective_review::analysis/demo_fixed_workflow.py::unreviewed",
+      "detector": "subjective_review",
+      "file": "analysis/demo_fixed_workflow.py",
+      "tier": 4,
+      "confidence": "low",
+      "summary": "No design review on record \u2014 run `desloppify review --prepare`",
+      "detail": {
+        "reason": "unreviewed",
+        "loc": 189
+      },
+      "status": "open",
+      "note": null,
+      "first_seen": "2026-03-03T12:38:25+00:00",
+      "last_seen": "2026-03-03T12:38:25+00:00",
+      "resolved_at": null,
+      "reopen_count": 0,
+      "lang": "python",
+      "zone": "production",
+      "suppressed": false,
+      "suppressed_at": null,
+      "suppression_pattern": null
+    },
+    "subjective_review::analysis/improved_analysis.py::unreviewed": {
+      "id": "subjective_review::analysis/improved_analysis.py::unreviewed",
+      "detector": "subjective_review",
+      "file": "analysis/improved_analysis.py",
+      "tier": 4,
+      "confidence": "low",
+      "summary": "No design review on record \u2014 run `desloppify review --prepare`",
+      "detail": {
+        "reason": "unreviewed",
+        "loc": 187
+      },
+      "status": "open",
+      "note": null,
+      "first_seen": "2026-03-03T12:38:25+00:00",
+      "last_seen": "2026-03-03T12:38:25+00:00",
+      "resolved_at": null,
+      "reopen_count": 0,
+      "lang": "python",
+      "zone": "production",
+      "suppressed": false,
+      "suppressed_at": null,
+      "suppression_pattern": null
+    },
+    "subjective_review::analysis/non_srp_filter.py::unreviewed": {
+      "id": "subjective_review::analysis/non_srp_filter.py::unreviewed",
+      "detector": "subjective_review",
+      "file": "analysis/non_srp_filter.py",
+      "tier": 4,
+      "confidence": "low",
+      "summary": "No design review on record \u2014 run `desloppify review --prepare`",
+      "detail": {
+        "reason": "unreviewed",
+        "loc": 121
+      },
+      "status": "open",
+      "note": null,
+      "first_seen": "2026-03-03T12:38:25+00:00",
+      "last_seen": "2026-03-03T12:38:25+00:00",
+      "resolved_at": null,
+      "reopen_count": 0,
+      "lang": "python",
+      "zone": "production",
+      "suppressed": false,
+      "suppressed_at": null,
+      "suppression_pattern": null
+    },
+    "subjective_review::analysis/protein_analysis_utils.py::unreviewed": {
+      "id": "subjective_review::analysis/protein_analysis_utils.py::unreviewed",
+      "detector": "subjective_review",
+      "file": "analysis/protein_analysis_utils.py",
+      "tier": 4,
+      "confidence": "low",
+      "summary": "No design review on record \u2014 run `desloppify review --prepare`",
+      "detail": {
+        "reason": "unreviewed",
+        "loc": 302
+      },
+      "status": "open",
+      "note": null,
+      "first_seen": "2026-03-03T12:38:25+00:00",
+      "last_seen": "2026-03-03T12:38:25+00:00",
+      "resolved_at": null,
+      "reopen_count": 0,
+      "lang": "python",
+      "zone": "production",
+      "suppressed": false,
+      "suppressed_at": null,
+      "suppression_pattern": null
+    },
+    "subjective_review::analysis/signalp_6_filter.py::unreviewed": {
+      "id": "subjective_review::analysis/signalp_6_filter.py::unreviewed",
+      "detector": "subjective_review",
+      "file": "analysis/signalp_6_filter.py",
+      "tier": 4,
+      "confidence": "low",
+      "summary": "No design review on record \u2014 run `desloppify review --prepare`",
+      "detail": {
+        "reason": "unreviewed",
+        "loc": 57
+      },
+      "status": "open",
+      "note": null,
+      "first_seen": "2026-03-03T12:38:25+00:00",
+      "last_seen": "2026-03-03T12:38:25+00:00",
+      "resolved_at": null,
+      "reopen_count": 0,
+      "lang": "python",
+      "zone": "production",
+      "suppressed": false,
+      "suppressed_at": null,
+      "suppression_pattern": null
+    },
+    "subjective_review::analysis/srp_filter.py::unreviewed": {
+      "id": "subjective_review::analysis/srp_filter.py::unreviewed",
+      "detector": "subjective_review",
+      "file": "analysis/srp_filter.py",
+      "tier": 4,
+      "confidence": "low",
+      "summary": "No design review on record \u2014 run `desloppify review --prepare`",
+      "detail": {
+        "reason": "unreviewed",
+        "loc": 128
+      },
+      "status": "open",
+      "note": null,
+      "first_seen": "2026-03-03T12:38:25+00:00",
+      "last_seen": "2026-03-03T12:38:25+00:00",
+      "resolved_at": null,
+      "reopen_count": 0,
+      "lang": "python",
+      "zone": "production",
+      "suppressed": false,
+      "suppressed_at": null,
+      "suppression_pattern": null
+    },
+    "subjective_review::analysis/tmd_count.py::unreviewed": {
+      "id": "subjective_review::analysis/tmd_count.py::unreviewed",
+      "detector": "subjective_review",
+      "file": "analysis/tmd_count.py",
+      "tier": 4,
+      "confidence": "low",
+      "summary": "No design review on record \u2014 run `desloppify review --prepare`",
+      "detail": {
+        "reason": "unreviewed",
+        "loc": 23
+      },
+      "status": "open",
+      "note": null,
+      "first_seen": "2026-03-03T12:38:25+00:00",
+      "last_seen": "2026-03-03T12:38:25+00:00",
+      "resolved_at": null,
+      "reopen_count": 0,
+      "lang": "python",
+      "zone": "production",
+      "suppressed": false,
+      "suppressed_at": null,
+      "suppression_pattern": null
+    },
+    "subjective_review::app/app.py::unreviewed": {
+      "id": "subjective_review::app/app.py::unreviewed",
+      "detector": "subjective_review",
+      "file": "app/app.py",
+      "tier": 4,
+      "confidence": "low",
+      "summary": "No design review on record \u2014 run `desloppify review --prepare`",
+      "detail": {
+        "reason": "unreviewed",
+        "loc": 259
+      },
+      "status": "open",
+      "note": null,
+      "first_seen": "2026-03-03T12:38:25+00:00",
+      "last_seen": "2026-03-03T12:38:25+00:00",
+      "resolved_at": null,
+      "reopen_count": 0,
+      "lang": "python",
+      "zone": "production",
+      "suppressed": false,
+      "suppressed_at": null,
+      "suppression_pattern": null
+    },
+    "subjective_review::app/protein_analysis_utils.py::unreviewed": {
+      "id": "subjective_review::app/protein_analysis_utils.py::unreviewed",
+      "detector": "subjective_review",
+      "file": "app/protein_analysis_utils.py",
+      "tier": 4,
+      "confidence": "low",
+      "summary": "No design review on record \u2014 run `desloppify review --prepare`",
+      "detail": {
+        "reason": "unreviewed",
+        "loc": 302
+      },
+      "status": "open",
+      "note": null,
+      "first_seen": "2026-03-03T12:38:25+00:00",
+      "last_seen": "2026-03-03T12:38:25+00:00",
+      "resolved_at": null,
+      "reopen_count": 0,
+      "lang": "python",
+      "zone": "production",
+      "suppressed": false,
+      "suppressed_at": null,
+      "suppression_pattern": null
+    },
+    "subjective_review::app/wsgi_pythonanywhere.py::unreviewed": {
+      "id": "subjective_review::app/wsgi_pythonanywhere.py::unreviewed",
+      "detector": "subjective_review",
+      "file": "app/wsgi_pythonanywhere.py",
+      "tier": 4,
+      "confidence": "low",
+      "summary": "No design review on record \u2014 run `desloppify review --prepare`",
+      "detail": {
+        "reason": "unreviewed",
+        "loc": 25
+      },
+      "status": "open",
+      "note": null,
+      "first_seen": "2026-03-03T12:38:25+00:00",
+      "last_seen": "2026-03-03T12:38:25+00:00",
+      "resolved_at": null,
+      "reopen_count": 0,
+      "lang": "python",
+      "zone": "production",
+      "suppressed": false,
+      "suppressed_at": null,
+      "suppression_pattern": null
+    },
+    "subjective_review::docs/QUICK_START.py::unreviewed": {
+      "id": "subjective_review::docs/QUICK_START.py::unreviewed",
+      "detector": "subjective_review",
+      "file": "docs/QUICK_START.py",
+      "tier": 4,
+      "confidence": "low",
+      "summary": "No design review on record \u2014 run `desloppify review --prepare`",
+      "detail": {
+        "reason": "unreviewed",
+        "loc": 213
+      },
+      "status": "open",
+      "note": null,
+      "first_seen": "2026-03-03T12:38:25+00:00",
+      "last_seen": "2026-03-03T12:38:25+00:00",
+      "resolved_at": null,
+      "reopen_count": 0,
+      "lang": "python",
+      "zone": "production",
+      "suppressed": false,
+      "suppressed_at": null,
+      "suppression_pattern": null
+    },
+    "subjective_review::protein_analysis_utils.py::unreviewed": {
+      "id": "subjective_review::protein_analysis_utils.py::unreviewed",
+      "detector": "subjective_review",
+      "file": "protein_analysis_utils.py",
+      "tier": 4,
+      "confidence": "low",
+      "summary": "No design review on record \u2014 run `desloppify review --prepare`",
+      "detail": {
+        "reason": "unreviewed",
+        "loc": 302
+      },
+      "status": "open",
+      "note": null,
+      "first_seen": "2026-03-03T12:38:25+00:00",
+      "last_seen": "2026-03-03T12:38:25+00:00",
+      "resolved_at": null,
+      "reopen_count": 0,
+      "lang": "python",
+      "zone": "production",
+      "suppressed": false,
+      "suppressed_at": null,
+      "suppression_pattern": null
+    },
+    "subjective_review::.::holistic_unreviewed": {
+      "id": "subjective_review::.::holistic_unreviewed",
+      "detector": "subjective_review",
+      "file": ".",
+      "tier": 4,
+      "confidence": "low",
+      "summary": "No holistic codebase review on record \u2014 run `desloppify review --prepare`",
+      "detail": {
+        "reason": "unreviewed"
+      },
+      "status": "open",
+      "note": null,
+      "first_seen": "2026-03-03T12:38:25+00:00",
+      "last_seen": "2026-03-03T12:38:25+00:00",
+      "resolved_at": null,
+      "reopen_count": 0,
+      "lang": "python",
+      "zone": "production",
+      "suppressed": false,
+      "suppressed_at": null,
+      "suppression_pattern": null
+    },
+    "boilerplate_duplication::analysis/protein_analysis_utils.py::94c2721e1684c2c9": {
+      "id": "boilerplate_duplication::analysis/protein_analysis_utils.py::94c2721e1684c2c9",
+      "detector": "boilerplate_duplication",
+      "file": "analysis/protein_analysis_utils.py",
+      "tier": 3,
+      "confidence": "medium",
+      "summary": "Boilerplate block repeated across 3 files (window 302 lines): analysis/protein_analysis_utils.py:1, app/protein_analysis_utils.py:1, protein_analysis_utils.py:1",
+      "detail": {
+        "distinct_files": 3,
+        "window_size": 302,
+        "locations": [
+          {
+            "file": "analysis/protein_analysis_utils.py",
+            "line": 1
+          },
+          {
+            "file": "app/protein_analysis_utils.py",
+            "line": 1
+          },
+          {
+            "file": "protein_analysis_utils.py",
+            "line": 1
+          }
+        ],
+        "sample": [
+          "#!/usr/bin/env python3",
+          "\"\"\"",
+          "Protein Analysis Utilities",
+          ""
+        ]
+      },
+      "status": "open",
+      "note": null,
+      "first_seen": "2026-03-03T12:38:30+00:00",
+      "last_seen": "2026-03-03T12:38:30+00:00",
+      "resolved_at": null,
+      "reopen_count": 0,
+      "lang": "python",
+      "zone": "production",
+      "suppressed": false,
+      "suppressed_at": null,
+      "suppression_pattern": null
+    },
+    "boilerplate_duplication::analysis/non_srp_filter.py::f3ed55c7c5d1e284": {
+      "id": "boilerplate_duplication::analysis/non_srp_filter.py::f3ed55c7c5d1e284",
+      "detector": "boilerplate_duplication",
+      "file": "analysis/non_srp_filter.py",
+      "tier": 3,
+      "confidence": "medium",
+      "summary": "Boilerplate block repeated across 2 files (window 22 lines): analysis/non_srp_filter.py:68, analysis/srp_filter.py:75",
+      "detail": {
+        "distinct_files": 2,
+        "window_size": 22,
+        "locations": [
+          {
+            "file": "analysis/non_srp_filter.py",
+            "line": 68
+          },
+          {
+            "file": "analysis/srp_filter.py",
+            "line": 75
+          }
+        ],
+        "sample": [
+          "def calc_cterm_dist(row):",
+          "        length = row.get('Length', 0)",
+          "        if pd.isna(length) or length == 0:",
+          "            return float('inf')"
+        ]
+      },
+      "status": "open",
+      "note": null,
+      "first_seen": "2026-03-03T12:38:30+00:00",
+      "last_seen": "2026-03-03T12:38:30+00:00",
+      "resolved_at": null,
+      "reopen_count": 0,
+      "lang": "python",
+      "zone": "production",
+      "suppressed": false,
+      "suppressed_at": null,
+      "suppression_pattern": null
+    },
+    "dupes::analysis/protein_analysis_utils.py::filter_and_compare::app/protein_analysis_utils.py::filter_and_compare": {
+      "id": "dupes::analysis/protein_analysis_utils.py::filter_and_compare::app/protein_analysis_utils.py::filter_and_compare",
+      "detector": "dupes",
+      "file": "analysis/protein_analysis_utils.py",
+      "tier": 2,
+      "confidence": "high",
+      "summary": "Exact dupe cluster (3 functions, 100% similar): filter_and_compare (analysis/protein_analysis_utils.py:22), filter_and_compare (app/protein_analysis_utils.py:22), ...",
+      "detail": {
+        "fn_a": {
+          "file": "analysis/protein_analysis_utils.py",
+          "name": "filter_and_compare",
+          "line": 22,
+          "loc": 55
+        },
+        "fn_b": {
+          "file": "app/protein_analysis_utils.py",
+          "name": "filter_and_compare",
+          "line": 22,
+          "loc": 55
+        },
+        "similarity": 1.0,
+        "kind": "exact",
+        "cluster_size": 3,
+        "cluster": [
+          {
+            "file": "analysis/protein_analysis_utils.py",
+            "name": "filter_and_compare",
+            "line": 22,
+            "loc": 55
+          },
+          {
+            "file": "app/protein_analysis_utils.py",
+            "name": "filter_and_compare",
+            "line": 22,
+            "loc": 55
+          },
+          {
+            "file": "protein_analysis_utils.py",
+            "name": "filter_and_compare",
+            "line": 22,
+            "loc": 55
+          }
+        ]
+      },
+      "status": "open",
+      "note": null,
+      "first_seen": "2026-03-03T12:38:30+00:00",
+      "last_seen": "2026-03-03T12:38:30+00:00",
+      "resolved_at": null,
+      "reopen_count": 0,
+      "lang": "python",
+      "zone": "production",
+      "suppressed": false,
+      "suppressed_at": null,
+      "suppression_pattern": null
+    },
+    "dupes::analysis/protein_analysis_utils.py::filter_by_cterm_distance::app/protein_analysis_utils.py::filter_by_cterm_distance": {
+      "id": "dupes::analysis/protein_analysis_utils.py::filter_by_cterm_distance::app/protein_analysis_utils.py::filter_by_cterm_distance",
+      "detector": "dupes",
+      "file": "analysis/protein_analysis_utils.py",
+      "tier": 2,
+      "confidence": "high",
+      "summary": "Exact dupe cluster (3 functions, 100% similar): filter_by_cterm_distance (analysis/protein_analysis_utils.py:79), filter_by_cterm_distance (app/protein_analysis_utils.py:79), ...",
+      "detail": {
+        "fn_a": {
+          "file": "analysis/protein_analysis_utils.py",
+          "name": "filter_by_cterm_distance",
+          "line": 79,
+          "loc": 24
+        },
+        "fn_b": {
+          "file": "app/protein_analysis_utils.py",
+          "name": "filter_by_cterm_distance",
+          "line": 79,
+          "loc": 24
+        },
+        "similarity": 1.0,
+        "kind": "exact",
+        "cluster_size": 3,
+        "cluster": [
+          {
+            "file": "analysis/protein_analysis_utils.py",
+            "name": "filter_by_cterm_distance",
+            "line": 79,
+            "loc": 24
+          },
+          {
+            "file": "app/protein_analysis_utils.py",
+            "name": "filter_by_cterm_distance",
+            "line": 79,
+            "loc": 24
+          },
+          {
+            "file": "protein_analysis_utils.py",
+            "name": "filter_by_cterm_distance",
+            "line": 79,
+            "loc": 24
+          }
+        ]
+      },
+      "status": "open",
+      "note": null,
+      "first_seen": "2026-03-03T12:38:30+00:00",
+      "last_seen": "2026-03-03T12:38:30+00:00",
+      "resolved_at": null,
+      "reopen_count": 0,
+      "lang": "python",
+      "zone": "production",
+      "suppressed": false,
+      "suppressed_at": null,
+      "suppression_pattern": null
+    },
+    "dupes::analysis/protein_analysis_utils.py::compare_categories::app/protein_analysis_utils.py::compare_categories": {
+      "id": "dupes::analysis/protein_analysis_utils.py::compare_categories::app/protein_analysis_utils.py::compare_categories",
+      "detector": "dupes",
+      "file": "analysis/protein_analysis_utils.py",
+      "tier": 2,
+      "confidence": "high",
+      "summary": "Exact dupe cluster (3 functions, 100% similar): compare_categories (analysis/protein_analysis_utils.py:105), compare_categories (app/protein_analysis_utils.py:105), ...",
+      "detail": {
+        "fn_a": {
+          "file": "analysis/protein_analysis_utils.py",
+          "name": "compare_categories",
+          "line": 105,
+          "loc": 27
+        },
+        "fn_b": {
+          "file": "app/protein_analysis_utils.py",
+          "name": "compare_categories",
+          "line": 105,
+          "loc": 27
+        },
+        "similarity": 1.0,
+        "kind": "exact",
+        "cluster_size": 3,
+        "cluster": [
+          {
+            "file": "analysis/protein_analysis_utils.py",
+            "name": "compare_categories",
+            "line": 105,
+            "loc": 27
+          },
+          {
+            "file": "app/protein_analysis_utils.py",
+            "name": "compare_categories",
+            "line": 105,
+            "loc": 27
+          },
+          {
+            "file": "protein_analysis_utils.py",
+            "name": "compare_categories",
+            "line": 105,
+            "loc": 27
+          }
+        ]
+      },
+      "status": "open",
+      "note": null,
+      "first_seen": "2026-03-03T12:38:30+00:00",
+      "last_seen": "2026-03-03T12:38:30+00:00",
+      "resolved_at": null,
+      "reopen_count": 0,
+      "lang": "python",
+      "zone": "production",
+      "suppressed": false,
+      "suppressed_at": null,
+      "suppression_pattern": null
+    },
+    "dupes::analysis/protein_analysis_utils.py::summary_report::app/protein_analysis_utils.py::summary_report": {
+      "id": "dupes::analysis/protein_analysis_utils.py::summary_report::app/protein_analysis_utils.py::summary_report",
+      "detector": "dupes",
+      "file": "analysis/protein_analysis_utils.py",
+      "tier": 2,
+      "confidence": "high",
+      "summary": "Exact dupe cluster (3 functions, 100% similar): summary_report (analysis/protein_analysis_utils.py:134), summary_report (app/protein_analysis_utils.py:134), ...",
+      "detail": {
+        "fn_a": {
+          "file": "analysis/protein_analysis_utils.py",
+          "name": "summary_report",
+          "line": 134,
+          "loc": 41
+        },
+        "fn_b": {
+          "file": "app/protein_analysis_utils.py",
+          "name": "summary_report",
+          "line": 134,
+          "loc": 41
+        },
+        "similarity": 1.0,
+        "kind": "exact",
+        "cluster_size": 3,
+        "cluster": [
+          {
+            "file": "analysis/protein_analysis_utils.py",
+            "name": "summary_report",
+            "line": 134,
+            "loc": 41
+          },
+          {
+            "file": "app/protein_analysis_utils.py",
+            "name": "summary_report",
+            "line": 134,
+            "loc": 41
+          },
+          {
+            "file": "protein_analysis_utils.py",
+            "name": "summary_report",
+            "line": 134,
+            "loc": 41
+          }
+        ]
+      },
+      "status": "open",
+      "note": null,
+      "first_seen": "2026-03-03T12:38:30+00:00",
+      "last_seen": "2026-03-03T12:38:30+00:00",
+      "resolved_at": null,
+      "reopen_count": 0,
+      "lang": "python",
+      "zone": "production",
+      "suppressed": false,
+      "suppressed_at": null,
+      "suppression_pattern": null
+    },
+    "dupes::analysis/protein_analysis_utils.py::analyze_cterm_distance_effects::app/protein_analysis_utils.py::analyze_cterm_distance_effects": {
+      "id": "dupes::analysis/protein_analysis_utils.py::analyze_cterm_distance_effects::app/protein_analysis_utils.py::analyze_cterm_distance_effects",
+      "detector": "dupes",
+      "file": "analysis/protein_analysis_utils.py",
+      "tier": 2,
+      "confidence": "high",
+      "summary": "Exact dupe cluster (3 functions, 100% similar): analyze_cterm_distance_effects (analysis/protein_analysis_utils.py:177), analyze_cterm_distance_effects (app/protein_analysis_utils.py:177), ...",
+      "detail": {
+        "fn_a": {
+          "file": "analysis/protein_analysis_utils.py",
+          "name": "analyze_cterm_distance_effects",
+          "line": 177,
+          "loc": 29
+        },
+        "fn_b": {
+          "file": "app/protein_analysis_utils.py",
+          "name": "analyze_cterm_distance_effects",
+          "line": 177,
+          "loc": 29
+        },
+        "similarity": 1.0,
+        "kind": "exact",
+        "cluster_size": 3,
+        "cluster": [
+          {
+            "file": "analysis/protein_analysis_utils.py",
+            "name": "analyze_cterm_distance_effects",
+            "line": 177,
+            "loc": 29
+          },
+          {
+            "file": "app/protein_analysis_utils.py",
+            "name": "analyze_cterm_distance_effects",
+            "line": 177,
+            "loc": 29
+          },
+          {
+            "file": "protein_analysis_utils.py",
+            "name": "analyze_cterm_distance_effects",
+            "line": 177,
+            "loc": 29
+          }
+        ]
+      },
+      "status": "open",
+      "note": null,
+      "first_seen": "2026-03-03T12:38:30+00:00",
+      "last_seen": "2026-03-03T12:38:30+00:00",
+      "resolved_at": null,
+      "reopen_count": 0,
+      "lang": "python",
+      "zone": "production",
+      "suppressed": false,
+      "suppressed_at": null,
+      "suppression_pattern": null
+    },
+    "dupes::analysis/protein_analysis_utils.py::cross_tabulate_categories::app/protein_analysis_utils.py::cross_tabulate_categories": {
+      "id": "dupes::analysis/protein_analysis_utils.py::cross_tabulate_categories::app/protein_analysis_utils.py::cross_tabulate_categories",
+      "detector": "dupes",
+      "file": "analysis/protein_analysis_utils.py",
+      "tier": 2,
+      "confidence": "high",
+      "summary": "Exact dupe cluster (3 functions, 100% similar): cross_tabulate_categories (analysis/protein_analysis_utils.py:208), cross_tabulate_categories (app/protein_analysis_utils.py:208), ...",
+      "detail": {
+        "fn_a": {
+          "file": "analysis/protein_analysis_utils.py",
+          "name": "cross_tabulate_categories",
+          "line": 208,
+          "loc": 32
+        },
+        "fn_b": {
+          "file": "app/protein_analysis_utils.py",
+          "name": "cross_tabulate_categories",
+          "line": 208,
+          "loc": 32
+        },
+        "similarity": 1.0,
+        "kind": "exact",
+        "cluster_size": 3,
+        "cluster": [
+          {
+            "file": "analysis/protein_analysis_utils.py",
+            "name": "cross_tabulate_categories",
+            "line": 208,
+            "loc": 32
+          },
+          {
+            "file": "app/protein_analysis_utils.py",
+            "name": "cross_tabulate_categories",
+            "line": 208,
+            "loc": 32
+          },
+          {
+            "file": "protein_analysis_utils.py",
+            "name": "cross_tabulate_categories",
+            "line": 208,
+            "loc": 32
+          }
+        ]
+      },
+      "status": "open",
+      "note": null,
+      "first_seen": "2026-03-03T12:38:30+00:00",
+      "last_seen": "2026-03-03T12:38:30+00:00",
+      "resolved_at": null,
+      "reopen_count": 0,
+      "lang": "python",
+      "zone": "production",
+      "suppressed": false,
+      "suppressed_at": null,
+      "suppression_pattern": null
+    },
+    "dupes::analysis/protein_analysis_utils.py::quick_cterm_analysis::app/protein_analysis_utils.py::quick_cterm_analysis": {
+      "id": "dupes::analysis/protein_analysis_utils.py::quick_cterm_analysis::app/protein_analysis_utils.py::quick_cterm_analysis",
+      "detector": "dupes",
+      "file": "analysis/protein_analysis_utils.py",
+      "tier": 2,
+      "confidence": "high",
+      "summary": "Exact dupe cluster (3 functions, 100% similar): quick_cterm_analysis (analysis/protein_analysis_utils.py:243), quick_cterm_analysis (app/protein_analysis_utils.py:243), ...",
+      "detail": {
+        "fn_a": {
+          "file": "analysis/protein_analysis_utils.py",
+          "name": "quick_cterm_analysis",
+          "line": 243,
+          "loc": 21
+        },
+        "fn_b": {
+          "file": "app/protein_analysis_utils.py",
+          "name": "quick_cterm_analysis",
+          "line": 243,
+          "loc": 21
+        },
+        "similarity": 1.0,
+        "kind": "exact",
+        "cluster_size": 3,
+        "cluster": [
+          {
+            "file": "analysis/protein_analysis_utils.py",
+            "name": "quick_cterm_analysis",
+            "line": 243,
+            "loc": 21
+          },
+          {
+            "file": "app/protein_analysis_utils.py",
+            "name": "quick_cterm_analysis",
+            "line": 243,
+            "loc": 21
+          },
+          {
+            "file": "protein_analysis_utils.py",
+            "name": "quick_cterm_analysis",
+            "line": 243,
+            "loc": 21
+          }
+        ]
+      },
+      "status": "open",
+      "note": null,
+      "first_seen": "2026-03-03T12:38:30+00:00",
+      "last_seen": "2026-03-03T12:38:30+00:00",
+      "resolved_at": null,
+      "reopen_count": 0,
+      "lang": "python",
+      "zone": "production",
+      "suppressed": false,
+      "suppressed_at": null,
+      "suppression_pattern": null
+    },
+    "dupes::analysis/protein_analysis_utils.py::quick_localization_analysis::app/protein_analysis_utils.py::quick_localization_analysis": {
+      "id": "dupes::analysis/protein_analysis_utils.py::quick_localization_analysis::app/protein_analysis_utils.py::quick_localization_analysis",
+      "detector": "dupes",
+      "file": "analysis/protein_analysis_utils.py",
+      "tier": 2,
+      "confidence": "high",
+      "summary": "Exact dupe cluster (3 functions, 100% similar): quick_localization_analysis (analysis/protein_analysis_utils.py:266), quick_localization_analysis (app/protein_analysis_utils.py:266), ...",
+      "detail": {
+        "fn_a": {
+          "file": "analysis/protein_analysis_utils.py",
+          "name": "quick_localization_analysis",
+          "line": 266,
+          "loc": 17
+        },
+        "fn_b": {
+          "file": "app/protein_analysis_utils.py",
+          "name": "quick_localization_analysis",
+          "line": 266,
+          "loc": 17
+        },
+        "similarity": 1.0,
+        "kind": "exact",
+        "cluster_size": 3,
+        "cluster": [
+          {
+            "file": "analysis/protein_analysis_utils.py",
+            "name": "quick_localization_analysis",
+            "line": 266,
+            "loc": 17
+          },
+          {
+            "file": "app/protein_analysis_utils.py",
+            "name": "quick_localization_analysis",
+            "line": 266,
+            "loc": 17
+          },
+          {
+            "file": "protein_analysis_utils.py",
+            "name": "quick_localization_analysis",
+            "line": 266,
+            "loc": 17
+          }
+        ]
+      },
+      "status": "open",
+      "note": null,
+      "first_seen": "2026-03-03T12:38:30+00:00",
+      "last_seen": "2026-03-03T12:38:30+00:00",
+      "resolved_at": null,
+      "reopen_count": 0,
+      "lang": "python",
+      "zone": "production",
+      "suppressed": false,
+      "suppressed_at": null,
+      "suppression_pattern": null
+    }
+  },
+  "scan_coverage": {
+    "python": {
+      "status": "full",
+      "confidence": 1.0,
+      "detectors": {
+        "security": {
+          "detector": "security",
+          "status": "full",
+          "confidence": 1.0,
+          "summary": "Security coverage complete for enabled detectors.",
+          "impact": "",
+          "remediation": "",
+          "tool": "",
+          "reason": ""
+        }
+      },
+      "warnings": [],
+      "updated_at": "2026-03-03T12:38:30+00:00"
+    }
+  },
+  "score_confidence": {
+    "status": "full",
+    "confidence": 1.0,
+    "detectors": [],
+    "dimensions": []
+  },
+  "subjective_integrity": {
+    "status": "pass",
+    "target_score": 95.0,
+    "matched_count": 0,
+    "matched_dimensions": [],
+    "reset_dimensions": []
+  },
+  "subjective_assessments": {},
+  "lang_capabilities": {
+    "python": {
+      "fixers": [],
+      "typecheck_cmd": ""
+    }
+  },
+  "zone_distribution": {
+    "production": 14,
+    "test": 1
+  },
+  "scan_history": [
+    {
+      "timestamp": "2026-03-03T12:38:30+00:00",
+      "lang": "python",
+      "strict_score": 18.5,
+      "verified_strict_score": 46.2,
+      "objective_score": 46.2,
+      "overall_score": 18.5,
+      "open": 78,
+      "diff_new": 78,
+      "diff_resolved": 0,
+      "ignored": 0,
+      "raw_findings": 78,
+      "suppressed_pct": 0.0,
+      "ignore_patterns": 0,
+      "subjective_integrity": {
+        "status": "pass",
+        "matched_count": 0,
+        "reset_count": 0,
+        "target_score": 95.0
+      },
+      "score_confidence": {
+        "status": "full",
+        "confidence": 1.0,
+        "detector_count": 0,
+        "dimension_count": 0
+      },
+      "dimension_scores": {
+        "File health": {
+          "score": 60.0,
+          "strict": 60.0
+        },
+        "Code quality": {
+          "score": 80.1,
+          "strict": 80.1
+        },
+        "Duplication": {
+          "score": 78.1,
+          "strict": 78.1
+        },
+        "Test health": {
+          "score": 5.4,
+          "strict": 5.4
+        },
+        "Security": {
+          "score": 100.0,
+          "strict": 100.0
+        },
+        "Error consistency": {
+          "score": 0.0,
+          "strict": 0.0
+        },
+        "Abstraction fit": {
+          "score": 0.0,
+          "strict": 0.0
+        },
+        "AI generated debt": {
+          "score": 0.0,
+          "strict": 0.0
+        },
+        "High elegance": {
+          "score": 0.0,
+          "strict": 0.0
+        },
+        "Mid elegance": {
+          "score": 0.0,
+          "strict": 0.0
+        },
+        "Low elegance": {
+          "score": 0.0,
+          "strict": 0.0
+        },
+        "Cross-module arch": {
+          "score": 0.0,
+          "strict": 0.0
+        },
+        "Convention drift": {
+          "score": 0.0,
+          "strict": 0.0
+        },
+        "Dep health": {
+          "score": 0.0,
+          "strict": 0.0
+        },
+        "Test strategy": {
+          "score": 0.0,
+          "strict": 0.0
+        },
+        "Structure nav": {
+          "score": 0.0,
+          "strict": 0.0
+        },
+        "Design coherence": {
+          "score": 0.0,
+          "strict": 0.0
+        }
+      }
+    }
+  ],
+  "tool_hash": "e073c6da67fa",
+  "scan_path": ".",
+  "scan_completeness": {
+    "python": "full"
+  },
+  "potentials": {
+    "python": {
+      "unused": 14,
+      "structural": 14,
+      "flat_dirs": 4,
+      "props": 0,
+      "responsibility_cohesion": 2,
+      "single_use": 0,
+      "cycles": 14,
+      "orphaned": 14,
+      "facade": 14,
+      "coupling": 0,
+      "uncalled_functions": 0,
+      "test_coverage": 152,
+      "smells": 14,
+      "global_mutable_config": 14,
+      "security": 14,
+      "private_imports": 14,
+      "dict_keys": 14,
+      "subjective_review": 14,
+      "boilerplate_duplication": 5,
+      "dupes": 38,
+      "stale_wontfix": 0
+    }
+  },
+  "codebase_metrics": {
+    "python": {
+      "total_files": 15,
+      "total_loc": 2657,
+      "total_directories": 4
+    }
+  },
+  "dimension_scores": {
+    "File health": {
+      "score": 60.0,
+      "strict_score": 60.0,
+      "verified_strict_score": 60.0,
+      "checks": 14,
+      "issues": 8,
+      "tier": 3,
+      "detectors": {
+        "structural": {
+          "potential": 14,
+          "pass_rate": 0.5999999999999999,
+          "issues": 8,
+          "weighted_failures": 5.6000000000000005
+        }
+      },
+      "strict": 60.0
+    },
+    "Code quality": {
+      "score": 80.1,
+      "strict_score": 80.1,
+      "verified_strict_score": 80.1,
+      "checks": 104,
+      "issues": 33,
+      "tier": 3,
+      "detectors": {
+        "unused": {
+          "potential": 14,
+          "pass_rate": 1.0,
+          "issues": 0,
+          "weighted_failures": 0.0
+        },
+        "smells": {
+          "potential": 14,
+          "pass_rate": 0.32142857142857145,
+          "issues": 17,
+          "weighted_failures": 9.5
+        },
+        "dict_keys": {
+          "potential": 14,
+          "pass_rate": 1.0,
+          "issues": 0,
+          "weighted_failures": 0.0
+        },
+        "global_mutable_config": {
+          "potential": 14,
+          "pass_rate": 1.0,
+          "issues": 0,
+          "weighted_failures": 0.0
+        },
+        "orphaned": {
+          "potential": 14,
+          "pass_rate": 0.35000000000000003,
+          "issues": 13,
+          "weighted_failures": 9.1
+        },
+        "flat_dirs": {
+          "potential": 4,
+          "pass_rate": 1.0,
+          "issues": 0,
+          "weighted_failures": 0.0
+        },
+        "facade": {
+          "potential": 14,
+          "pass_rate": 1.0,
+          "issues": 0,
+          "weighted_failures": 0.0
+        },
+        "responsibility_cohesion": {
+          "potential": 2,
+          "pass_rate": 0.0,
+          "issues": 3,
+          "weighted_failures": 2.0999999999999996
+        },
+        "private_imports": {
+          "potential": 14,
+          "pass_rate": 1.0,
+          "issues": 0,
+          "weighted_failures": 0.0
+        }
+      },
+      "strict": 80.1
+    },
+    "Duplication": {
+      "score": 78.1,
+      "strict_score": 78.1,
+      "verified_strict_score": 78.1,
+      "checks": 43,
+      "issues": 10,
+      "tier": 3,
+      "detectors": {
+        "dupes": {
+          "potential": 38,
+          "pass_rate": 0.7894736842105263,
+          "issues": 8,
+          "weighted_failures": 8.0
+        },
+        "boilerplate_duplication": {
+          "potential": 5,
+          "pass_rate": 0.72,
+          "issues": 2,
+          "weighted_failures": 1.4
+        }
+      },
+      "strict": 78.1
+    },
+    "Test health": {
+      "score": 5.4,
+      "strict_score": 5.4,
+      "verified_strict_score": 5.4,
+      "checks": 166,
+      "issues": 26,
+      "tier": 4,
+      "detectors": {
+        "test_coverage": {
+          "potential": 152,
+          "pass_rate": 0.0,
+          "issues": 11,
+          "weighted_failures": 152.48589426402054
+        },
+        "subjective_review": {
+          "potential": 14,
+          "pass_rate": 0.6785714285714286,
+          "issues": 15,
+          "weighted_failures": 4.5
+        }
+      },
+      "strict": 5.4
+    },
+    "Security": {
+      "score": 100.0,
+      "strict_score": 100.0,
+      "verified_strict_score": 100.0,
+      "checks": 28,
+      "issues": 0,
+      "tier": 4,
+      "detectors": {
+        "security": {
+          "potential": 14,
+          "pass_rate": 1.0,
+          "issues": 0,
+          "weighted_failures": 0.0
+        },
+        "cycles": {
+          "potential": 14,
+          "pass_rate": 1.0,
+          "issues": 0,
+          "weighted_failures": 0.0
+        }
+      },
+      "strict": 100.0
+    },
+    "Error consistency": {
+      "score": 0.0,
+      "strict_score": 0.0,
+      "verified_strict_score": 0.0,
+      "checks": 10,
+      "issues": 0,
+      "tier": 4,
+      "detectors": {
+        "subjective_assessment": {
+          "potential": 10,
+          "pass_rate": 0.0,
+          "issues": 0,
+          "weighted_failures": 10.0,
+          "assessment_score": 0.0,
+          "placeholder": true,
+          "dimension_key": "error_consistency",
+          "configured_weight": 3.0,
+          "components": []
+        }
+      },
+      "strict": 0.0
+    },
+    "Abstraction fit": {
+      "score": 0.0,
+      "strict_score": 0.0,
+      "verified_strict_score": 0.0,
+      "checks": 10,
+      "issues": 0,
+      "tier": 4,
+      "detectors": {
+        "subjective_assessment": {
+          "potential": 10,
+          "pass_rate": 0.0,
+          "issues": 0,
+          "weighted_failures": 10.0,
+          "assessment_score": 0.0,
+          "placeholder": true,
+          "dimension_key": "abstraction_fitness",
+          "configured_weight": 8.0,
+          "components": []
+        }
+      },
+      "strict": 0.0
+    },
+    "AI generated debt": {
+      "score": 0.0,
+      "strict_score": 0.0,
+      "verified_strict_score": 0.0,
+      "checks": 10,
+      "issues": 0,
+      "tier": 4,
+      "detectors": {
+        "subjective_assessment": {
+          "potential": 10,
+          "pass_rate": 0.0,
+          "issues": 0,
+          "weighted_failures": 10.0,
+          "assessment_score": 0.0,
+          "placeholder": true,
+          "dimension_key": "ai_generated_debt",
+          "configured_weight": 1.0,
+          "components": []
+        }
+      },
+      "strict": 0.0
+    },
+    "High elegance": {
+      "score": 0.0,
+      "strict_score": 0.0,
+      "verified_strict_score": 0.0,
+      "checks": 10,
+      "issues": 0,
+      "tier": 4,
+      "detectors": {
+        "subjective_assessment": {
+          "potential": 10,
+          "pass_rate": 0.0,
+          "issues": 0,
+          "weighted_failures": 10.0,
+          "assessment_score": 0.0,
+          "placeholder": true,
+          "dimension_key": "high_level_elegance",
+          "configured_weight": 22.0,
+          "components": []
+        }
+      },
+      "strict": 0.0
+    },
+    "Mid elegance": {
+      "score": 0.0,
+      "strict_score": 0.0,
+      "verified_strict_score": 0.0,
+      "checks": 10,
+      "issues": 0,
+      "tier": 4,
+      "detectors": {
+        "subjective_assessment": {
+          "potential": 10,
+          "pass_rate": 0.0,
+          "issues": 0,
+          "weighted_failures": 10.0,
+          "assessment_score": 0.0,
+          "placeholder": true,
+          "dimension_key": "mid_level_elegance",
+          "configured_weight": 22.0,
+          "components": []
+        }
+      },
+      "strict": 0.0
+    },
+    "Low elegance": {
+      "score": 0.0,
+      "strict_score": 0.0,
+      "verified_strict_score": 0.0,
+      "checks": 10,
+      "issues": 0,
+      "tier": 4,
+      "detectors": {
+        "subjective_assessment": {
+          "potential": 10,
+          "pass_rate": 0.0,
+          "issues": 0,
+          "weighted_failures": 10.0,
+          "assessment_score": 0.0,
+          "placeholder": true,
+          "dimension_key": "low_level_elegance",
+          "configured_weight": 12.0,
+          "components": []
+        }
+      },
+      "strict": 0.0
+    },
+    "Cross-module arch": {
+      "score": 0.0,
+      "strict_score": 0.0,
+      "verified_strict_score": 0.0,
+      "checks": 10,
+      "issues": 0,
+      "tier": 4,
+      "detectors": {
+        "subjective_assessment": {
+          "potential": 10,
+          "pass_rate": 0.0,
+          "issues": 0,
+          "weighted_failures": 10.0,
+          "assessment_score": 0.0,
+          "placeholder": true,
+          "dimension_key": "cross_module_architecture",
+          "configured_weight": 1.0,
+          "components": []
+        }
+      },
+      "strict": 0.0
+    },
+    "Convention drift": {
+      "score": 0.0,
+      "strict_score": 0.0,
+      "verified_strict_score": 0.0,
+      "checks": 10,
+      "issues": 0,
+      "tier": 4,
+      "detectors": {
+        "subjective_assessment": {
+          "potential": 10,
+          "pass_rate": 0.0,
+          "issues": 0,
+          "weighted_failures": 10.0,
+          "assessment_score": 0.0,
+          "placeholder": true,
+          "dimension_key": "convention_outlier",
+          "configured_weight": 1.0,
+          "components": []
+        }
+      },
+      "strict": 0.0
+    },
+    "Dep health": {
+      "score": 0.0,
+      "strict_score": 0.0,
+      "verified_strict_score": 0.0,
+      "checks": 10,
+      "issues": 0,
+      "tier": 4,
+      "detectors": {
+        "subjective_assessment": {
+          "potential": 10,
+          "pass_rate": 0.0,
+          "issues": 0,
+          "weighted_failures": 10.0,
+          "assessment_score": 0.0,
+          "placeholder": true,
+          "dimension_key": "dependency_health",
+          "configured_weight": 1.0,
+          "components": []
+        }
+      },
+      "strict": 0.0
+    },
+    "Test strategy": {
+      "score": 0.0,
+      "strict_score": 0.0,
+      "verified_strict_score": 0.0,
+      "checks": 10,
+      "issues": 0,
+      "tier": 4,
+      "detectors": {
+        "subjective_assessment": {
+          "potential": 10,
+          "pass_rate": 0.0,
+          "issues": 0,
+          "weighted_failures": 10.0,
+          "assessment_score": 0.0,
+          "placeholder": true,
+          "dimension_key": "test_strategy",
+          "configured_weight": 1.0,
+          "components": []
+        }
+      },
+      "strict": 0.0
+    },
+    "Structure nav": {
+      "score": 0.0,
+      "strict_score": 0.0,
+      "verified_strict_score": 0.0,
+      "checks": 10,
+      "issues": 0,
+      "tier": 4,
+      "detectors": {
+        "subjective_assessment": {
+          "potential": 10,
+          "pass_rate": 0.0,
+          "issues": 0,
+          "weighted_failures": 10.0,
+          "assessment_score": 0.0,
+          "placeholder": true,
+          "dimension_key": "package_organization",
+          "configured_weight": 5.0,
+          "components": []
+        }
+      },
+      "strict": 0.0
+    },
+    "Design coherence": {
+      "score": 0.0,
+      "strict_score": 0.0,
+      "verified_strict_score": 0.0,
+      "checks": 10,
+      "issues": 0,
+      "tier": 4,
+      "detectors": {
+        "subjective_assessment": {
+          "potential": 10,
+          "pass_rate": 0.0,
+          "issues": 0,
+          "weighted_failures": 10.0,
+          "assessment_score": 0.0,
+          "placeholder": true,
+          "dimension_key": "design_coherence",
+          "configured_weight": 10.0,
+          "components": []
+        }
+      },
+      "strict": 0.0
+    }
+  },
+  "reminder_history": {
+    "zone_classification": 1,
+    "report_scores": 1
+  }
+}

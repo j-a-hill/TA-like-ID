@@ -1,0 +1,416 @@
+{
+  "command": "show",
+  "query": "test_coverage",
+  "status_filter": "open",
+  "total": 10,
+  "summary": {
+    "by_tier": {
+      "T2": 5,
+      "T3": 5
+    },
+    "by_detector": {
+      "test_coverage": 10
+    },
+    "files": 10
+  },
+  "by_file": {
+    "STANDALONE_APP.py": [
+      {
+        "id": "test_coverage::STANDALONE_APP.py::untested_critical",
+        "tier": 2,
+        "confidence": "high",
+        "summary": "Untested critical module (266 LOC, 0 importers) \u2014 high blast radius",
+        "detail": {
+          "kind": "untested_critical",
+          "loc": 266,
+          "importer_count": 0,
+          "loc_weight": 16.30950643030009,
+          "complexity_score": 35
+        }
+      }
+    ],
+    "analysis/Uniprot_TMD_search.py": [
+      {
+        "id": "test_coverage::analysis/Uniprot_TMD_search.py::untested_critical",
+        "tier": 2,
+        "confidence": "high",
+        "summary": "Untested critical module (180 LOC, 0 importers) \u2014 high blast radius",
+        "detail": {
+          "kind": "untested_critical",
+          "loc": 180,
+          "importer_count": 0,
+          "loc_weight": 13.416407864998739,
+          "complexity_score": 36
+        }
+      }
+    ],
+    "analysis/demo_fixed_workflow.py": [
+      {
+        "id": "test_coverage::analysis/demo_fixed_workflow.py::untested_critical",
+        "tier": 2,
+        "confidence": "high",
+        "summary": "Untested critical module (189 LOC, 0 importers) \u2014 high blast radius",
+        "detail": {
+          "kind": "untested_critical",
+          "loc": 189,
+          "importer_count": 0,
+          "loc_weight": 13.74772708486752,
+          "complexity_score": 84
+        }
+      }
+    ],
+    "analysis/improved_analysis.py": [
+      {
+        "id": "test_coverage::analysis/improved_analysis.py::untested_critical",
+        "tier": 2,
+        "confidence": "high",
+        "summary": "Untested critical module (187 LOC, 0 importers) \u2014 high blast radius",
+        "detail": {
+          "kind": "untested_critical",
+          "loc": 187,
+          "importer_count": 0,
+          "loc_weight": 13.674794331177344,
+          "complexity_score": 76
+        }
+      }
+    ],
+    "analysis/non_srp_filter.py": [
+      {
+        "id": "test_coverage::analysis/non_srp_filter.py::untested_module",
+        "tier": 3,
+        "confidence": "high",
+        "summary": "Untested module (121 LOC, 0 importers)",
+        "detail": {
+          "kind": "untested_module",
+          "loc": 121,
+          "importer_count": 0,
+          "loc_weight": 11.0
+        }
+      }
+    ],
+    "analysis/protein_analysis_utils.py": [
+      {
+        "id": "test_coverage::analysis/protein_analysis_utils.py::untested_module",
+        "tier": 3,
+        "confidence": "high",
+        "summary": "Untested module (302 LOC, 0 importers)",
+        "detail": {
+          "kind": "untested_module",
+          "loc": 302,
+          "importer_count": 0,
+          "loc_weight": 17.378147196982766
+        }
+      }
+    ],
+    "analysis/srp_filter.py": [
+      {
+        "id": "test_coverage::analysis/srp_filter.py::untested_module",
+        "tier": 3,
+        "confidence": "high",
+        "summary": "Untested module (128 LOC, 0 importers)",
+        "detail": {
+          "kind": "untested_module",
+          "loc": 128,
+          "importer_count": 0,
+          "loc_weight": 11.313708498984761
+        }
+      }
+    ],
+    "analysis/tmd_count.py": [
+      {
+        "id": "test_coverage::analysis/tmd_count.py::untested_module",
+        "tier": 3,
+        "confidence": "high",
+        "summary": "Untested module (23 LOC, 0 importers)",
+        "detail": {
+          "kind": "untested_module",
+          "loc": 23,
+          "importer_count": 0,
+          "loc_weight": 4.795831523312719
+        }
+      }
+    ],
+    "app/app.py": [
+      {
+        "id": "test_coverage::app/app.py::untested_critical",
+        "tier": 2,
+        "confidence": "high",
+        "summary": "Untested critical module (259 LOC, 0 importers) \u2014 high blast radius",
+        "detail": {
+          "kind": "untested_critical",
+          "loc": 259,
+          "importer_count": 0,
+          "loc_weight": 16.09347693943108,
+          "complexity_score": 51
+        }
+      }
+    ],
+    "app/protein_analysis_utils.py": [
+      {
+        "id": "test_coverage::app/protein_analysis_utils.py::untested_module",
+        "tier": 3,
+        "confidence": "high",
+        "summary": "Untested module (302 LOC, 0 importers)",
+        "detail": {
+          "kind": "untested_module",
+          "loc": 302,
+          "importer_count": 0,
+          "loc_weight": 17.378147196982766
+        }
+      }
+    ]
+  },
+  "total_matching": 11,
+  "hidden": {
+    "by_detector": {
+      "test_coverage": 1
+    },
+    "total": 1
+  },
+  "noise_budget": 10,
+  "noise_global_budget": 0,
+  "narrative": {
+    "phase": "first_scan",
+    "headline": "First scan complete. 78 open findings across 3 dimensions.",
+    "dimensions": {
+      "lowest_dimensions": [
+        {
+          "name": "Error consistency",
+          "strict": 0.0,
+          "issues": 0,
+          "impact": 0.0,
+          "subjective": true,
+          "impact_description": "re-review to improve"
+        },
+        {
+          "name": "Abstraction fit",
+          "strict": 0.0,
+          "issues": 0,
+          "impact": 0.0,
+          "subjective": true,
+          "impact_description": "re-review to improve"
+        },
+        {
+          "name": "AI generated debt",
+          "strict": 0.0,
+          "issues": 0,
+          "impact": 0.0,
+          "subjective": true,
+          "impact_description": "re-review to improve"
+        }
+      ],
+      "biggest_gap_dimensions": [],
+      "stagnant_dimensions": []
+    },
+    "actions": [
+      {
+        "type": "reorganize",
+        "detector": "orphaned",
+        "count": 13,
+        "description": "13 orphaned findings \u2014 delete dead files or relocate with `desloppify move`",
+        "command": "desloppify show orphaned --status open",
+        "impact": 0.0,
+        "dimension": "Code quality",
+        "priority": 1,
+        "lane": "restructure"
+      },
+      {
+        "type": "refactor",
+        "detector": "structural",
+        "count": 8,
+        "description": "8 structural findings \u2014 decompose large files \u2014 extract logic into focused modules",
+        "command": "desloppify show structural --status open",
+        "impact": 0.0,
+        "dimension": "File health",
+        "priority": 2,
+        "lane": "refactor"
+      },
+      {
+        "type": "refactor",
+        "detector": "dupes",
+        "count": 8,
+        "description": "8 dupes findings \u2014 extract shared utility or consolidate duplicates",
+        "command": "desloppify show dupes --status open",
+        "impact": 0.0,
+        "dimension": "Duplication",
+        "priority": 3,
+        "lane": "refactor"
+      },
+      {
+        "type": "refactor",
+        "detector": "test_coverage",
+        "count": 11,
+        "description": "11 test_coverage findings \u2014 add tests for untested production modules \u2014 prioritize by import count",
+        "command": "desloppify show test_coverage --status open",
+        "impact": 0.0,
+        "dimension": "Test health",
+        "priority": 4,
+        "lane": "test_coverage"
+      },
+      {
+        "type": "refactor",
+        "detector": "responsibility_cohesion",
+        "count": 3,
+        "description": "3 responsibility_cohesion findings \u2014 split modules with too many responsibilities \u2014 extract focused sub-modules",
+        "command": "desloppify show responsibility_cohesion --status open",
+        "impact": 0.0,
+        "dimension": "Code quality",
+        "priority": 5,
+        "lane": "refactor"
+      },
+      {
+        "type": "refactor",
+        "detector": "boilerplate_duplication",
+        "count": 2,
+        "description": "2 boilerplate_duplication findings \u2014 extract shared boilerplate into reusable helpers or base classes",
+        "command": "desloppify show boilerplate_duplication --status open",
+        "impact": 0.0,
+        "dimension": "Duplication",
+        "priority": 6,
+        "lane": "refactor"
+      },
+      {
+        "type": "manual_fix",
+        "detector": "smells",
+        "count": 18,
+        "description": "18 smells findings \u2014 inspect with `desloppify next` and fix manually",
+        "command": "desloppify show smells --status open",
+        "impact": 0.0,
+        "dimension": "Code quality",
+        "priority": 7,
+        "lane": "refactor"
+      },
+      {
+        "type": "manual_fix",
+        "detector": "subjective_review",
+        "count": 15,
+        "description": "15 files need design review \u2014 run design review with dimension templates",
+        "command": "desloppify fix review",
+        "impact": 0.0,
+        "dimension": "Test health",
+        "priority": 8,
+        "lane": "refactor"
+      }
+    ],
+    "strategy": {
+      "fixer_leverage": {
+        "auto_fixable_count": 0,
+        "total_count": 78,
+        "coverage": 0.0,
+        "impact_ratio": 0.0,
+        "recommendation": "none"
+      },
+      "lanes": {
+        "restructure": {
+          "actions": [
+            1
+          ],
+          "file_count": 13,
+          "total_impact": 0.0,
+          "automation": "manual",
+          "run_first": false
+        },
+        "refactor": {
+          "actions": [
+            2,
+            3,
+            5,
+            6,
+            7,
+            8
+          ],
+          "file_count": 16,
+          "total_impact": 0.0,
+          "automation": "manual",
+          "run_first": false
+        },
+        "test_coverage": {
+          "actions": [
+            4
+          ],
+          "file_count": 11,
+          "total_impact": 0.0,
+          "automation": "manual",
+          "run_first": false
+        }
+      },
+      "can_parallelize": true,
+      "hint": "3 independent workstreams, safe to parallelize. Rescan after each phase to verify."
+    },
+    "tools": {
+      "fixers": [],
+      "move": {
+        "available": true,
+        "relevant": true,
+        "reason": "13 orphaned files",
+        "usage": "desloppify move <source> <dest> [--dry-run]"
+      },
+      "plan": {
+        "command": "desloppify plan",
+        "description": "Generate prioritized markdown cleanup plan"
+      },
+      "badge": {
+        "generated": true,
+        "in_readme": false,
+        "path": "scorecard.png",
+        "recommendation": "Add to README: <img src=\"scorecard.png\" width=\"100%\">"
+      }
+    },
+    "debt": {
+      "overall_gap": 0.0,
+      "wontfix_count": 0,
+      "worst_dimension": null,
+      "worst_gap": 0.0,
+      "trend": "stable"
+    },
+    "milestone": null,
+    "primary_action": {
+      "command": "desloppify show orphaned --status open",
+      "description": "13 orphaned findings \u2014 delete dead files or relocate with `desloppify move`"
+    },
+    "why_now": "3 independent workstreams, safe to parallelize. Rescan after each phase to verify.",
+    "verification_step": {
+      "command": "desloppify scan",
+      "reason": "revalidate after changes"
+    },
+    "risk_flags": [],
+    "strict_target": {
+      "target": 95.0,
+      "current": 18.5,
+      "gap": 76.5,
+      "state": "below",
+      "warning": null
+    },
+    "reminders": [
+      {
+        "type": "zone_classification",
+        "message": "1 of 15 files classified as non-production (1 test). Override with `desloppify zone set <file> production` if any are misclassified.",
+        "command": "desloppify zone show",
+        "priority": 2,
+        "severity": "medium"
+      }
+    ],
+    "reminder_history": {
+      "zone_classification": 2,
+      "report_scores": 1
+    }
+  },
+  "config": {
+    "target_strict_score": 95,
+    "review_max_age_days": 30,
+    "review_batch_max_files": 80,
+    "holistic_max_age_days": 30,
+    "generate_scorecard": true,
+    "badge_path": "scorecard.png",
+    "exclude": [],
+    "ignore": [],
+    "ignore_metadata": {},
+    "zone_overrides": {},
+    "review_dimensions": [],
+    "large_files_threshold": 0,
+    "props_threshold": 0,
+    "finding_noise_budget": 10,
+    "finding_noise_global_budget": 0,
+    "languages": {}
+  }
+}
