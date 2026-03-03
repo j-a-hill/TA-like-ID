@@ -1,155 +1,12 @@
 {
   "command": "show",
-  "query": "test_coverage",
+  "query": "dupes",
   "status_filter": "open",
-  "total": 9,
-  "summary": {
-    "by_tier": {
-      "T2": 3,
-      "T3": 6
-    },
-    "by_detector": {
-      "test_coverage": 9
-    },
-    "files": 9
-  },
-  "by_file": {
-    "STANDALONE_APP.py": [
-      {
-        "id": "test_coverage::STANDALONE_APP.py::untested_critical",
-        "tier": 2,
-        "confidence": "high",
-        "summary": "Untested critical module (268 LOC, 0 importers) \u2014 high blast radius",
-        "detail": {
-          "kind": "untested_critical",
-          "loc": 268,
-          "importer_count": 0,
-          "loc_weight": 16.3707055437449,
-          "complexity_score": 35
-        }
-      }
-    ],
-    "analysis/Uniprot_TMD_search.py": [
-      {
-        "id": "test_coverage::analysis/Uniprot_TMD_search.py::untested_critical",
-        "tier": 2,
-        "confidence": "high",
-        "summary": "Untested critical module (180 LOC, 0 importers) \u2014 high blast radius",
-        "detail": {
-          "kind": "untested_critical",
-          "loc": 180,
-          "importer_count": 0,
-          "loc_weight": 13.416407864998739,
-          "complexity_score": 36
-        }
-      }
-    ],
-    "analysis/demo_fixed_workflow.py": [
-      {
-        "id": "test_coverage::analysis/demo_fixed_workflow.py::untested_module",
-        "tier": 3,
-        "confidence": "high",
-        "summary": "Untested module (168 LOC, 0 importers)",
-        "detail": {
-          "kind": "untested_module",
-          "loc": 168,
-          "importer_count": 0,
-          "loc_weight": 12.96148139681572
-        }
-      }
-    ],
-    "analysis/improved_analysis.py": [
-      {
-        "id": "test_coverage::analysis/improved_analysis.py::untested_module",
-        "tier": 3,
-        "confidence": "high",
-        "summary": "Untested module (174 LOC, 0 importers)",
-        "detail": {
-          "kind": "untested_module",
-          "loc": 174,
-          "importer_count": 0,
-          "loc_weight": 13.19090595827292
-        }
-      }
-    ],
-    "analysis/non_srp_filter.py": [
-      {
-        "id": "test_coverage::analysis/non_srp_filter.py::untested_module",
-        "tier": 3,
-        "confidence": "high",
-        "summary": "Untested module (106 LOC, 0 importers)",
-        "detail": {
-          "kind": "untested_module",
-          "loc": 106,
-          "importer_count": 0,
-          "loc_weight": 10.295630140987
-        }
-      }
-    ],
-    "analysis/srp_filter.py": [
-      {
-        "id": "test_coverage::analysis/srp_filter.py::untested_module",
-        "tier": 3,
-        "confidence": "high",
-        "summary": "Untested module (113 LOC, 0 importers)",
-        "detail": {
-          "kind": "untested_module",
-          "loc": 113,
-          "importer_count": 0,
-          "loc_weight": 10.63014581273465
-        }
-      }
-    ],
-    "analysis/tmd_count.py": [
-      {
-        "id": "test_coverage::analysis/tmd_count.py::untested_module",
-        "tier": 3,
-        "confidence": "high",
-        "summary": "Untested module (23 LOC, 0 importers)",
-        "detail": {
-          "kind": "untested_module",
-          "loc": 23,
-          "importer_count": 0,
-          "loc_weight": 4.795831523312719
-        }
-      }
-    ],
-    "app/app.py": [
-      {
-        "id": "test_coverage::app/app.py::untested_critical",
-        "tier": 2,
-        "confidence": "high",
-        "summary": "Untested critical module (261 LOC, 0 importers) \u2014 high blast radius",
-        "detail": {
-          "kind": "untested_critical",
-          "loc": 261,
-          "importer_count": 0,
-          "loc_weight": 16.15549442140351,
-          "complexity_score": 51
-        }
-      }
-    ],
-    "app/wsgi_pythonanywhere.py": [
-      {
-        "id": "test_coverage::app/wsgi_pythonanywhere.py::untested_module",
-        "tier": 3,
-        "confidence": "high",
-        "summary": "Untested module (23 LOC, 0 importers)",
-        "detail": {
-          "kind": "untested_module",
-          "loc": 23,
-          "importer_count": 0,
-          "loc_weight": 4.795831523312719
-        }
-      }
-    ]
-  },
-  "total_matching": 9,
-  "noise_budget": 10,
-  "noise_global_budget": 0,
+  "total": 0,
+  "findings": [],
   "narrative": {
-    "phase": "stagnation",
-    "headline": "\u26a0 45 security findings \u2014 review before other cleanup. Score plateaued at 24.1 for 5 scans. Error consistency (0.0%) is where the breakthrough is.",
+    "phase": "middle_grind",
+    "headline": "\u26a0 74 security findings \u2014 review before other cleanup. 107 findings open. Error consistency (0.0%) needs attention \u2014 run `desloppify next` to start.",
     "dimensions": {
       "lowest_dimensions": [
         {
@@ -250,8 +107,8 @@
       {
         "type": "reorganize",
         "detector": "orphaned",
-        "count": 11,
-        "description": "11 orphaned findings \u2014 delete dead files or relocate with `desloppify move`",
+        "count": 9,
+        "description": "9 orphaned findings \u2014 delete dead files or relocate with `desloppify move`",
         "command": "desloppify show orphaned --status open",
         "impact": 0.0,
         "dimension": "Code quality",
@@ -261,8 +118,8 @@
       {
         "type": "refactor",
         "detector": "structural",
-        "count": 4,
-        "description": "4 structural findings \u2014 decompose large files \u2014 extract logic into focused modules",
+        "count": 3,
+        "description": "3 structural findings \u2014 decompose large files \u2014 extract logic into focused modules",
         "command": "desloppify show structural --status open",
         "impact": 0.0,
         "dimension": "File health",
@@ -272,8 +129,8 @@
       {
         "type": "refactor",
         "detector": "test_coverage",
-        "count": 9,
-        "description": "9 test_coverage findings \u2014 add tests for untested production modules \u2014 prioritize by import count",
+        "count": 7,
+        "description": "7 test_coverage findings \u2014 add tests for untested production modules \u2014 prioritize by import count",
         "command": "desloppify show test_coverage --status open",
         "impact": 0.0,
         "dimension": "Test health",
@@ -294,8 +151,8 @@
       {
         "type": "manual_fix",
         "detector": "security",
-        "count": 45,
-        "description": "45 security findings \u2014 review and fix security findings \u2014 prioritize by severity",
+        "count": 74,
+        "description": "74 security findings \u2014 review and fix security findings \u2014 prioritize by severity",
         "command": "desloppify show security --status open",
         "impact": 0.0,
         "dimension": "Security",
@@ -317,7 +174,7 @@
     "strategy": {
       "fixer_leverage": {
         "auto_fixable_count": 0,
-        "total_count": 83,
+        "total_count": 107,
         "coverage": 0.0,
         "impact_ratio": 0.0,
         "recommendation": "none"
@@ -327,7 +184,7 @@
           "actions": [
             1
           ],
-          "file_count": 11,
+          "file_count": 9,
           "total_impact": 0.0,
           "automation": "manual",
           "run_first": false
@@ -347,7 +204,7 @@
           "actions": [
             5
           ],
-          "file_count": 1,
+          "file_count": 2,
           "total_impact": 0.0,
           "automation": "manual",
           "run_first": false
@@ -356,7 +213,7 @@
           "actions": [
             3
           ],
-          "file_count": 9,
+          "file_count": 7,
           "total_impact": 0.0,
           "automation": "manual",
           "run_first": false
@@ -370,7 +227,7 @@
       "move": {
         "available": true,
         "relevant": true,
-        "reason": "11 orphaned files",
+        "reason": "9 orphaned files",
         "usage": "desloppify move <source> <dest> [--dry-run]"
       },
       "plan": {
@@ -394,7 +251,7 @@
     "milestone": null,
     "primary_action": {
       "command": "desloppify show orphaned --status open",
-      "description": "11 orphaned findings \u2014 delete dead files or relocate with `desloppify move`"
+      "description": "9 orphaned findings \u2014 delete dead files or relocate with `desloppify move`"
     },
     "why_now": "4 independent workstreams, safe to parallelize. Rescan after each phase to verify.",
     "verification_step": {
@@ -404,15 +261,15 @@
     "risk_flags": [],
     "strict_target": {
       "target": 95.0,
-      "current": 24.1,
-      "gap": 70.9,
+      "current": 27.0,
+      "gap": 68.0,
       "state": "below",
       "warning": null
     },
     "reminders": [],
     "reminder_history": {
       "zone_classification": 3,
-      "report_scores": 5,
+      "report_scores": 6,
       "feedback_nudge": 3,
       "stagnant_nudge": 13
     }
