@@ -1,26 +1,155 @@
 {
-  "command": "resolve",
-  "patterns": [
-    "boilerplate_duplication::analysis/non_srp_filter.py::885175a1788a6364"
-  ],
-  "status": "fixed",
-  "resolved": [
-    "boilerplate_duplication::analysis/non_srp_filter.py::885175a1788a6364"
-  ],
-  "count": 1,
-  "next_command": "desloppify scan",
-  "overall_score": 24.2,
-  "objective_score": 60.5,
-  "strict_score": 24.0,
-  "verified_strict_score": 59.6,
-  "prev_overall_score": 24.1,
-  "prev_objective_score": 60.3,
-  "prev_strict_score": 23.9,
-  "prev_verified_strict_score": 59.6,
-  "attestation": "I have actually removed the duplicated try/except ImportError blocks from both analysis/non_srp_filter.py and analysis/srp_filter.py and replaced them with a simple direct import from protein_analysis_utils and I am not gaming the score by resolving without fixing.",
+  "command": "show",
+  "query": "test_coverage",
+  "status_filter": "open",
+  "total": 9,
+  "summary": {
+    "by_tier": {
+      "T2": 3,
+      "T3": 6
+    },
+    "by_detector": {
+      "test_coverage": 9
+    },
+    "files": 9
+  },
+  "by_file": {
+    "STANDALONE_APP.py": [
+      {
+        "id": "test_coverage::STANDALONE_APP.py::untested_critical",
+        "tier": 2,
+        "confidence": "high",
+        "summary": "Untested critical module (268 LOC, 0 importers) \u2014 high blast radius",
+        "detail": {
+          "kind": "untested_critical",
+          "loc": 268,
+          "importer_count": 0,
+          "loc_weight": 16.3707055437449,
+          "complexity_score": 35
+        }
+      }
+    ],
+    "analysis/Uniprot_TMD_search.py": [
+      {
+        "id": "test_coverage::analysis/Uniprot_TMD_search.py::untested_critical",
+        "tier": 2,
+        "confidence": "high",
+        "summary": "Untested critical module (180 LOC, 0 importers) \u2014 high blast radius",
+        "detail": {
+          "kind": "untested_critical",
+          "loc": 180,
+          "importer_count": 0,
+          "loc_weight": 13.416407864998739,
+          "complexity_score": 36
+        }
+      }
+    ],
+    "analysis/demo_fixed_workflow.py": [
+      {
+        "id": "test_coverage::analysis/demo_fixed_workflow.py::untested_module",
+        "tier": 3,
+        "confidence": "high",
+        "summary": "Untested module (168 LOC, 0 importers)",
+        "detail": {
+          "kind": "untested_module",
+          "loc": 168,
+          "importer_count": 0,
+          "loc_weight": 12.96148139681572
+        }
+      }
+    ],
+    "analysis/improved_analysis.py": [
+      {
+        "id": "test_coverage::analysis/improved_analysis.py::untested_module",
+        "tier": 3,
+        "confidence": "high",
+        "summary": "Untested module (174 LOC, 0 importers)",
+        "detail": {
+          "kind": "untested_module",
+          "loc": 174,
+          "importer_count": 0,
+          "loc_weight": 13.19090595827292
+        }
+      }
+    ],
+    "analysis/non_srp_filter.py": [
+      {
+        "id": "test_coverage::analysis/non_srp_filter.py::untested_module",
+        "tier": 3,
+        "confidence": "high",
+        "summary": "Untested module (106 LOC, 0 importers)",
+        "detail": {
+          "kind": "untested_module",
+          "loc": 106,
+          "importer_count": 0,
+          "loc_weight": 10.295630140987
+        }
+      }
+    ],
+    "analysis/srp_filter.py": [
+      {
+        "id": "test_coverage::analysis/srp_filter.py::untested_module",
+        "tier": 3,
+        "confidence": "high",
+        "summary": "Untested module (113 LOC, 0 importers)",
+        "detail": {
+          "kind": "untested_module",
+          "loc": 113,
+          "importer_count": 0,
+          "loc_weight": 10.63014581273465
+        }
+      }
+    ],
+    "analysis/tmd_count.py": [
+      {
+        "id": "test_coverage::analysis/tmd_count.py::untested_module",
+        "tier": 3,
+        "confidence": "high",
+        "summary": "Untested module (23 LOC, 0 importers)",
+        "detail": {
+          "kind": "untested_module",
+          "loc": 23,
+          "importer_count": 0,
+          "loc_weight": 4.795831523312719
+        }
+      }
+    ],
+    "app/app.py": [
+      {
+        "id": "test_coverage::app/app.py::untested_critical",
+        "tier": 2,
+        "confidence": "high",
+        "summary": "Untested critical module (261 LOC, 0 importers) \u2014 high blast radius",
+        "detail": {
+          "kind": "untested_critical",
+          "loc": 261,
+          "importer_count": 0,
+          "loc_weight": 16.15549442140351,
+          "complexity_score": 51
+        }
+      }
+    ],
+    "app/wsgi_pythonanywhere.py": [
+      {
+        "id": "test_coverage::app/wsgi_pythonanywhere.py::untested_module",
+        "tier": 3,
+        "confidence": "high",
+        "summary": "Untested module (23 LOC, 0 importers)",
+        "detail": {
+          "kind": "untested_module",
+          "loc": 23,
+          "importer_count": 0,
+          "loc_weight": 4.795831523312719
+        }
+      }
+    ]
+  },
+  "total_matching": 9,
+  "noise_budget": 10,
+  "noise_global_budget": 0,
   "narrative": {
-    "phase": "early_momentum",
-    "headline": "\u26a0 45 security findings \u2014 review before other cleanup. Score 24.0/100 with 83 findings open. Keep the momentum going.",
+    "phase": "stagnation",
+    "headline": "\u26a0 45 security findings \u2014 review before other cleanup. Score plateaued at 24.1 for 5 scans. Error consistency (0.0%) is where the breakthrough is.",
     "dimensions": {
       "lowest_dimensions": [
         {
@@ -48,80 +177,72 @@
           "impact_description": "re-review to improve"
         }
       ],
-      "biggest_gap_dimensions": [
-        {
-          "name": "Code quality",
-          "lenient": 91.3,
-          "strict": 89.8,
-          "gap": 1.5,
-          "wontfix_count": 2
-        }
-      ],
+      "biggest_gap_dimensions": [],
       "stagnant_dimensions": [
         {
           "name": "Security",
           "strict": 100.0,
-          "stuck_scans": 4
+          "stuck_scans": 5
         },
         {
           "name": "Error consistency",
           "strict": 0.0,
-          "stuck_scans": 4
+          "stuck_scans": 5
         },
         {
           "name": "Abstraction fit",
           "strict": 0.0,
-          "stuck_scans": 4
+          "stuck_scans": 5
         },
         {
           "name": "AI generated debt",
           "strict": 0.0,
-          "stuck_scans": 4
+          "stuck_scans": 5
         },
         {
           "name": "High elegance",
           "strict": 0.0,
-          "stuck_scans": 4
+          "stuck_scans": 5
         },
         {
           "name": "Mid elegance",
           "strict": 0.0,
-          "stuck_scans": 4
+          "stuck_scans": 5
         },
         {
           "name": "Low elegance",
           "strict": 0.0,
-          "stuck_scans": 4
+          "stuck_scans": 5
         },
         {
           "name": "Cross-module arch",
           "strict": 0.0,
-          "stuck_scans": 4
+          "stuck_scans": 5
         },
         {
           "name": "Convention drift",
           "strict": 0.0,
-          "stuck_scans": 4
+          "stuck_scans": 5
         },
         {
           "name": "Dep health",
           "strict": 0.0,
-          "stuck_scans": 4
+          "stuck_scans": 5
         },
         {
           "name": "Test strategy",
           "strict": 0.0,
-          "stuck_scans": 4
+          "stuck_scans": 5
         },
         {
           "name": "Structure nav",
           "strict": 0.0,
-          "stuck_scans": 4
+          "stuck_scans": 5
         },
         {
           "name": "Design coherence",
           "strict": 0.0,
-          "stuck_scans": 4
+          "stuck_scans": 5
         }
       ]
     },
@@ -264,10 +385,10 @@
       }
     },
     "debt": {
-      "overall_gap": 0.1,
-      "wontfix_count": 2,
-      "worst_dimension": "Code quality",
-      "worst_gap": 1.5,
+      "overall_gap": 0.0,
+      "wontfix_count": 0,
+      "worst_dimension": null,
+      "worst_gap": 0.0,
       "trend": "stable"
     },
     "milestone": null,
@@ -280,35 +401,20 @@
       "command": "desloppify scan",
       "reason": "revalidate after changes"
     },
-    "risk_flags": [
-      {
-        "type": "wontfix_gap",
-        "severity": "medium",
-        "message": "Strict/lenient gap is 0.1 pts with 2 wontfix findings"
-      }
-    ],
+    "risk_flags": [],
     "strict_target": {
       "target": 95.0,
-      "current": 24.0,
-      "gap": 71.0,
+      "current": 24.1,
+      "gap": 70.9,
       "state": "below",
       "warning": null
     },
-    "reminders": [
-      {
-        "type": "rescan_needed",
-        "message": "Rescan to verify \u2014 cascading effects may create new findings.",
-        "command": "desloppify scan",
-        "priority": 1,
-        "severity": "high"
-      }
-    ],
+    "reminders": [],
     "reminder_history": {
       "zone_classification": 3,
-      "report_scores": 4,
+      "report_scores": 5,
       "feedback_nudge": 3,
-      "stagnant_nudge": 13,
-      "rescan_needed": 1
+      "stagnant_nudge": 13
     }
   },
   "config": {
