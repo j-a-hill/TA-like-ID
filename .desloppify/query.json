@@ -1,12 +1,12 @@
 {
   "command": "show",
-  "query": "dupes",
+  "query": "smells",
   "status_filter": "open",
   "total": 0,
   "findings": [],
   "narrative": {
     "phase": "middle_grind",
-    "headline": "\u26a0 74 security findings \u2014 review before other cleanup. 107 findings open. Error consistency (0.0%) needs attention \u2014 run `desloppify next` to start.",
+    "headline": "\u26a0 91 security findings \u2014 review before other cleanup. 121 findings open. Error consistency (0.0%) needs attention \u2014 run `desloppify next` to start.",
     "dimensions": {
       "lowest_dimensions": [
         {
@@ -107,8 +107,8 @@
       {
         "type": "reorganize",
         "detector": "orphaned",
-        "count": 9,
-        "description": "9 orphaned findings \u2014 delete dead files or relocate with `desloppify move`",
+        "count": 7,
+        "description": "7 orphaned findings \u2014 delete dead files or relocate with `desloppify move`",
         "command": "desloppify show orphaned --status open",
         "impact": 0.0,
         "dimension": "Code quality",
@@ -129,8 +129,8 @@
       {
         "type": "refactor",
         "detector": "test_coverage",
-        "count": 7,
-        "description": "7 test_coverage findings \u2014 add tests for untested production modules \u2014 prioritize by import count",
+        "count": 5,
+        "description": "5 test_coverage findings \u2014 add tests for untested production modules \u2014 prioritize by import count",
         "command": "desloppify show test_coverage --status open",
         "impact": 0.0,
         "dimension": "Test health",
@@ -149,14 +149,25 @@
         "lane": "refactor_0"
       },
       {
+        "type": "refactor",
+        "detector": "boilerplate_duplication",
+        "count": 1,
+        "description": "1 boilerplate_duplication findings \u2014 extract shared boilerplate into reusable helpers or base classes",
+        "command": "desloppify show boilerplate_duplication --status open",
+        "impact": 0.0,
+        "dimension": "Duplication",
+        "priority": 5,
+        "lane": "refactor_0"
+      },
+      {
         "type": "manual_fix",
         "detector": "security",
-        "count": 74,
-        "description": "74 security findings \u2014 review and fix security findings \u2014 prioritize by severity",
+        "count": 91,
+        "description": "91 security findings \u2014 review and fix security findings \u2014 prioritize by severity",
         "command": "desloppify show security --status open",
         "impact": 0.0,
         "dimension": "Security",
-        "priority": 5,
+        "priority": 6,
         "lane": "refactor_1"
       },
       {
@@ -167,14 +178,14 @@
         "command": "desloppify fix review",
         "impact": 0.0,
         "dimension": "Test health",
-        "priority": 6,
+        "priority": 7,
         "lane": "refactor_0"
       }
     ],
     "strategy": {
       "fixer_leverage": {
         "auto_fixable_count": 0,
-        "total_count": 107,
+        "total_count": 121,
         "coverage": 0.0,
         "impact_ratio": 0.0,
         "recommendation": "none"
@@ -184,7 +195,7 @@
           "actions": [
             1
           ],
-          "file_count": 9,
+          "file_count": 7,
           "total_impact": 0.0,
           "automation": "manual",
           "run_first": false
@@ -193,7 +204,8 @@
           "actions": [
             2,
             4,
-            6
+            5,
+            7
           ],
           "file_count": 13,
           "total_impact": 0.0,
@@ -202,9 +214,9 @@
         },
         "refactor_1": {
           "actions": [
-            5
+            6
           ],
-          "file_count": 2,
+          "file_count": 3,
           "total_impact": 0.0,
           "automation": "manual",
           "run_first": false
@@ -213,7 +225,7 @@
           "actions": [
             3
           ],
-          "file_count": 7,
+          "file_count": 5,
           "total_impact": 0.0,
           "automation": "manual",
           "run_first": false
@@ -227,7 +239,7 @@
       "move": {
         "available": true,
         "relevant": true,
-        "reason": "9 orphaned files",
+        "reason": "7 orphaned files",
         "usage": "desloppify move <source> <dest> [--dry-run]"
       },
       "plan": {
@@ -251,7 +263,7 @@
     "milestone": null,
     "primary_action": {
       "command": "desloppify show orphaned --status open",
-      "description": "9 orphaned findings \u2014 delete dead files or relocate with `desloppify move`"
+      "description": "7 orphaned findings \u2014 delete dead files or relocate with `desloppify move`"
     },
     "why_now": "4 independent workstreams, safe to parallelize. Rescan after each phase to verify.",
     "verification_step": {
@@ -261,15 +273,15 @@
     "risk_flags": [],
     "strict_target": {
       "target": 95.0,
-      "current": 27.0,
-      "gap": 68.0,
+      "current": 29.8,
+      "gap": 65.2,
       "state": "below",
       "warning": null
     },
     "reminders": [],
     "reminder_history": {
       "zone_classification": 3,
-      "report_scores": 6,
+      "report_scores": 7,
       "feedback_nudge": 3,
       "stagnant_nudge": 13
     }
