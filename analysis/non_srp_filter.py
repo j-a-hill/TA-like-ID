@@ -1,10 +1,6 @@
 import pandas as pd
 import re
-import sys
-from pathlib import Path
 
-# Allow running from analysis/ directory
-sys.path.insert(0, str(Path(__file__).parent.parent))
 from protein_analysis_utils import calc_min_cterm_distance
 
 # Load data

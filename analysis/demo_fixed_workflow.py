@@ -13,6 +13,7 @@ After the fix: Users can easily perform multi-step filtering and comparisons.
 
 import pandas as pd
 from protein_analysis_utils import (
+    FilterConfig,
     filter_and_compare,
     filter_by_cterm_distance,
     quick_cterm_analysis,
@@ -103,10 +104,12 @@ def _demo_comprehensive_reporting(df: pd.DataFrame) -> None:
 
     summary_report(
         df,
-        filter_column='cterm_distance',
-        filter_value=30,
-        operator='<=',
-        compare_columns=['membrane_domain_count', 'Prediction', 'in_biogrid', 'in_massspec']
+        FilterConfig(
+            filter_column='cterm_distance',
+            filter_value=30,
+            operator='<=',
+            compare_columns=['membrane_domain_count', 'Prediction', 'in_biogrid', 'in_massspec']
+        )
     )
 
 

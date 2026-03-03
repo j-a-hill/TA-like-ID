@@ -153,48 +153,29 @@ def compare_categories(
 def summary_report(
     df: pd.DataFrame,
     config: FilterConfig | None = None,
-    *,
-    filter_column: str = 'cterm_distance',
-    filter_value: int | float = 30,
-    operator: str = '<=',
-    compare_columns: list[str] | None = None
 ) -> None:
     """
     Generate a comprehensive summary report for filtered data.
 
-    Can be called with an explicit ``FilterConfig`` object, or with the legacy
-    keyword arguments for backward compatibility.
-
     Args:
         df: Input DataFrame.
-        config: Optional :class:`FilterConfig`.  When provided the individual
-            keyword arguments (``filter_column``, ``filter_value``,
-            ``operator``, ``compare_columns``) are ignored.
-        filter_column: Column to filter on.
-        filter_value: Value to filter by.
-        operator: Comparison operator.
-        compare_columns: List of columns to compare within filtered data.
+        config: :class:`FilterConfig` controlling the filter and comparison.
+            Defaults to ``FilterConfig()`` (cterm_distance <= 30).
     """
-    if config is not None:
-        filter_column = config.filter_column
-        filter_value = config.filter_value
-        operator = config.operator
-        compare_columns = config.compare_columns
-    elif compare_columns is None:
-        compare_columns = ['membrane_domain_count', 'Prediction', 'in_biogrid', 'in_massspec']
+    cfg = config if config is not None else FilterConfig()
     
     # Filter the data
-    filtered_df, _ = filter_and_compare(df, filter_column, filter_value, compare_columns[0], operator)
+    filtered_df, _ = filter_and_compare(df, cfg.filter_column, cfg.filter_value, cfg.compare_columns[0], cfg.operator)
     
     print(f"=== Summary Report ===")
-    print(f"Filter: {filter_column} {operator} {filter_value}")
+    print(f"Filter: {cfg.filter_column} {cfg.operator} {cfg.filter_value}")
     print(f"Original dataset size: {len(df):,}")
     print(f"Filtered dataset size: {len(filtered_df):,}")
     print(f"Percentage retained: {len(filtered_df)/len(df)*100:.1f}%")
     print()
     
     # Compare categories within filtered data
-    for col in compare_columns:
+    for col in cfg.compare_columns:
         if col in filtered_df.columns:
             print(f"--- {col.replace('_', ' ').title()} Distribution ---")
             counts = filtered_df[col].value_counts()
@@ -269,9 +250,6 @@ def cross_tabulate_categories(
     crosstab = pd.crosstab(filtered_df[column1], filtered_df[column2], margins=True)
     
     return crosstab
-
-
-import re
 
 
 def calc_min_cterm_distance(row: pd.Series) -> float | None:
@@ -357,7 +335,6 @@ if __name__ == "__main__":
         quick_localization_analysis(df, 30)
         
     except FileNotFoundError as exc:
-        import sys
         print(f"Sample data not found ({exc}). This module provides utilities for protein analysis.")
         print("Use the functions in your own analysis scripts.")
-        sys.exit(1)
+        raise

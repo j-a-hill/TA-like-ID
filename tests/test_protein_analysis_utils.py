@@ -108,7 +108,7 @@ class TestCompareCategories:
 
 class TestSummaryReport:
     def test_runs_without_error(self, sample_df, capsys):
-        summary_report(sample_df, filter_column="cterm_distance", filter_value=30, operator="<=")
+        summary_report(sample_df, FilterConfig(filter_column="cterm_distance", filter_value=30, operator="<="))
         captured = capsys.readouterr()
         assert "Summary Report" in captured.out
         assert "Filter:" in captured.out
@@ -116,9 +116,11 @@ class TestSummaryReport:
     def test_custom_compare_columns(self, sample_df, capsys):
         summary_report(
             sample_df,
-            filter_column="cterm_distance",
-            filter_value=100,
-            compare_columns=["Prediction"],
+            FilterConfig(
+                filter_column="cterm_distance",
+                filter_value=100,
+                compare_columns=["Prediction"],
+            ),
         )
         captured = capsys.readouterr()
         assert "Prediction" in captured.out
@@ -187,16 +189,21 @@ class TestSummaryReportWithConfig:
             operator="<=",
             compare_columns=["Prediction"],
         )
-        summary_report(sample_df, config=config)
+        summary_report(sample_df, config)
         captured = capsys.readouterr()
         assert "Prediction" in captured.out
 
-    def test_config_overrides_kwargs(self, sample_df, capsys):
-        config = FilterConfig(filter_value=100)
-        summary_report(sample_df, config=config, filter_value=5)
+    def test_default_config_used_when_none(self, sample_df, capsys):
+        summary_report(sample_df)
         captured = capsys.readouterr()
-        # config.filter_value=100 means all rows are retained
-        assert "6" in captured.out  # all 6 sample rows retained
+        assert "Summary Report" in captured.out
+
+    def test_config_filter_value_applied(self, sample_df, capsys):
+        config = FilterConfig(filter_value=100)
+        summary_report(sample_df, config)
+        captured = capsys.readouterr()
+        # filter_value=100 means all 6 rows are retained
+        assert "6" in captured.out
 
 
 class TestCalcMinCtermDistance:

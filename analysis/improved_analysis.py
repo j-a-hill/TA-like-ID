@@ -16,6 +16,7 @@ from pathlib import Path
 
 # Import our custom utilities
 from protein_analysis_utils import (
+    FilterConfig,
     filter_and_compare,
     filter_by_cterm_distance, 
     summary_report,
@@ -94,20 +95,24 @@ def _run_summary_reports(df: pd.DataFrame) -> None:
 
     summary_report(
         df,
-        filter_column='cterm_distance',
-        filter_value=30,
-        operator='<=',
-        compare_columns=['membrane_domain_count', 'Prediction', 'in_biogrid', 'in_massspec']
+        FilterConfig(
+            filter_column='cterm_distance',
+            filter_value=30,
+            operator='<=',
+            compare_columns=['membrane_domain_count', 'Prediction', 'in_biogrid', 'in_massspec']
+        )
     )
 
     print("Summary for proteins with many membrane domains:")
     print("-" * 60)
     summary_report(
         df,
-        filter_column='membrane_domain_count',
-        filter_value=5,
-        operator='>=',
-        compare_columns=['cterm_distance', 'Prediction', 'Reduced.CC.Terms']
+        FilterConfig(
+            filter_column='membrane_domain_count',
+            filter_value=5,
+            operator='>=',
+            compare_columns=['cterm_distance', 'Prediction', 'Reduced.CC.Terms']
+        )
     )
 
 
