@@ -1,4 +1,0 @@
-UniProtID,GeneName,Length,Transmembrane,Intramembrane,Membrane_Domain_Count,cterm_distance
-P001,GENE1,200,170..190,,1,10.0
-P004,GENE4,400,380..395,,1,5.0
-P005,GENE5,100,80..95,,1,5.0
