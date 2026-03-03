@@ -7,9 +7,11 @@ Designed for easy sharing via Gist or direct deployment.
 Loads data from GitHub (works with Shinylive browser deployment).
 """
 
-from shiny import App, render, ui, reactive
+from shiny import App, render, ui, reactive, Inputs, Outputs, Session
+from htmltools import Tag
 import pandas as pd
 import matplotlib.pyplot as plt
+from matplotlib.figure import Figure
 import io
 from pathlib import Path
 
@@ -150,10 +152,10 @@ app_ui = ui.page_fluid(
 )
 
 # Server logic
-def server(input, output, session):
+def server(input: Inputs, output: Outputs, session: Session) -> None:
     
     @reactive.Calc
-    def filtered_data():
+    def filtered_data() -> pd.DataFrame:
         """Apply filters to the data"""
         operator = input.operator()
         value = input.distance_value()
@@ -174,7 +176,7 @@ def server(input, output, session):
         return df[mask].copy()
     
     @reactive.Calc
-    def category_counts():
+    def category_counts() -> pd.Series:
         """Get category distribution"""
         fdf = filtered_data()
         compare_col = input.compare_column()
@@ -185,7 +187,7 @@ def server(input, output, session):
     
     @output
     @render.ui
-    def stats():
+    def stats() -> Tag:
         """Render statistics summary"""
         total = len(df)
         filtered = len(filtered_data())
@@ -216,7 +218,7 @@ def server(input, output, session):
     
     @output
     @render.plot
-    def category_chart():
+    def category_chart() -> Figure:
         """Render category distribution chart"""
         counts = category_counts()
         

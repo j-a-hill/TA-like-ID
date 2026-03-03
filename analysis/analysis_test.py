@@ -5,9 +5,8 @@ and implement the fix for filtering by cterm_distance and comparing within sets
 """
 
 import pandas as pd
-import numpy as np
 
-def main():
+def main() -> None:
     # Load the data
     df = pd.read_csv('raw_data/membrane_protein_analysis_with_reduced_cc.csv')
     print("Data loaded successfully")
@@ -64,7 +63,7 @@ def main():
     # Test the filtering and comparison function that users want
     print("\n=== Implementing the desired functionality ===")
     
-    def filter_and_compare(df, filter_column, filter_value, compare_column, operator='<='):
+    def filter_and_compare(df: pd.DataFrame, filter_column: str, filter_value: int | float | str, compare_column: str, operator: str = '<=') -> tuple[pd.DataFrame, pd.Series]:
         """
         Filter by one column and then compare counts within that filtered set
         """

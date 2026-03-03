@@ -89,3 +89,10 @@ dmypy.json
 # *.csv
 # *.tsv
 # *.xlsx
+
+# Generated CSV output files from analysis scripts
+non_srp_cterm_*.csv
+srp_cterm_*.csv
+non_biogrid_*.csv
+analyzed_cterm_proteins.tsv
+*.tsv

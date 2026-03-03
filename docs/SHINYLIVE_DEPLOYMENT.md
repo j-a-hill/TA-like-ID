@@ -71,66 +71,25 @@ Visit: http://localhost:8000
 ✅ **Private** - Data never leaves user's browser  
 ✅ **Easy Sharing** - Just send a URL  
 
-## 📝 Important Notes for Shinylive
+## 📝 Data Loading
 
-### Data File Considerations
+Shinylive apps run in the browser, so data must be loaded from a URL rather than the local filesystem.
 
-Shinylive apps run in the browser, so data files need to be handled specially:
-
-**Option A: Embed data in the app**
-```python
-# Convert CSV to embedded Python dict or use pickle
-import pickle
-data = {...}  # Your data structure
-```
-
-**Option B: Load from URL**
-```python
-# Load data from a publicly accessible URL
-df = pd.read_csv('https://raw.githubusercontent.com/user/repo/main/data.csv')
-```
-
-**Option C: User upload**
-```python
-# Add file upload widget
-ui.input_file("upload", "Upload CSV", accept=".csv")
-```
-
-For this app, you'll want to either:
-1. Host the CSV on GitHub and load it via URL
-2. Embed a subset of the data in the app
-3. Add a file upload feature
-
-## 🔧 Modifying for Shinylive
-
-Current app loads data from file system. For Shinylive deployment, update the data loading in `app.py`:
+The app already handles this — it loads data via the `_DATA_URL` constant in `app/app.py`:
 
 ```python
-# Instead of:
-df = pd.read_csv(str(_data_file))
-
-# Use one of:
-# 1. Load from URL
-df = pd.read_csv('https://raw.githubusercontent.com/j-a-hill/TA-like-ID/main/raw_data/membrane_protein_analysis_with_reduced_cc.csv')
-
-# 2. Or add file upload
-@reactive.Calc
-def uploaded_data():
-    file = input.upload()
-    if file is None:
-        return pd.DataFrame()  # Empty default
-    return pd.read_csv(file[0]["datapath"])
+_DATA_URL = "https://raw.githubusercontent.com/j-a-hill/TA-like-ID/main/raw_data/membrane_protein_analysis_with_reduced_cc.csv"
+df = pd.read_csv(_DATA_URL)
 ```
+
+No changes to `app.py` are needed before exporting with `shinylive export`.
 
 ## 🎯 Recommended Workflow
 
 1. **Develop locally** with `shiny run`
-2. **Test with data URL** or upload feature
-3. **Export to Shinylive** with `shinylive export`
-4. **Deploy to GitHub Pages** or other static host
-5. **Share URL** with colleagues
-
-No backend servers, no PythonAnywhere setup, no Docker - just pure browser-based Python!
+2. **Export to Shinylive** with `shinylive export app site`
+3. **Deploy `site/`** to GitHub Pages or another static host
+4. **Share the URL** with colleagues
 
 ## 📚 Resources
 
@@ -147,6 +106,5 @@ No backend servers, no PythonAnywhere setup, no Docker - just pure browser-based
 | Maintenance | None | Updates, security |
 | Data Privacy | Browser only | Sent to server |
 | Scalability | Infinite | Limited by server |
-| Offline Use | Possible | No |
 
 Perfect for sharing with colleagues who just need a simple interface!
