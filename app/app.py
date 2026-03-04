@@ -124,7 +124,7 @@ app_ui = ui.page_fillable(
                 ui.input_text("cc_search", "CC Terms (search)", placeholder="e.g., ER, secretory")
             ),
             
-            ui.download_button("download_csv", "📥 Download CSV", width="100%"),
+            ui.output_ui("download_csv"),
             
             width=280
         ),
@@ -248,14 +248,22 @@ def server(input: Inputs, output: Outputs, session: Session) -> None:
             height="600px"
         )
     
-    @render.download(filename="filtered_proteins.csv")
+    @output
+    @render.ui
     def download_csv():
-        """Download filtered data as CSV"""
+        """Render a client-side download link (Shinylive compatible)"""
+        import base64
         fdf = filtered_data()
-        csv_buffer = io.StringIO()
-        fdf.to_csv(csv_buffer, index=False)
-        csv_buffer.seek(0)
-        return csv_buffer.getvalue()
+        csv_str = fdf.to_csv(index=False)
+        b64 = base64.b64encode(csv_str.encode()).decode()
+        href = f"data:text/csv;base64,{b64}"
+        return ui.tags.a(
+            "📥 Download CSV",
+            href=href,
+            download="filtered_proteins.csv",
+            class_="btn btn-default",
+            style="width:100%; text-align:center; display:block;"
+        )
 
 # Create the app
 app = App(app_ui, server)
