@@ -16,6 +16,8 @@ from idr_analysis import (
     match_disprot,
     aiupred_summary,
     mobidb_lite_summary,
+    run_aiupred_local,
+    run_mobidb_lite_local,
     run_disorder_predictions,
 )
 
@@ -233,7 +235,95 @@ class TestMobidbLiteSummary:
         assert result["mobidb_lite_disordered_fraction"] <= 1.0
 
 
-# ── run_disorder_predictions (mocked API calls) ───────────────────────────────
+# ── run_aiupred_local ─────────────────────────────────────────────────────────
+
+class TestRunAiupredLocal:
+    _AIUPRED_OUTPUT = (
+        "# Position\tResidue\tDisorder\n"
+        "1\tM\t0.80\n"
+        "2\tK\t0.23\n"
+        "3\tL\t0.71\n"
+        "4\tV\t0.55\n"
+    )
+
+    @staticmethod
+    def _write_fake_script(tmp_path, output: str) -> None:
+        """Write a fake aiupred.py that prints *output* and exits 0."""
+        (tmp_path / "aiupred.py").write_text(
+            "import sys\n"
+            f"print({repr(output)})\n"
+            "sys.exit(0)\n"
+        )
+
+    def test_returns_scores_on_success(self, tmp_path):
+        """Simulate a successful aiupred.py run and verify score parsing."""
+        self._write_fake_script(tmp_path, self._AIUPRED_OUTPUT)
+        result = run_aiupred_local("MKLV", aiupred_dir=str(tmp_path))
+        assert result == {"scores": [0.80, 0.23, 0.71, 0.55]}
+
+    def test_empty_dir_returns_empty(self):
+        result = run_aiupred_local("MKLV", aiupred_dir="")
+        assert result == {}
+
+    def test_missing_dir_returns_empty(self):
+        result = run_aiupred_local("MKLV", aiupred_dir="/nonexistent/path")
+        assert result == {}
+
+    def test_missing_script_returns_empty(self, tmp_path):
+        result = run_aiupred_local("MKLV", aiupred_dir=str(tmp_path))
+        assert result == {}
+
+    def test_nonzero_exit_returns_empty(self, tmp_path):
+        (tmp_path / "aiupred.py").write_text("import sys\nsys.exit(1)\n")
+        result = run_aiupred_local("MKLV", aiupred_dir=str(tmp_path))
+        assert result == {}
+
+    def test_comment_lines_excluded(self, tmp_path):
+        """Lines beginning with '#' must not be parsed as score rows."""
+        output = "# Position\tResidue\tDisorder\n# comment\n1\tM\t0.75\n"
+        self._write_fake_script(tmp_path, output)
+        result = run_aiupred_local("M", aiupred_dir=str(tmp_path))
+        assert result["scores"] == [0.75]
+
+
+# ── run_mobidb_lite_local ─────────────────────────────────────────────────────
+
+class TestRunMobidbLiteLocal:
+    def test_empty_bindir_returns_empty(self):
+        result = run_mobidb_lite_local("MKLV", bindir="")
+        assert result == {}
+
+    def test_nonexistent_bindir_returns_empty(self):
+        result = run_mobidb_lite_local("MKLV", bindir="/nonexistent/bin")
+        assert result == {}
+
+    def test_returns_regions_on_success(self, tmp_path):
+        """Mock mobidb_lite.consensus.run to yield a plausible result."""
+        fake_regions = {"mobidblite": [(1, 40), (80, 120)]}
+        fake_scores = {"mobidblite": [0.7] * 200}
+
+        with patch("mobidb_lite.consensus.run",
+                   return_value=iter([("query", fake_regions, fake_scores)])):
+            result = run_mobidb_lite_local("M" * 200, bindir=str(tmp_path))
+
+        assert "prediction-disorder-mobidb_lite" in result
+        assert result["prediction-disorder-mobidb_lite"]["regions"] == [(1, 40), (80, 120)]
+
+    def test_none_regions_returns_empty(self, tmp_path):
+        """When the predictor returns None regions, return empty dict."""
+        with patch("mobidb_lite.consensus.run",
+                   return_value=iter([("query", None, {})])):
+            result = run_mobidb_lite_local("MKLV", bindir=str(tmp_path))
+        assert result == {}
+
+    def test_import_error_returns_empty(self, tmp_path):
+        """If mobidb_lite is not installed, return empty dict gracefully."""
+        with patch.dict("sys.modules", {"mobidb_lite.consensus": None}):
+            result = run_mobidb_lite_local("MKLV", bindir=str(tmp_path))
+        assert result == {}
+
+
+# ── run_disorder_predictions (mocked local tools) ─────────────────────────────
 
 class TestRunDisorderPredictions:
     def _make_ta_df(self):
@@ -246,9 +336,9 @@ class TestRunDisorderPredictions:
         ta_df = self._make_ta_df()
         with (
             patch("idr_analysis.fetch_sequence", return_value="MKLV"),
-            patch("idr_analysis.predict_aiupred",
+            patch("idr_analysis.run_aiupred_local",
                   return_value={"scores": [0.8, 0.2, 0.7, 0.9]}),
-            patch("idr_analysis.predict_mobidb_lite",
+            patch("idr_analysis.run_mobidb_lite_local",
                   return_value={"prediction-disorder-mobidb_lite": {"regions": [[1, 25]]}}),
         ):
             result = run_disorder_predictions(ta_df)
@@ -258,25 +348,35 @@ class TestRunDisorderPredictions:
             assert col in result.columns
 
     def test_handles_missing_sequence(self):
-        """If fetch_sequence returns None, AIUPred columns should be None."""
+        """If fetch_sequence returns None, all prediction columns should be None."""
         ta_df = self._make_ta_df()
-        with (
-            patch("idr_analysis.fetch_sequence", return_value=None),
-            patch("idr_analysis.predict_mobidb_lite", return_value={}),
-        ):
+        with patch("idr_analysis.fetch_sequence", return_value=None):
             result = run_disorder_predictions(ta_df)
 
         assert result["aiupred_mean_score"].isna().all()
         assert result["aiupred_disordered_fraction"].isna().all()
+        assert result["mobidb_lite_disordered_fraction"].isna().all()
 
     def test_row_count_preserved(self):
         ta_df = self._make_ta_df()
         with (
             patch("idr_analysis.fetch_sequence", return_value="MKLV"),
-            patch("idr_analysis.predict_aiupred",
+            patch("idr_analysis.run_aiupred_local",
                   return_value={"scores": [0.5, 0.5, 0.5, 0.5]}),
-            patch("idr_analysis.predict_mobidb_lite", return_value={}),
+            patch("idr_analysis.run_mobidb_lite_local", return_value={}),
         ):
             result = run_disorder_predictions(ta_df)
 
         assert len(result) == len(ta_df)
+
+    def test_sequence_fetched_once_per_protein(self):
+        """fetch_sequence should be called exactly once per row (used for both tools)."""
+        ta_df = self._make_ta_df()
+        with (
+            patch("idr_analysis.fetch_sequence", return_value="MKLV") as mock_fetch,
+            patch("idr_analysis.run_aiupred_local", return_value={}),
+            patch("idr_analysis.run_mobidb_lite_local", return_value={}),
+        ):
+            run_disorder_predictions(ta_df)
+
+        assert mock_fetch.call_count == len(ta_df)

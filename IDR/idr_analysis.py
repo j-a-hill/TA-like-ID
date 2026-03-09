@@ -3,14 +3,29 @@
 IDR Analysis Pipeline for Tail-Anchored (TA) Proteins
 
 Filters the main membrane-protein dataset to genuine TA proteins, cross-references
-them against human DisProt entries, and runs intrinsic-disorder predictions via
-the AIUPred and MobiDB-lite REST APIs.
+them against human DisProt entries, and runs intrinsic-disorder predictions using
+the AIUPred and MobiDB-lite standalone tools installed locally.
+
+Tool setup
+----------
+AIUPred (https://github.com/doszilab/AIUPred):
+    git clone https://github.com/doszilab/AIUPred.git /path/to/aiupred
+    pip install torch>=2.6.0 numpy scipy
+    export AIUPRED_DIR=/path/to/aiupred
+
+MobiDB-lite (https://github.com/BioComputingUP/MobiDB-lite):
+    pip install git+https://github.com/BioComputingUP/MobiDB-lite.git
+    # Obtain compiled sub-predictor binaries and set:
+    export MOBIDB_BINDIR=/path/to/mobidb-lite/bin
 
 Outputs a DataFrame with all TA-protein columns plus appended disorder annotations.
 """
 
+import io
 import os
-import re
+import subprocess
+import sys
+import tempfile
 import time
 
 import pandas as pd
@@ -25,10 +40,15 @@ MAX_N_TERM_DOMAINS: int = 0    # N-terminal membrane domains (0 = C-terminal onl
 MAX_CTERM_EXTENSION: int = 30  # Max residues between TMD end and protein C-terminus
 
 AIUPRED_THRESHOLD: float = 0.5   # Per-residue score ≥ this → predicted disordered
-MOBIDB_THRESHOLD: float = 0.5    # (reserved for future per-residue MobiDB scoring)
-API_DELAY: float = 0.3           # Seconds to pause between successive API calls
+API_DELAY: float = 0.3           # Seconds to pause between UniProt sequence fetches
 
 HUMAN_TAXON_ID: str = "9606"
+
+# ── Local tool paths (override via environment variables) ─────────────────────
+# Directory of the cloned doszilab/AIUPred repository.
+AIUPRED_DIR: str = os.environ.get("AIUPRED_DIR", "")
+# Directory containing the compiled MobiDB-lite binary sub-predictors.
+MOBIDB_BINDIR: str = os.environ.get("MOBIDB_BINDIR", "")
 
 # Default file paths (relative to this script's location)
 _HERE = os.path.dirname(os.path.abspath(__file__))
@@ -143,27 +163,67 @@ def fetch_sequence(uniprot_acc: str, delay: float = API_DELAY) -> str | None:
         time.sleep(delay)
 
 
-# ── AIUPred ───────────────────────────────────────────────────────────────────
+# ── AIUPred (local) ───────────────────────────────────────────────────────────
 
-def predict_aiupred(sequence: str) -> dict:
-    """Call the AIUPred REST API with a protein *sequence*.
+def run_aiupred_local(sequence: str, aiupred_dir: str = AIUPRED_DIR) -> dict:
+    """Run AIUPred disorder prediction using the locally cloned standalone tool.
 
-    Endpoint
-    --------
-    POST https://aiupred.elte.hu/api/disordered  (AIUPred2, verified 2025-03)
-    Body   : ``{"sequence": "<AA sequence>"}``
-    Returns: ``{"scores": [<float>, ...], "disordered": [<bool>, ...]}``
+    Clone the repository and set ``AIUPRED_DIR`` (or pass *aiupred_dir*):
 
-    If the endpoint changes, update the *url* variable below and re-verify the
-    response schema.  Returns the parsed JSON dict or an empty dict on failure.
+    .. code-block:: bash
+
+        git clone https://github.com/doszilab/AIUPred.git /path/to/aiupred
+        pip install torch>=2.6.0 numpy scipy
+        export AIUPRED_DIR=/path/to/aiupred
+
+    The function writes a temporary FASTA file, calls ``aiupred.py`` as a
+    subprocess with ``--force-cpu``, and parses the tab-delimited output.
+
+    Returns
+    -------
+    dict
+        ``{"scores": [<float>, ...]}`` with one score per residue, or ``{}``
+        when *aiupred_dir* is unset, the script is not found, or the call fails.
     """
-    url = "https://aiupred.elte.hu/api/disordered"
-    try:
-        resp = requests.post(url, json={"sequence": sequence}, timeout=60)
-        resp.raise_for_status()
-        return resp.json()
-    except Exception:
+    if not aiupred_dir or not os.path.isdir(aiupred_dir):
         return {}
+
+    script = os.path.join(aiupred_dir, "aiupred.py")
+    if not os.path.isfile(script):
+        return {}
+
+    fd, fasta_path = tempfile.mkstemp(suffix=".fasta")
+    try:
+        with os.fdopen(fd, "w") as fh:
+            fh.write(f">query\n{sequence}\n")
+
+        result = subprocess.run(
+            [sys.executable, script, "-i", fasta_path, "--force-cpu"],
+            capture_output=True,
+            text=True,
+            timeout=300,
+            cwd=aiupred_dir,
+        )
+        if result.returncode != 0:
+            return {}
+
+        # Output: lines starting with '#' are comments; data lines are
+        # tab-separated "Position\tResidue\tDisorder"
+        scores = []
+        for line in result.stdout.splitlines():
+            if not line or line.startswith("#"):
+                continue
+            parts = line.split()
+            if len(parts) >= 3:
+                try:
+                    scores.append(float(parts[2]))
+                except ValueError:
+                    continue
+        return {"scores": scores}
+    except (subprocess.TimeoutExpired, OSError):
+        return {}
+    finally:
+        os.unlink(fasta_path)
 
 
 def aiupred_summary(scores: list, threshold: float = AIUPRED_THRESHOLD) -> dict:
@@ -186,38 +246,52 @@ def aiupred_summary(scores: list, threshold: float = AIUPRED_THRESHOLD) -> dict:
     }
 
 
-# ── MobiDB-lite ───────────────────────────────────────────────────────────────
+# ── MobiDB-lite (local) ───────────────────────────────────────────────────────
 
-def predict_mobidb_lite(uniprot_acc: str, delay: float = API_DELAY) -> dict:
-    """Fetch MobiDB-lite disorder prediction from the MobiDB REST API.
+def run_mobidb_lite_local(sequence: str, bindir: str = MOBIDB_BINDIR) -> dict:
+    """Run MobiDB-lite disorder prediction using the locally installed package.
 
-    Endpoint
-    --------
-    GET https://mobidb.org/api/entry/<acc>?projection=prediction-disorder-mobidb_lite
+    Install the package and provide the path to its compiled binary tools:
 
-    Returns the parsed JSON dict (or a nested entry dict) or ``{}`` on failure.
+    .. code-block:: bash
+
+        pip install git+https://github.com/BioComputingUP/MobiDB-lite.git
+        # place compiled sub-predictor binaries in a directory then:
+        export MOBIDB_BINDIR=/path/to/mobidb-lite/bin
+
+    The function uses the ``mobidb_lite.consensus.run`` Python API directly,
+    passing a StringIO FASTA handle and the *bindir* path.
+
+    Returns
+    -------
+    dict
+        ``{"prediction-disorder-mobidb_lite": {"regions": [[start, end], ...]}}``
+        compatible with :func:`mobidb_lite_summary`, or ``{}`` when *bindir* is
+        unset, the package is not installed, or the prediction fails.
     """
-    url = f"https://mobidb.org/api/entry/{uniprot_acc}"
+    if not bindir or not os.path.isdir(bindir):
+        return {}
+
     try:
-        resp = requests.get(
-            url,
-            params={"projection": "prediction-disorder-mobidb_lite"},
-            timeout=15,
-        )
-        resp.raise_for_status()
-        data = resp.json()
-        # The API may return a list with one element; unwrap if so.
-        if isinstance(data, list) and data:
-            return data[0]
-        return data if isinstance(data, dict) else {}
+        from mobidb_lite.consensus import run as _mobi_run  # type: ignore[import]
+    except ImportError:
+        return {}
+
+    fasta_handle = io.StringIO(f">query\n{sequence}\n")
+    try:
+        for _seq_id, regions, _scores in _mobi_run(fasta_handle, bindir, "", threads=1):
+            if regions is None:
+                return {}
+            mobi_regions = regions.get("mobidblite", [])
+            return {"prediction-disorder-mobidb_lite": {"regions": mobi_regions}}
     except Exception:
         return {}
-    finally:
-        time.sleep(delay)
+
+    return {}
 
 
 def mobidb_lite_summary(data: dict, protein_length: int) -> dict:
-    """Parse a MobiDB API response dict into a disordered-fraction metric.
+    """Parse a MobiDB-lite result dict into a disordered-fraction metric.
 
     Returns
     -------
@@ -246,10 +320,13 @@ def mobidb_lite_summary(data: dict, protein_length: int) -> dict:
 def run_disorder_predictions(ta_df: pd.DataFrame) -> pd.DataFrame:
     """Add AIUPred and MobiDB-lite predictions to each row of *ta_df*.
 
-    Makes live API calls – requires network access.  Failed calls produce
-    ``None`` values rather than raising exceptions.
+    Fetches the amino-acid sequence from UniProt for each protein, then runs
+    both local predictors.  Failed calls produce ``None`` values rather than
+    raising exceptions.
 
-    Returns a new DataFrame with four additional columns appended.
+    Returns a new DataFrame with three additional columns appended:
+    ``aiupred_mean_score``, ``aiupred_disordered_fraction``,
+    ``mobidb_lite_disordered_fraction``.
     """
     records = []
     total = len(ta_df)
@@ -258,17 +335,17 @@ def run_disorder_predictions(ta_df: pd.DataFrame) -> pd.DataFrame:
         length = int(row["Length"]) if pd.notna(row.get("Length")) else 0
         print(f"  [{i}/{total}] {acc}", end=" ", flush=True)
 
-        # AIUPred – needs the amino-acid sequence
+        # Fetch sequence once; used by both local tools
         sequence = fetch_sequence(acc)
         if sequence:
-            ai_raw = predict_aiupred(sequence)
+            ai_raw = run_aiupred_local(sequence)
             ai_metrics = aiupred_summary(ai_raw.get("scores", []))
+
+            mobi_raw = run_mobidb_lite_local(sequence)
+            mobi_metrics = mobidb_lite_summary(mobi_raw, length)
         else:
             ai_metrics = {"aiupred_mean_score": None, "aiupred_disordered_fraction": None}
-
-        # MobiDB-lite – queries by UniProt accession
-        mobi_raw = predict_mobidb_lite(acc)
-        mobi_metrics = mobidb_lite_summary(mobi_raw, length)
+            mobi_metrics = {"mobidb_lite_disordered_fraction": None}
 
         records.append({**ai_metrics, **mobi_metrics})
         print("✓")
@@ -292,7 +369,8 @@ def main(
     1. Load the membrane-protein DataFrame and the DisProt TSV.
     2. Filter to TA proteins using the supplied (or default) thresholds.
     3. Cross-reference against human DisProt entries.
-    4. Optionally run AIUPred and MobiDB-lite predictions.
+    4. Optionally run AIUPred and MobiDB-lite predictions using the local
+       standalone tools (set ``AIUPRED_DIR`` and ``MOBIDB_BINDIR``).
 
     Parameters
     ----------
@@ -301,8 +379,8 @@ def main(
     disprot_path:
         Path to the DisProt TSV file.
     run_predictions:
-        When ``True``, call the AIUPred and MobiDB-lite APIs for each protein.
-        Set to ``False`` to skip API calls (DisProt annotation only).
+        When ``True``, run the AIUPred and MobiDB-lite local tools for each
+        protein.  Set to ``False`` to skip predictions (DisProt annotation only).
     tmd_count, max_n_term, max_cterm:
         Override the module-level TA filtering constants.
 
