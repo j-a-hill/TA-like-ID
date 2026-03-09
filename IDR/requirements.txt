@@ -1,7 +1,9 @@
 # IDR analysis pipeline dependencies
 #
-# MobiDB-lite: install from GitHub (includes all Python predictors)
-git+https://github.com/BioComputingUP/MobiDB-lite.git
+# MobiDB-lite: installed by setup_idr_env.sh from the local clone so that the
+# compiled sub-predictor binaries (bin/) are included in the site-packages dir.
+# Do NOT re-enable the line below – it omits bin/ and predictions will fail.
+# git+https://github.com/BioComputingUP/MobiDB-lite.git
 joblib>=1.3.0
 numba>=0.59.0
 scikit-learn>=1.4.0
