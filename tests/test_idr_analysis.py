@@ -238,26 +238,29 @@ class TestMobidbLiteSummary:
 # ── run_aiupred_local ─────────────────────────────────────────────────────────
 
 class TestRunAiupredLocal:
-    _AIUPRED_OUTPUT = (
-        "# Position\tResidue\tDisorder\n"
-        "1\tM\t0.80\n"
-        "2\tK\t0.23\n"
-        "3\tL\t0.71\n"
-        "4\tV\t0.55\n"
-    )
+    """Tests for run_aiupred_local using a fake aiupred_lib module."""
 
     @staticmethod
-    def _write_fake_script(tmp_path, output: str) -> None:
-        """Write a fake aiupred.py that prints *output* and exits 0."""
-        (tmp_path / "aiupred.py").write_text(
-            "import sys\n"
-            f"print({repr(output)})\n"
-            "sys.exit(0)\n"
+    def _make_fake_aiupred_lib(tmp_path, scores: list):
+        """Write a minimal fake aiupred_lib.py that returns *scores* from predict_disorder."""
+        lib = tmp_path / "aiupred_lib.py"
+        lib.write_text(
+            "import os\n"
+            "PATH = os.path.dirname(os.path.abspath(__file__))\n"
+            f"_SCORES = {scores!r}\n"
+            "def init_models(prediction_type, force_cpu=False, gpu_num=0):\n"
+            "    return ('embed', 'reg', 'cpu')\n"
+            "def predict_disorder(seq, emb, reg, dev, smoothing=True):\n"
+            "    return _SCORES\n"
         )
+        return lib
 
     def test_returns_scores_on_success(self, tmp_path):
-        """Simulate a successful aiupred.py run and verify score parsing."""
-        self._write_fake_script(tmp_path, self._AIUPRED_OUTPUT)
+        """Fake aiupred_lib with known scores → run_aiupred_local returns them."""
+        # Clear cache so this test's tmp_path is freshly loaded
+        import idr_analysis
+        idr_analysis._aiupred_cache.clear()
+        self._make_fake_aiupred_lib(tmp_path, [0.80, 0.23, 0.71, 0.55])
         result = run_aiupred_local("MKLV", aiupred_dir=str(tmp_path))
         assert result == {"scores": [0.80, 0.23, 0.71, 0.55]}
 
@@ -269,21 +272,44 @@ class TestRunAiupredLocal:
         result = run_aiupred_local("MKLV", aiupred_dir="/nonexistent/path")
         assert result == {}
 
-    def test_missing_script_returns_empty(self, tmp_path):
+    def test_missing_lib_returns_empty(self, tmp_path):
+        """No aiupred_lib.py in the dir → {}."""
+        import idr_analysis
+        idr_analysis._aiupred_cache.clear()
         result = run_aiupred_local("MKLV", aiupred_dir=str(tmp_path))
         assert result == {}
 
-    def test_nonzero_exit_returns_empty(self, tmp_path):
-        (tmp_path / "aiupred.py").write_text("import sys\nsys.exit(1)\n")
+    def test_lib_import_error_returns_empty(self, tmp_path):
+        """aiupred_lib.py raises ImportError (e.g. torch missing) → {}."""
+        import idr_analysis
+        idr_analysis._aiupred_cache.clear()
+        (tmp_path / "aiupred_lib.py").write_text("raise ImportError('torch not found')\n")
         result = run_aiupred_local("MKLV", aiupred_dir=str(tmp_path))
         assert result == {}
 
-    def test_comment_lines_excluded(self, tmp_path):
-        """Lines beginning with '#' must not be parsed as score rows."""
-        output = "# Position\tResidue\tDisorder\n# comment\n1\tM\t0.75\n"
-        self._write_fake_script(tmp_path, output)
-        result = run_aiupred_local("M", aiupred_dir=str(tmp_path))
-        assert result["scores"] == [0.75]
+    def test_models_cached_across_calls(self, tmp_path):
+        """init_models should only be called once even for multiple sequences."""
+        import idr_analysis
+        idr_analysis._aiupred_cache.clear()
+
+        lib = tmp_path / "aiupred_lib.py"
+        lib.write_text(
+            "import os\n"
+            "PATH = os.path.dirname(os.path.abspath(__file__))\n"
+            "_init_call_count = 0\n"
+            "def init_models(t, force_cpu=False, gpu_num=0):\n"
+            "    global _init_call_count\n"
+            "    _init_call_count += 1\n"
+            "    return ('e', 'r', 'cpu')\n"
+            "def predict_disorder(s, e, r, d, smoothing=True):\n"
+            "    return [0.5] * len(s)\n"
+        )
+        run_aiupred_local("AAA", aiupred_dir=str(tmp_path))
+        run_aiupred_local("CCC", aiupred_dir=str(tmp_path))
+
+        cached_mod = idr_analysis._aiupred_cache[str(tmp_path)]
+        # init_models was called exactly once (during _load_aiupred_lib)
+        assert cached_mod._init_call_count == 1
 
 
 # ── run_mobidb_lite_local ─────────────────────────────────────────────────────

@@ -13,23 +13,33 @@ AIUPred (https://github.com/doszilab/AIUPred):
     pip install torch>=2.6.0 numpy scipy
     export AIUPRED_DIR=/path/to/aiupred
 
+    ``aiupred_lib.py`` is imported directly (no subprocess) so the models are
+    loaded from ``<AIUPRED_DIR>/data/`` once and reused for all sequences.
+
 MobiDB-lite (https://github.com/BioComputingUP/MobiDB-lite):
-    pip install git+https://github.com/BioComputingUP/MobiDB-lite.git
-    # Obtain compiled sub-predictor binaries and set:
-    export MOBIDB_BINDIR=/path/to/mobidb-lite/bin
+    git clone https://github.com/BioComputingUP/MobiDB-lite.git /path/to/mobidb-lite
+    pip install /path/to/mobidb-lite          # installs Python package + bin/ directory
+    export MOBIDB_BINDIR=/path/to/mobidb-lite/src/mobidb_lite/bin
+
+    The ``bin/`` directory contains compiled sub-predictor binaries (IUPred,
+    DisEMBL, ESpritz, TISEAN, SEG).  It is NOT included when you run
+    ``pip install git+https://...``; you must clone the repo and either
+    install locally (``pip install .``) or set ``MOBIDB_BINDIR`` manually.
+    The pipeline also tries to auto-detect ``bin/`` from the installed package.
 
 Outputs a DataFrame with all TA-protein columns plus appended disorder annotations.
 """
 
+import importlib.util
 import io
+import logging
 import os
-import subprocess
-import sys
-import tempfile
 import time
 
 import pandas as pd
 import requests
+
+logger = logging.getLogger(__name__)
 
 # ── Tunable parameters ────────────────────────────────────────────────────────
 # A TA protein has exactly one transmembrane domain (TMD), located towards
@@ -47,8 +57,24 @@ HUMAN_TAXON_ID: str = "9606"
 # ── Local tool paths (override via environment variables) ─────────────────────
 # Directory of the cloned doszilab/AIUPred repository.
 AIUPRED_DIR: str = os.environ.get("AIUPRED_DIR", "")
+
 # Directory containing the compiled MobiDB-lite binary sub-predictors.
-MOBIDB_BINDIR: str = os.environ.get("MOBIDB_BINDIR", "")
+# If not set explicitly, the pipeline tries to find bin/ inside the installed
+# mobidb_lite package (works when pip-installed from a local clone of the repo).
+def _detect_mobidb_bindir() -> str:
+    explicit = os.environ.get("MOBIDB_BINDIR", "")
+    if explicit:
+        return explicit
+    try:
+        import mobidb_lite as _mobi  # type: ignore[import]
+        candidate = os.path.join(os.path.dirname(_mobi.__file__), "bin")
+        if os.path.isdir(candidate):
+            return candidate
+    except ImportError:
+        pass
+    return ""
+
+MOBIDB_BINDIR: str = _detect_mobidb_bindir()
 
 # Default file paths (relative to this script's location)
 _HERE = os.path.dirname(os.path.abspath(__file__))
@@ -165,6 +191,46 @@ def fetch_sequence(uniprot_acc: str, delay: float = API_DELAY) -> str | None:
 
 # ── AIUPred (local) ───────────────────────────────────────────────────────────
 
+# Module-level cache: aiupred_dir → loaded aiupred_lib module (or None on failure)
+_aiupred_cache: dict = {}
+
+
+def _load_aiupred_lib(aiupred_dir: str):
+    """Import ``aiupred_lib`` directly from the cloned AIUPred repository.
+
+    Uses :mod:`importlib.util` so the caller's ``sys.path`` is not polluted.
+    The loaded module is cached keyed by *aiupred_dir* so that the expensive
+    PyTorch model weights are only read from disk once per interpreter session.
+
+    Returns the module, or ``None`` when the library cannot be loaded.
+    """
+    if aiupred_dir in _aiupred_cache:
+        return _aiupred_cache[aiupred_dir]
+
+    lib_path = os.path.join(aiupred_dir, "aiupred_lib.py")
+    if not os.path.isfile(lib_path):
+        logger.warning(
+            "AIUPred: aiupred_lib.py not found in %s – AIUPred predictions will be skipped. "
+            "Clone https://github.com/doszilab/AIUPred.git and set AIUPRED_DIR.",
+            aiupred_dir,
+        )
+        _aiupred_cache[aiupred_dir] = None
+        return None
+
+    try:
+        spec = importlib.util.spec_from_file_location("_aiupred_lib", lib_path)
+        mod = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(mod)  # executes module code; __file__=lib_path so data/ is found
+        # Pre-load the disorder models once; stored in the cached module object
+        mod._disorder_models = mod.init_models("disorder", force_cpu=True)
+        _aiupred_cache[aiupred_dir] = mod
+        return mod
+    except Exception as exc:
+        logger.warning("AIUPred: failed to load aiupred_lib from %s: %s", aiupred_dir, exc)
+        _aiupred_cache[aiupred_dir] = None
+        return None
+
+
 def run_aiupred_local(sequence: str, aiupred_dir: str = AIUPRED_DIR) -> dict:
     """Run AIUPred disorder prediction using the locally cloned standalone tool.
 
@@ -176,54 +242,34 @@ def run_aiupred_local(sequence: str, aiupred_dir: str = AIUPRED_DIR) -> dict:
         pip install torch>=2.6.0 numpy scipy
         export AIUPRED_DIR=/path/to/aiupred
 
-    The function writes a temporary FASTA file, calls ``aiupred.py`` as a
-    subprocess with ``--force-cpu``, and parses the tab-delimited output.
+    The function imports ``aiupred_lib.py`` directly via :mod:`importlib.util`
+    and calls ``predict_disorder`` with pre-loaded models (loaded once per
+    session and cached).  No subprocess is spawned and no text output is parsed.
 
     Returns
     -------
     dict
         ``{"scores": [<float>, ...]}`` with one score per residue, or ``{}``
-        when *aiupred_dir* is unset, the script is not found, or the call fails.
+        when *aiupred_dir* is unset, the library is not found, or prediction fails.
     """
     if not aiupred_dir or not os.path.isdir(aiupred_dir):
+        if aiupred_dir:
+            logger.warning("AIUPred: AIUPRED_DIR '%s' does not exist.", aiupred_dir)
         return {}
 
-    script = os.path.join(aiupred_dir, "aiupred.py")
-    if not os.path.isfile(script):
+    mod = _load_aiupred_lib(aiupred_dir)
+    if mod is None:
         return {}
 
-    fd, fasta_path = tempfile.mkstemp(suffix=".fasta")
     try:
-        with os.fdopen(fd, "w") as fh:
-            fh.write(f">query\n{sequence}\n")
-
-        result = subprocess.run(
-            [sys.executable, script, "-i", fasta_path, "--force-cpu"],
-            capture_output=True,
-            text=True,
-            timeout=300,
-            cwd=aiupred_dir,
+        embedding_model, reg_model, device = mod._disorder_models
+        scores = mod.predict_disorder(
+            sequence, embedding_model, reg_model, device, smoothing=True
         )
-        if result.returncode != 0:
-            return {}
-
-        # Output: lines starting with '#' are comments; data lines are
-        # tab-separated "Position\tResidue\tDisorder"
-        scores = []
-        for line in result.stdout.splitlines():
-            if not line or line.startswith("#"):
-                continue
-            parts = line.split()
-            if len(parts) >= 3:
-                try:
-                    scores.append(float(parts[2]))
-                except ValueError:
-                    continue
-        return {"scores": scores}
-    except (subprocess.TimeoutExpired, OSError):
+        return {"scores": list(scores)}
+    except Exception as exc:
+        logger.warning("AIUPred: prediction failed for sequence of length %d: %s", len(sequence), exc)
         return {}
-    finally:
-        os.unlink(fasta_path)
 
 
 def aiupred_summary(scores: list, threshold: float = AIUPRED_THRESHOLD) -> dict:
@@ -251,16 +297,20 @@ def aiupred_summary(scores: list, threshold: float = AIUPRED_THRESHOLD) -> dict:
 def run_mobidb_lite_local(sequence: str, bindir: str = MOBIDB_BINDIR) -> dict:
     """Run MobiDB-lite disorder prediction using the locally installed package.
 
-    Install the package and provide the path to its compiled binary tools:
+    Install the package from a **local clone** so that the compiled
+    sub-predictor binaries are available alongside the Python package:
 
     .. code-block:: bash
 
-        pip install git+https://github.com/BioComputingUP/MobiDB-lite.git
-        # place compiled sub-predictor binaries in a directory then:
-        export MOBIDB_BINDIR=/path/to/mobidb-lite/bin
+        git clone https://github.com/BioComputingUP/MobiDB-lite.git /path/to/mobidb-lite
+        pip install /path/to/mobidb-lite
 
-    The function uses the ``mobidb_lite.consensus.run`` Python API directly,
-    passing a StringIO FASTA handle and the *bindir* path.
+    The ``pip install git+https://...`` form does **not** ship the ``bin/``
+    directory; install from a local clone instead, or set ``MOBIDB_BINDIR``
+    explicitly to ``/path/to/mobidb-lite/src/mobidb_lite/bin``.
+
+    The function uses ``mobidb_lite.consensus.run`` directly (no subprocess),
+    passing a :class:`io.StringIO` FASTA handle and the *bindir* path.
 
     Returns
     -------
@@ -270,21 +320,35 @@ def run_mobidb_lite_local(sequence: str, bindir: str = MOBIDB_BINDIR) -> dict:
         unset, the package is not installed, or the prediction fails.
     """
     if not bindir or not os.path.isdir(bindir):
+        logger.warning(
+            "MobiDB-lite: bin/ directory not found (bindir=%r). "
+            "Clone https://github.com/BioComputingUP/MobiDB-lite.git, "
+            "run 'pip install .' from the clone, and set MOBIDB_BINDIR if needed.",
+            bindir,
+        )
         return {}
 
     try:
         from mobidb_lite.consensus import run as _mobi_run  # type: ignore[import]
     except ImportError:
+        logger.warning("MobiDB-lite: mobidb_lite package is not installed.")
         return {}
 
     fasta_handle = io.StringIO(f">query\n{sequence}\n")
     try:
         for _seq_id, regions, _scores in _mobi_run(fasta_handle, bindir, "", threads=1):
             if regions is None:
+                logger.warning(
+                    "MobiDB-lite: prediction failed for sequence of length %d "
+                    "(some sub-predictors may be missing from %s).",
+                    len(sequence),
+                    bindir,
+                )
                 return {}
             mobi_regions = regions.get("mobidblite", [])
             return {"prediction-disorder-mobidb_lite": {"regions": mobi_regions}}
-    except Exception:
+    except Exception as exc:
+        logger.warning("MobiDB-lite: prediction raised an exception: %s", exc)
         return {}
 
     return {}
