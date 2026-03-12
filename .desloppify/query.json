@@ -1,26 +1,118 @@
 {
   "command": "show",
-  "query": "smells",
+  "query": "test_coverage",
   "status_filter": "open",
-  "total": 0,
-  "findings": [],
+  "total": 6,
+  "summary": {
+    "by_tier": {
+      "T2": 2,
+      "T3": 4
+    },
+    "by_detector": {
+      "test_coverage": 6
+    },
+    "files": 6
+  },
+  "by_file": {
+    "STANDALONE_APP.py": [
+      {
+        "id": "test_coverage::STANDALONE_APP.py::untested_critical",
+        "tier": 2,
+        "confidence": "high",
+        "summary": "Untested critical module (268 LOC, 0 importers) \u2014 high blast radius",
+        "detail": {
+          "kind": "untested_critical",
+          "loc": 268,
+          "importer_count": 0,
+          "loc_weight": 16.3707055437449,
+          "complexity_score": 35
+        }
+      }
+    ],
+    "analysis/demo_fixed_workflow.py": [
+      {
+        "id": "test_coverage::analysis/demo_fixed_workflow.py::untested_module",
+        "tier": 3,
+        "confidence": "high",
+        "summary": "Untested module (168 LOC, 0 importers)",
+        "detail": {
+          "kind": "untested_module",
+          "loc": 168,
+          "importer_count": 0,
+          "loc_weight": 12.96148139681572
+        }
+      }
+    ],
+    "analysis/improved_analysis.py": [
+      {
+        "id": "test_coverage::analysis/improved_analysis.py::untested_module",
+        "tier": 3,
+        "confidence": "high",
+        "summary": "Untested module (174 LOC, 0 importers)",
+        "detail": {
+          "kind": "untested_module",
+          "loc": 174,
+          "importer_count": 0,
+          "loc_weight": 13.19090595827292
+        }
+      }
+    ],
+    "analysis/signalp_6_filter.py": [
+      {
+        "id": "test_coverage::analysis/signalp_6_filter.py::untested_module",
+        "tier": 3,
+        "confidence": "high",
+        "summary": "Untested module (65 LOC, 0 importers)",
+        "detail": {
+          "kind": "untested_module",
+          "loc": 65,
+          "importer_count": 0,
+          "loc_weight": 8.06225774829855
+        }
+      }
+    ],
+    "app/app.py": [
+      {
+        "id": "test_coverage::app/app.py::untested_critical",
+        "tier": 2,
+        "confidence": "high",
+        "summary": "Untested critical module (269 LOC, 0 importers) \u2014 high blast radius",
+        "detail": {
+          "kind": "untested_critical",
+          "loc": 269,
+          "importer_count": 0,
+          "loc_weight": 16.401219466856727,
+          "complexity_score": 59
+        }
+      }
+    ],
+    "app/wsgi_pythonanywhere.py": [
+      {
+        "id": "test_coverage::app/wsgi_pythonanywhere.py::untested_module",
+        "tier": 3,
+        "confidence": "high",
+        "summary": "Untested module (23 LOC, 0 importers)",
+        "detail": {
+          "kind": "untested_module",
+          "loc": 23,
+          "importer_count": 0,
+          "loc_weight": 4.795831523312719
+        }
+      }
+    ]
+  },
+  "total_matching": 6,
+  "noise_budget": 10,
+  "noise_global_budget": 0,
   "narrative": {
     "phase": "middle_grind",
-    "headline": "\u26a0 91 security findings \u2014 review before other cleanup. 121 findings open. Error consistency (0.0%) needs attention \u2014 run `desloppify next` to start.",
+    "headline": "51 issues open. Abstraction fit (0.0%) needs attention \u2014 run `desloppify next` to start.",
     "dimensions": {
       "lowest_dimensions": [
         {
-          "name": "Error consistency",
-          "strict": 0.0,
-          "issues": 0,
-          "impact": 0.0,
-          "subjective": true,
-          "impact_description": "re-review to improve"
-        },
-        {
           "name": "Abstraction fit",
           "strict": 0.0,
-          "issues": 0,
+          "failing": 0,
           "impact": 0.0,
           "subjective": true,
           "impact_description": "re-review to improve"
@@ -28,13 +120,43 @@
         {
           "name": "AI generated debt",
           "strict": 0.0,
-          "issues": 0,
+          "failing": 0,
+          "impact": 0.0,
+          "subjective": true,
+          "impact_description": "re-review to improve"
+        },
+        {
+          "name": "API coherence",
+          "strict": 0.0,
+          "failing": 0,
           "impact": 0.0,
           "subjective": true,
           "impact_description": "re-review to improve"
         }
       ],
-      "biggest_gap_dimensions": [],
+      "biggest_gap_dimensions": [
+        {
+          "name": "Test health",
+          "lenient": 60.6,
+          "strict": 12.2,
+          "gap": 48.4,
+          "wontfix_count": 0
+        },
+        {
+          "name": "File health",
+          "lenient": 83.8,
+          "strict": 46.2,
+          "gap": 37.6,
+          "wontfix_count": 0
+        },
+        {
+          "name": "Code quality",
+          "lenient": 87.5,
+          "strict": 71.8,
+          "gap": 15.7,
+          "wontfix_count": 0
+        }
+      ],
       "stagnant_dimensions": [
         {
           "name": "Security",
@@ -42,37 +164,12 @@
           "stuck_scans": 5
         },
         {
-          "name": "Error consistency",
-          "strict": 0.0,
-          "stuck_scans": 5
-        },
-        {
           "name": "Abstraction fit",
           "strict": 0.0,
           "stuck_scans": 5
         },
         {
           "name": "AI generated debt",
-          "strict": 0.0,
-          "stuck_scans": 5
-        },
-        {
-          "name": "High elegance",
-          "strict": 0.0,
-          "stuck_scans": 5
-        },
-        {
-          "name": "Mid elegance",
-          "strict": 0.0,
-          "stuck_scans": 5
-        },
-        {
-          "name": "Low elegance",
-          "strict": 0.0,
-          "stuck_scans": 5
-        },
-        {
-          "name": "Cross-module arch",
           "strict": 0.0,
           "stuck_scans": 5
         },
@@ -82,12 +179,37 @@
           "stuck_scans": 5
         },
         {
+          "name": "Cross-module arch",
+          "strict": 0.0,
+          "stuck_scans": 5
+        },
+        {
           "name": "Dep health",
           "strict": 0.0,
           "stuck_scans": 5
         },
         {
-          "name": "Test strategy",
+          "name": "Design coherence",
+          "strict": 0.0,
+          "stuck_scans": 5
+        },
+        {
+          "name": "Error consistency",
+          "strict": 0.0,
+          "stuck_scans": 5
+        },
+        {
+          "name": "High elegance",
+          "strict": 0.0,
+          "stuck_scans": 5
+        },
+        {
+          "name": "Low elegance",
+          "strict": 0.0,
+          "stuck_scans": 5
+        },
+        {
+          "name": "Mid elegance",
           "strict": 0.0,
           "stuck_scans": 5
         },
@@ -97,7 +219,7 @@
           "stuck_scans": 5
         },
         {
-          "name": "Design coherence",
+          "name": "Test strategy",
           "strict": 0.0,
           "stuck_scans": 5
         }
@@ -107,8 +229,8 @@
       {
         "type": "reorganize",
         "detector": "orphaned",
-        "count": 7,
-        "description": "7 orphaned findings \u2014 delete dead files or relocate with `desloppify move`",
+        "count": 8,
+        "description": "8 orphaned issues \u2014 delete dead files or relocate with `desloppify move`",
         "command": "desloppify show orphaned --status open",
         "impact": 0.0,
         "dimension": "Code quality",
@@ -118,19 +240,19 @@
       {
         "type": "refactor",
         "detector": "structural",
-        "count": 3,
-        "description": "3 structural findings \u2014 decompose large files \u2014 extract logic into focused modules",
+        "count": 4,
+        "description": "4 structural issues \u2014 review large files \u2014 split only when responsibilities are clearly separable",
         "command": "desloppify show structural --status open",
         "impact": 0.0,
         "dimension": "File health",
         "priority": 2,
-        "lane": "refactor_0"
+        "lane": "refactor"
       },
       {
         "type": "refactor",
         "detector": "test_coverage",
-        "count": 5,
-        "description": "5 test_coverage findings \u2014 add tests for untested production modules \u2014 prioritize by import count",
+        "count": 6,
+        "description": "6 test_coverage issues \u2014 add tests for untested production modules \u2014 prioritize by import count",
         "command": "desloppify show test_coverage --status open",
         "impact": 0.0,
         "dimension": "Test health",
@@ -140,52 +262,72 @@
       {
         "type": "refactor",
         "detector": "responsibility_cohesion",
-        "count": 1,
-        "description": "1 responsibility_cohesion findings \u2014 split modules with too many responsibilities \u2014 extract focused sub-modules",
+        "count": 2,
+        "description": "2 responsibility_cohesion issues \u2014 split modules with too many responsibilities \u2014 extract focused sub-modules",
         "command": "desloppify show responsibility_cohesion --status open",
         "impact": 0.0,
         "dimension": "Code quality",
         "priority": 4,
-        "lane": "refactor_0"
+        "lane": "refactor"
       },
       {
         "type": "refactor",
         "detector": "boilerplate_duplication",
         "count": 1,
-        "description": "1 boilerplate_duplication findings \u2014 extract shared boilerplate into reusable helpers or base classes",
+        "description": "1 boilerplate_duplication issues \u2014 extract shared boilerplate into reusable helpers or base classes",
         "command": "desloppify show boilerplate_duplication --status open",
         "impact": 0.0,
         "dimension": "Duplication",
         "priority": 5,
-        "lane": "refactor_0"
+        "lane": "refactor"
       },
       {
         "type": "manual_fix",
-        "detector": "security",
-        "count": 91,
-        "description": "91 security findings \u2014 review and fix security findings \u2014 prioritize by severity",
-        "command": "desloppify show security --status open",
+        "detector": "smells",
+        "count": 15,
+        "description": "15 smells issues \u2014 inspect with `desloppify next` and fix manually",
+        "command": "desloppify show smells --status open",
         "impact": 0.0,
-        "dimension": "Security",
+        "dimension": "Code quality",
         "priority": 6,
-        "lane": "refactor_1"
+        "lane": "refactor"
+      },
+      {
+        "type": "manual_fix",
+        "detector": "global_mutable_config",
+        "count": 1,
+        "description": "1 global_mutable_config issues \u2014 refactor module-level mutable state \u2014 use explicit init functions or dependency injection",
+        "command": "desloppify show global_mutable_config --status open",
+        "impact": 0.0,
+        "dimension": "Code quality",
+        "priority": 7,
+        "lane": "refactor"
       },
       {
         "type": "manual_fix",
         "detector": "subjective_review",
-        "count": 13,
-        "description": "13 files need design review \u2014 run design review with dimension templates",
-        "command": "desloppify fix review",
+        "count": 14,
+        "description": "14 files need design review \u2014 run holistic review to refresh subjective scores",
+        "command": "desloppify review --prepare",
         "impact": 0.0,
         "dimension": "Test health",
-        "priority": 7,
-        "lane": "refactor_0"
+        "priority": 8,
+        "lane": "refactor"
+      },
+      {
+        "type": "debt_review",
+        "detector": null,
+        "description": "4.1 pts of wontfix debt \u2014 review stale decisions",
+        "command": "desloppify show --status wontfix",
+        "gap": 4.1,
+        "priority": 9,
+        "lane": "debt_review"
       }
     ],
     "strategy": {
       "fixer_leverage": {
         "auto_fixable_count": 0,
-        "total_count": 121,
+        "total_count": 51,
         "coverage": 0.0,
         "impact_ratio": 0.0,
         "recommendation": "none"
@@ -195,28 +337,21 @@
           "actions": [
             1
           ],
-          "file_count": 7,
+          "file_count": 8,
           "total_impact": 0.0,
           "automation": "manual",
           "run_first": false
         },
-        "refactor_0": {
+        "refactor": {
           "actions": [
             2,
             4,
             5,
-            7
+            6,
+            7,
+            8
           ],
-          "file_count": 13,
-          "total_impact": 0.0,
-          "automation": "manual",
-          "run_first": false
-        },
-        "refactor_1": {
-          "actions": [
-            6
-          ],
-          "file_count": 3,
+          "file_count": 15,
           "total_impact": 0.0,
           "automation": "manual",
           "run_first": false
@@ -225,21 +360,30 @@
           "actions": [
             3
           ],
-          "file_count": 5,
+          "file_count": 6,
+          "total_impact": 0.0,
+          "automation": "manual",
+          "run_first": false
+        },
+        "debt_review": {
+          "actions": [
+            9
+          ],
+          "file_count": 0,
           "total_impact": 0.0,
           "automation": "manual",
           "run_first": false
         }
       },
       "can_parallelize": true,
-      "hint": "4 independent workstreams, safe to parallelize. Rescan after each phase to verify."
+      "hint": "3 independent workstreams, safe to parallelize. Rescan after each phase to verify."
     },
     "tools": {
       "fixers": [],
       "move": {
         "available": true,
         "relevant": true,
-        "reason": "7 orphaned files",
+        "reason": "8 orphaned files",
         "usage": "desloppify move <source> <dest> [--dry-run]"
       },
       "plan": {
@@ -254,36 +398,51 @@
       }
     },
     "debt": {
-      "overall_gap": 0.0,
+      "overall_gap": 4.1,
       "wontfix_count": 0,
-      "worst_dimension": null,
-      "worst_gap": 0.0,
-      "trend": "stable"
+      "worst_dimension": "Test health",
+      "worst_gap": 48.4,
+      "trend": "growing"
     },
     "milestone": null,
     "primary_action": {
       "command": "desloppify show orphaned --status open",
-      "description": "7 orphaned findings \u2014 delete dead files or relocate with `desloppify move`"
+      "description": "8 orphaned issues \u2014 delete dead files or relocate with `desloppify move`"
     },
-    "why_now": "4 independent workstreams, safe to parallelize. Rescan after each phase to verify.",
+    "why_now": "3 independent workstreams, safe to parallelize. Rescan after each phase to verify.",
     "verification_step": {
       "command": "desloppify scan",
       "reason": "revalidate after changes"
     },
-    "risk_flags": [],
+    "risk_flags": [
+      {
+        "type": "wontfix_gap",
+        "severity": "medium",
+        "message": "Strict/lenient gap is 4.1 pts with 0 wontfix issues"
+      }
+    ],
     "strict_target": {
       "target": 95.0,
-      "current": 29.8,
-      "gap": 65.2,
+      "current": 18.8,
+      "gap": 76.2,
       "state": "below",
       "warning": null
     },
-    "reminders": [],
+    "reminders": [
+      {
+        "type": "wontfix_growing",
+        "message": "Wontfix debt is growing. Review stale decisions: `desloppify show --status wontfix`.",
+        "command": "desloppify show --status wontfix",
+        "priority": 2,
+        "severity": "medium"
+      }
+    ],
     "reminder_history": {
       "zone_classification": 3,
-      "report_scores": 7,
+      "report_scores": 9,
       "feedback_nudge": 3,
-      "stagnant_nudge": 13
+      "stagnant_nudge": 13,
+      "wontfix_growing": 3
     }
   },
   "config": {
@@ -293,15 +452,26 @@
     "holistic_max_age_days": 30,
     "generate_scorecard": true,
     "badge_path": "scorecard.png",
-    "exclude": [],
+    "exclude": [
+      "raw_data",
+      "filtered_datasets",
+      "__pycache__"
+    ],
     "ignore": [],
     "ignore_metadata": {},
     "zone_overrides": {},
     "review_dimensions": [],
     "large_files_threshold": 0,
     "props_threshold": 0,
-    "finding_noise_budget": 10,
-    "finding_noise_global_budget": 0,
-    "languages": {}
+    "issue_noise_budget": 10,
+    "issue_noise_global_budget": 0,
+    "execution_log_max_entries": 10000,
+    "needs_rescan": false,
+    "languages": {},
+    "commit_tracking_enabled": true,
+    "commit_pr": 0,
+    "commit_default_branch": "",
+    "commit_message_template": "desloppify: {status} {count} issue(s) \u2014 {summary}",
+    "trust_plugins": false
   }
 }
