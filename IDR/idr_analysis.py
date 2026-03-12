@@ -30,10 +30,14 @@ MobiDB-lite (https://github.com/BioComputingUP/MobiDB-lite):
 Outputs a DataFrame with all TA-protein columns plus appended disorder annotations.
 """
 
+import contextlib
+import gc
 import importlib.util
 import io
 import logging
+import multiprocessing as _mp
 import os
+import queue as _queue
 import time
 
 import pandas as pd
@@ -47,7 +51,7 @@ logger = logging.getLogger(__name__)
 
 EXACT_TMD_COUNT: int = 1       # Total membrane domains (TMD + intramembrane)
 MAX_N_TERM_DOMAINS: int = 0    # N-terminal membrane domains (0 = C-terminal only)
-MAX_CTERM_EXTENSION: int = 30  # Max residues between TMD end and protein C-terminus
+MAX_CTERM_EXTENSION: int = 10  # Max residues between TMD end and protein C-terminus
 
 AIUPRED_THRESHOLD: float = 0.5   # Per-residue score ≥ this → predicted disordered
 API_DELAY: float = 0.3           # Seconds to pause between UniProt sequence fetches
@@ -64,12 +68,14 @@ AIUPRED_DIR: str = os.environ.get("AIUPRED_DIR", "")
 def _detect_mobidb_bindir() -> str:
     explicit = os.environ.get("MOBIDB_BINDIR", "")
     if explicit:
-        return explicit
+        # Always resolve to an absolute path so sub-predictor subprocesses can
+        # find their binaries regardless of the working directory at call time.
+        return os.path.abspath(explicit)
     try:
         import mobidb_lite as _mobi  # type: ignore[import]
         candidate = os.path.join(os.path.dirname(_mobi.__file__), "bin")
         if os.path.isdir(candidate):
-            return candidate
+            return os.path.abspath(candidate)
     except ImportError:
         pass
     return ""
@@ -263,9 +269,17 @@ def run_aiupred_local(sequence: str, aiupred_dir: str = AIUPRED_DIR) -> dict:
 
     try:
         embedding_model, reg_model, device = mod._disorder_models
-        scores = mod.predict_disorder(
-            sequence, embedding_model, reg_model, device, smoothing=True
-        )
+        # torch.no_grad() prevents gradient graph accumulation during inference,
+        # which would otherwise grow memory linearly with protein count.
+        try:
+            import torch
+            _no_grad: contextlib.AbstractContextManager = torch.no_grad()
+        except ImportError:
+            _no_grad = contextlib.nullcontext()
+        with _no_grad:
+            scores = mod.predict_disorder(
+                sequence, embedding_model, reg_model, device, smoothing=True
+            )
         return {"scores": list(scores)}
     except Exception as exc:
         logger.warning("AIUPred: prediction failed for sequence of length %d: %s", len(sequence), exc)
@@ -348,7 +362,12 @@ def run_mobidb_lite_local(sequence: str, bindir: str = MOBIDB_BINDIR) -> dict:
             mobi_regions = regions.get("mobidblite", [])
             return {"prediction-disorder-mobidb_lite": {"regions": mobi_regions}}
     except Exception as exc:
-        logger.warning("MobiDB-lite: prediction raised an exception: %s", exc)
+        if "TimeoutExpired" in type(exc).__name__:
+            logger.warning(
+                "MobiDB-lite: sub-predictor timed out for sequence of length %d", len(sequence)
+            )
+        else:
+            logger.warning("MobiDB-lite: prediction raised an exception: %s", exc)
         return {}
 
     return {}
@@ -367,10 +386,16 @@ def mobidb_lite_summary(data: dict, protein_length: int) -> dict:
         return {"mobidb_lite_disordered_fraction": None}
 
     pred = data.get("prediction-disorder-mobidb_lite", {})
-    regions = pred.get("regions", []) if isinstance(pred, dict) else []
-
-    if not regions:
+    if not isinstance(pred, dict):
+        # Unexpected shape — treat as tool failure
         return {"mobidb_lite_disordered_fraction": None}
+    regions = pred.get("regions", [])
+
+    # Empty regions list means the tool ran but found no disordered residues
+    # (fully ordered) → 0.0, not None.  None is reserved for true failures
+    # where run_mobidb_lite_local returned {} (bindir missing, exception, etc.).
+    if not regions:
+        return {"mobidb_lite_disordered_fraction": 0.0}
 
     disordered_residues = sum(
         int(end) - int(start) + 1 for start, end in regions
@@ -381,40 +406,211 @@ def mobidb_lite_summary(data: dict, protein_length: int) -> dict:
 
 # ── Full prediction loop ──────────────────────────────────────────────────────
 
-def run_disorder_predictions(ta_df: pd.DataFrame) -> pd.DataFrame:
+_PRED_COLS = ("aiupred_mean_score", "aiupred_disordered_fraction",
+              "mobidb_lite_disordered_fraction")
+
+# Maximum wall-clock seconds to wait for one protein's predictions.
+# If the worker process hangs longer than this it is killed and restarted.
+# Each MobiDB-lite sub-predictor has a 30s timeout (8 predictors max = 240s),
+# plus AIUPred time and communication overhead.  Set worker budget generously.
+_PER_PROTEIN_TIMEOUT: int = 360  # 6 minutes
+
+_NULL_PRED: dict = {
+    "aiupred_mean_score": None,
+    "aiupred_disordered_fraction": None,
+    "mobidb_lite_disordered_fraction": None,
+}
+
+
+# ── Persistent worker ─────────────────────────────────────────────────────────
+
+def _worker_fn(job_q: "_mp.Queue", result_q: "_mp.Queue",
+               aiupred_dir: str, mobidb_bindir: str) -> None:
+    """Long-running child process: loads AIUPred models once, then loops.
+
+    Receives ``(acc, sequence, length)`` tuples from *job_q*, puts prediction
+    dicts into *result_q*.  A sentinel ``None`` job causes the worker to exit.
+    """
+    mod = _load_aiupred_lib(aiupred_dir)
+
+    while True:
+        job = job_q.get()
+        if job is None:
+            return
+
+        acc, sequence, length = job
+        try:
+            if sequence:
+                # AIUPred ── no_grad prevents gradient graph accumulation
+                if mod is not None:
+                    try:
+                        import torch
+                        _no_grad: contextlib.AbstractContextManager = torch.no_grad()
+                    except ImportError:
+                        _no_grad = contextlib.nullcontext()
+                    with _no_grad:
+                        emb, reg, dev = mod._disorder_models
+                        scores = mod.predict_disorder(
+                            sequence, emb, reg, dev, smoothing=True
+                        )
+                    ai_metrics = aiupred_summary(list(scores))
+                else:
+                    ai_metrics = {"aiupred_mean_score": None,
+                                  "aiupred_disordered_fraction": None}
+
+                mobi_raw = run_mobidb_lite_local(sequence, mobidb_bindir)
+                mobi_metrics = mobidb_lite_summary(mobi_raw, length)
+            else:
+                ai_metrics = {"aiupred_mean_score": None,
+                              "aiupred_disordered_fraction": None}
+                mobi_metrics = {"mobidb_lite_disordered_fraction": None}
+
+            result_q.put({**ai_metrics, **mobi_metrics})
+
+        except Exception as exc:  # noqa: BLE001
+            logger.warning("Worker: unhandled error for %s: %s", acc, exc)
+            result_q.put(dict(_NULL_PRED))
+
+        finally:
+            gc.collect()
+
+
+class _PredictionWorker:
+    """Manages a persistent child process that runs disorder predictions.
+
+    The worker is forked at creation (inheriting already-loaded module state)
+    and restarted automatically whenever it hangs or crashes.
+    """
+
+    def __init__(self, timeout: int = _PER_PROTEIN_TIMEOUT) -> None:
+        self.timeout = timeout
+        self._job_q: "_mp.Queue" = _mp.Queue()
+        self._result_q: "_mp.Queue" = _mp.Queue()
+        self._proc: "_mp.Process | None" = None
+        self._start()
+
+    def _start(self) -> None:
+        self._job_q = _mp.Queue()
+        self._result_q = _mp.Queue()
+        self._proc = _mp.Process(
+            target=_worker_fn,
+            args=(self._job_q, self._result_q, AIUPRED_DIR, MOBIDB_BINDIR),
+            daemon=True,
+        )
+        self._proc.start()
+
+    def _stop(self) -> None:
+        if self._proc is None:
+            return
+        self._proc.terminate()
+        self._proc.join(5)
+        if self._proc.is_alive():
+            self._proc.kill()
+            self._proc.join()
+        self._proc = None
+
+    def predict(self, acc: str, sequence: "str | None", length: int) -> dict:
+        """Return prediction dict for *sequence*.
+
+        Sends the job to the worker and waits up to ``self.timeout`` seconds.
+        If the worker does not respond in time it is killed and restarted;
+        ``_NULL_PRED`` is returned for the timed-out protein.
+        """
+        self._job_q.put((acc, sequence, length))
+        t0 = time.monotonic()
+        try:
+            return self._result_q.get(timeout=self.timeout)
+        except _queue.Empty:
+            elapsed = time.monotonic() - t0
+            logger.warning(
+                "Worker timeout after %.0fs (budget=%ds) for %s (len=%d) – killing and restarting worker.",
+                elapsed, self.timeout, acc, length,
+            )
+            self._stop()
+            self._start()
+            return dict(_NULL_PRED)
+
+    def shutdown(self) -> None:
+        """Send the sentinel and wait for the worker to exit cleanly."""
+        try:
+            self._job_q.put(None)
+            if self._proc is not None:
+                self._proc.join(10)
+        finally:
+            self._stop()
+
+
+def run_disorder_predictions(
+    ta_df: pd.DataFrame,
+    checkpoint_path: str | None = None,
+) -> pd.DataFrame:
     """Add AIUPred and MobiDB-lite predictions to each row of *ta_df*.
 
     Fetches the amino-acid sequence from UniProt for each protein, then runs
-    both local predictors.  Failed calls produce ``None`` values rather than
-    raising exceptions.
+    both predictors in an isolated worker process with a hard per-protein
+    timeout.  Failed or timed-out proteins produce ``None`` values.
 
-    Returns a new DataFrame with three additional columns appended:
-    ``aiupred_mean_score``, ``aiupred_disordered_fraction``,
-    ``mobidb_lite_disordered_fraction``.
+    Checkpoints are written to a separate ``.ckpt`` sidecar file after every
+    protein so an interrupted run can resume cheaply.
     """
+    # Sidecar checkpoint – never shares a name with the output file
+    ckpt_file = (checkpoint_path + ".ckpt") if checkpoint_path else None
+
+    # ── resume ────────────────────────────────────────────────────────────────
+    completed: dict[str, dict] = {}
+    if ckpt_file and os.path.isfile(ckpt_file):
+        try:
+            ckpt = pd.read_csv(ckpt_file)
+            for _, r in ckpt.iterrows():
+                completed[r["Entry"]] = {
+                    "aiupred_mean_score": r["aiupred_mean_score"] if pd.notna(r["aiupred_mean_score"]) else None,
+                    "aiupred_disordered_fraction": r["aiupred_disordered_fraction"] if pd.notna(r["aiupred_disordered_fraction"]) else None,
+                    "mobidb_lite_disordered_fraction": r["mobidb_lite_disordered_fraction"] if pd.notna(r["mobidb_lite_disordered_fraction"]) else None,
+                }
+            if completed:
+                print(f"  Resuming: {len(completed)} proteins already in checkpoint, skipping them.")
+        except Exception as exc:  # noqa: BLE001
+            logger.warning("Checkpoint load failed (%s) – starting from scratch.", exc)
+            completed = {}
+
+    worker = _PredictionWorker(timeout=_PER_PROTEIN_TIMEOUT)
     records = []
     total = len(ta_df)
-    for i, (_, row) in enumerate(ta_df.iterrows(), start=1):
-        acc = row["Entry"]
-        length = int(row["Length"]) if pd.notna(row.get("Length")) else 0
-        print(f"  [{i}/{total}] {acc}", end=" ", flush=True)
+    try:
+        for i, (idx, row) in enumerate(ta_df.iterrows(), start=1):
+            acc = row["Entry"]
+            length = int(row["Length"]) if pd.notna(row.get("Length")) else 0
 
-        # Fetch sequence once; used by both local tools
-        sequence = fetch_sequence(acc)
-        if sequence:
-            ai_raw = run_aiupred_local(sequence)
-            ai_metrics = aiupred_summary(ai_raw.get("scores", []))
+            if acc in completed:
+                print(f"  [{i}/{total}] {acc} (cached ✓)")
+                records.append((idx, completed[acc]))
+                continue
 
-            mobi_raw = run_mobidb_lite_local(sequence)
-            mobi_metrics = mobidb_lite_summary(mobi_raw, length)
-        else:
-            ai_metrics = {"aiupred_mean_score": None, "aiupred_disordered_fraction": None}
-            mobi_metrics = {"mobidb_lite_disordered_fraction": None}
+            print(f"  [{i}/{total}] {acc} (len={length})", end=" ", flush=True)
 
-        records.append({**ai_metrics, **mobi_metrics})
-        print("✓")
+            # Sequence fetch stays in the main process (controls API rate)
+            sequence = fetch_sequence(acc)
 
-    pred_df = pd.DataFrame(records, index=ta_df.index)
+            t_pred = time.monotonic()
+            pred = worker.predict(acc, sequence, length)
+            elapsed_pred = time.monotonic() - t_pred
+
+            timed_out = all(v is None for v in pred.values())
+            status = f"TIMEOUT – skipped ({elapsed_pred:.0f}s)" if timed_out else f"✓ ({elapsed_pred:.0f}s)"
+            print(status)
+
+            records.append((idx, pred))
+
+            if ckpt_file:
+                ckpt_row = pd.DataFrame([{"Entry": acc, **pred}])
+                write_header = not os.path.isfile(ckpt_file)
+                ckpt_row.to_csv(ckpt_file, mode="a", index=False, header=write_header)
+
+    finally:
+        worker.shutdown()
+
+    indices, dicts = zip(*records) if records else ([], [])
+    pred_df = pd.DataFrame(list(dicts), index=list(indices))
     return pd.concat([ta_df, pred_df], axis=1)
 
 
@@ -424,14 +620,17 @@ def main(
     data_path: str = DATA_PATH,
     disprot_path: str = DISPROT_PATH,
     run_predictions: bool = True,
+    filter_ta: bool = True,
     tmd_count: int = EXACT_TMD_COUNT,
     max_n_term: int = MAX_N_TERM_DOMAINS,
     max_cterm: int = MAX_CTERM_EXTENSION,
+    output_path: str | None = None,
+    resume: bool = True,
 ) -> pd.DataFrame:
     """Run the full IDR analysis pipeline.
 
     1. Load the membrane-protein DataFrame and the DisProt TSV.
-    2. Filter to TA proteins using the supplied (or default) thresholds.
+    2. Optionally filter to TA proteins (default) or process the whole dataset.
     3. Cross-reference against human DisProt entries.
     4. Optionally run AIUPred and MobiDB-lite predictions using the local
        standalone tools (set ``AIUPRED_DIR`` and ``MOBIDB_BINDIR``).
@@ -445,49 +644,124 @@ def main(
     run_predictions:
         When ``True``, run the AIUPred and MobiDB-lite local tools for each
         protein.  Set to ``False`` to skip predictions (DisProt annotation only).
+    filter_ta:
+        When ``True`` (default), restrict to TA proteins before running
+        predictions.  Set to ``False`` to process every protein in *data_path*
+        — useful for building a whole-population baseline for enrichment
+        comparisons.  When ``False`` a boolean ``is_ta`` column is added so
+        that TA proteins can still be identified downstream.
     tmd_count, max_n_term, max_cterm:
         Override the module-level TA filtering constants.
+    output_path:
+        Where to write the final CSV.  Defaults to ``ta_idr_results.csv`` (TA
+        mode) or ``all_idr_results.csv`` (whole-population mode) next to this
+        script.  Also used as the per-protein checkpoint file so that
+        interrupted runs can be resumed automatically.
+    resume:
+        When ``True`` (default) and *output_path* already exists, skip proteins
+        that are already present in that file and append new predictions to it.
+        Set to ``False`` to force a clean run from scratch.
 
     Returns
     -------
     pd.DataFrame
-        TA proteins with DisProt annotations and (if requested) disorder
+        Proteins with DisProt annotations and (if requested) disorder
         predictions appended as new columns.
     """
+    if output_path is None:
+        default_name = "ta_idr_results.csv" if filter_ta else "all_idr_results.csv"
+        output_path = os.path.join(_HERE, default_name)
+
     print("Loading data …")
     df = pd.read_csv(data_path)
     disprot_df = pd.read_csv(disprot_path, sep="\t", dtype=str)
 
     print(f"  {len(df):,} proteins in main dataset")
 
-    print("Filtering TA proteins …")
-    ta_df = filter_ta_proteins(df, tmd_count=tmd_count,
-                               max_n_term=max_n_term, max_cterm=max_cterm)
-    print(f"  {len(ta_df):,} TA proteins identified "
-          f"(TMD={tmd_count}, N-term≤{max_n_term}, C-ext≤{max_cterm})")
+    if filter_ta:
+        print("Filtering TA proteins …")
+        working_df = filter_ta_proteins(df, tmd_count=tmd_count,
+                                        max_n_term=max_n_term, max_cterm=max_cterm)
+        print(f"  {len(working_df):,} TA proteins identified "
+              f"(TMD={tmd_count}, N-term≤{max_n_term}, C-ext≤{max_cterm})")
+    else:
+        print("Processing whole dataset (no TA filter) …")
+        working_df = df.copy()
+        # Label which proteins meet TA criteria so downstream analysis can filter
+        for col in ("membrane_domain_count", "N_term_md", "cterm_distance"):
+            working_df[col] = pd.to_numeric(working_df[col], errors="coerce")
+        ta_mask = (
+            (working_df["membrane_domain_count"] == tmd_count)
+            & (working_df["N_term_md"] <= max_n_term)
+            & (working_df["cterm_distance"] <= max_cterm)
+        )
+        working_df["is_ta"] = ta_mask
+        ta_count = ta_mask.sum()
+        print(f"  {ta_count:,} proteins labelled is_ta=True "
+              f"(TMD={tmd_count}, N-term≤{max_n_term}, C-ext≤{max_cterm})")
 
     print("Matching against human DisProt entries …")
     disprot_human = filter_disprot_human(disprot_df)
     print(f"  {len(disprot_human):,} human DisProt annotations")
-    ta_df = match_disprot(ta_df, disprot_human)
-    hits = ta_df["disprot_id"].notna().sum()
-    print(f"  {hits} TA proteins found in DisProt")
-    if hits:
-        print(ta_df.loc[ta_df["disprot_id"].notna(),
-                        ["Entry", "Entry.Name", "disprot_id",
-                         "disprot_disorder_content"]].to_string(index=False))
+    working_df = match_disprot(working_df, disprot_human)
+    hits = working_df["disprot_id"].notna().sum()
+    print(f"  {hits} proteins found in DisProt")
+    if hits and filter_ta:
+        print(working_df.loc[working_df["disprot_id"].notna(),
+                             ["Entry", "Entry.Name", "disprot_id",
+                              "disprot_disorder_content"]].to_string(index=False))
 
     if run_predictions:
-        print(f"\nRunning disorder predictions for {len(ta_df)} proteins …")
-        ta_df = run_disorder_predictions(ta_df)
+        checkpoint = output_path if resume else None
+        print(f"\nRunning disorder predictions for {len(working_df):,} proteins …")
+        ckpt_sidecar = (output_path + ".ckpt") if checkpoint else None
+        if ckpt_sidecar and os.path.isfile(ckpt_sidecar):
+            print(f"  Checkpoint file found: {ckpt_sidecar}")
+        working_df = run_disorder_predictions(working_df, checkpoint_path=checkpoint)
         print("  Predictions complete.")
 
-    return ta_df
+    return working_df
 
 
 if __name__ == "__main__":
-    result_df = main()
-    output_path = os.path.join(_HERE, "ta_idr_results.csv")
-    result_df.to_csv(output_path, index=False)
-    print(f"\nSaved {len(result_df):,} rows → {output_path}")
+    import argparse
+
+    parser = argparse.ArgumentParser(
+        description="IDR analysis pipeline for tail-anchored proteins."
+    )
+    parser.add_argument(
+        "--output", default=os.path.join(_HERE, "ta_idr_results.csv"),
+        help="Path for the output CSV (default: IDR/ta_idr_results.csv).",
+    )
+    parser.add_argument(
+        "--no-resume", action="store_true",
+        help="Start a clean run, ignoring any existing output file.",
+    )
+    parser.add_argument(
+        "--no-predictions", action="store_true",
+        help="Skip AIUPred/MobiDB-lite – DisProt annotation only.",
+    )
+    parser.add_argument(
+        "--all-proteins", action="store_true",
+        help=(
+            "Process every protein in the dataset instead of filtering to TA proteins. "
+            "Adds an is_ta column so TA proteins can be identified downstream. "
+            "Default output file: IDR/all_idr_results.csv."
+        ),
+    )
+    args = parser.parse_args()
+
+    # When --all-proteins is set and no explicit --output was given, use all_idr_results.csv
+    output = args.output
+    if args.all_proteins and output == os.path.join(_HERE, "ta_idr_results.csv"):
+        output = os.path.join(_HERE, "all_idr_results.csv")
+
+    result_df = main(
+        output_path=output,
+        resume=not args.no_resume,
+        run_predictions=not args.no_predictions,
+        filter_ta=not args.all_proteins,
+    )
+    result_df.to_csv(output, index=False)
+    print(f"\nSaved {len(result_df):,} rows → {output}")
     print(f"Columns: {list(result_df.columns)}")

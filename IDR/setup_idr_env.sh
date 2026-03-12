@@ -31,9 +31,9 @@ REQUIREMENTS="$SCRIPT_DIR/requirements.txt"
 AIUPRED_TAG="2.1.2"
 MOBIDB_TAG="v4.0"
 
-SETUP_ONLY=false
+SETUP_ONLY=true       # default: setup only – use run_pipeline.sh to run
 for arg in "$@"; do
-    [[ "$arg" == "--setup-only" ]] && SETUP_ONLY=true
+    [[ "$arg" == "--run" ]] && SETUP_ONLY=false
 done
 
 # ── helpers ───────────────────────────────────────────────────────────────────
@@ -151,7 +151,12 @@ echo ""
 # ── 6. Run pipeline (unless --setup-only) ─────────────────────────────────────
 
 if [[ "$SETUP_ONLY" == true ]]; then
-    ok "Setup complete – pipeline not started (--setup-only)."
+    ok "Setup complete."
+    echo ""
+    echo "  Run the pipeline with:"
+    echo "    bash IDR/run_pipeline.sh"
+    echo "  or resume an interrupted run with:"
+    echo "    bash IDR/run_pipeline.sh --resume"
     exit 0
 fi
 
