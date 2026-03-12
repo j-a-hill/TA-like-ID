@@ -19,3 +19,7 @@ torch>=2.6.0
 pandas>=2.0.0
 requests>=2.28.0
 xmltramp2>=3.1.1   # required by EBI JDispatcher Python clients (e.g. pratt_client.py)
+#
+# N-terminal similarity analysis
+matplotlib>=3.8.0
+logomaker>=0.8.0   # sequence logo plots (plot_sequence_logo)
