@@ -1,0 +1,86 @@
+{
+  "batch": "mid_level_elegance",
+  "batch_index": 9,
+  "assessments": {"mid_level_elegance": 60.0},
+  "dimension_notes": {
+    "mid_level_elegance": {
+      "evidence": [
+        "IDR/idr_analysis.py main() → run_disorder_predictions() → _predict_one() → fetch_sequence() + worker.predict(): the call chain is well-composed with each step receiving explicit inputs and returning explicit outputs",
+        "analysis/Uniprot_TMD_search.py analyze_filtered_proteins() both computes a cterm_distance column AND prints a summary — it mixes data transformation with I/O side effects at the seam; callers cannot get the transformed DataFrame without the print output",
+        "analysis/non_srp_filter.py analyze_non_srp_by_cterm_distance() saves a CSV file as a side effect inline — callers have no way to disable or redirect the file I/O, coupling the analytical result to a filesystem write",
+        "protein_analysis_utils.py summary_report() prints directly rather than returning a structured object — a caller wanting to format the output differently must reimplement the logic",
+        "STANDALONE_APP.py module-level data load (df = pd.read_csv(DATA_URL) / fallback) at module import — this side effect means importing the module triggers network I/O, which is an unwanted seam for testing",
+        "app/app.py: df and ALL_COLUMNS are module-level globals populated at import time; the Shiny server function closes over them via free variable capture rather than explicit parameter passing",
+        "IDR/idr_analysis.py _append_checkpoint() writes one row at a time in append mode — the seam between prediction and persistence is implicit (callers must know to call this separately); the design is correct but the checkpoint sidecar pattern is not documented at the call site",
+        "IDR/nterm_analysis.py functions are cleanly composable: extract_windows_from_df → right_align_sequences → build_logo_matrix → plot_sequence_logo forms an explicit, testable pipeline"
+      ],
+      "impact_scope": "codebase",
+      "fix_scope": "multi_file_refactor",
+      "confidence": "high"
+    }
+  },
+  "dimension_judgment": {
+    "mid_level_elegance": {
+      "strengths": [
+        "IDR/idr_analysis.py main() pipeline has explicit data flow: each stage receives input and returns output, with PipelineConfig cleanly carrying parameters across seams",
+        "IDR/nterm_analysis.py functions are composable with clean inputs/outputs and no hidden I/O side effects",
+        "protein_analysis_utils.py filter_and_compare() and filter_by_cterm_distance() have clean seams: input DataFrame + parameters → output tuple"
+      ],
+      "issue_character": "Analysis functions at the seam between computation and output systematically mix data transformation with I/O side effects (printing, file writes), making them untestable without capturing stdout or filesystem state.",
+      "score_rationale": "The IDR pipeline and nterm_analysis demonstrate good seam design. However, the analysis/ scripts (analyze_filtered_proteins, analyze_non_srp_by_cterm_distance, summary_report) all mix computation with print/file-write side effects at the seam, which means no caller can use the computation result without triggering output. This is a pervasive mid-level seam defect that reduces reusability and testability of these boundary functions."
+    }
+  },
+  "issues": [
+    {
+      "dimension": "mid_level_elegance",
+      "identifier": "analyze_filtered_proteins_mixed_seam",
+      "summary": "analyze_filtered_proteins() mixes data transformation with print side effects, preventing callers from getting the result without console output",
+      "related_files": ["analysis/Uniprot_TMD_search.py"],
+      "evidence": [
+        "def analyze_filtered_proteins(df, gene_set, cterm_threshold=30) -> pd.DataFrame: ... print(...) ... return filtered_df",
+        "Callers cannot suppress the print output or redirect it — any test calling this function produces console noise"
+      ],
+      "suggestion": "Move print statements to the __main__ block or a separate display_filtered_proteins_summary() function; have analyze_filtered_proteins() only compute and return the filtered DataFrame",
+      "confidence": "high",
+      "impact_scope": "module",
+      "fix_scope": "single_edit"
+    },
+    {
+      "dimension": "mid_level_elegance",
+      "identifier": "analyze_by_cterm_distance_file_write_seam",
+      "summary": "analyze_non_srp_by_cterm_distance() and analyze_srp_by_cterm_distance() write CSV files as a side effect, coupling computation to filesystem",
+      "related_files": ["analysis/non_srp_filter.py", "analysis/srp_filter.py"],
+      "evidence": [
+        "close_cterm.to_csv(f'non_srp_cterm_{cterm_threshold}.csv', index=False) inside analyze_non_srp_by_cterm_distance()",
+        "Callers cannot run the analysis without a filesystem write; the output path is hardcoded using the threshold value"
+      ],
+      "suggestion": "Remove the to_csv() call from the analysis function; move it to the __main__ block after calling the function, so the computation is separable from persistence",
+      "confidence": "high",
+      "impact_scope": "module",
+      "fix_scope": "single_edit"
+    },
+    {
+      "dimension": "mid_level_elegance",
+      "identifier": "module_global_data_seam",
+      "summary": "app/app.py and STANDALONE_APP.py populate module-level globals (df, ALL_COLUMNS) at import time, coupling module load to data loading",
+      "related_files": ["app/app.py", "STANDALONE_APP.py"],
+      "evidence": [
+        "app/app.py: df = load_data() at module level; ALL_COLUMNS = list(df.columns) if len(df) > 0 else []",
+        "STANDALONE_APP.py: df = pd.read_csv(DATA_URL) at module level with try/except fallback",
+        "The server() function closes over df and ALL_COLUMNS as free variables rather than receiving them as parameters"
+      ],
+      "suggestion": "Wrap the data loading in a function called from if __name__ == '__main__' or inside the Shiny app startup, or pass the loaded DataFrame explicitly to the server function via a closure factory",
+      "confidence": "medium",
+      "impact_scope": "module",
+      "fix_scope": "single_edit"
+    }
+  ],
+  "retrospective": {
+    "root_causes": [
+      "Analysis scripts were written as self-contained pipeline scripts where print/write side effects were the intended output — the functions were not designed for reuse by other callers",
+      "Shiny module-level data loading is a common pattern in simple Shiny apps but creates seam issues for testing"
+    ],
+    "likely_symptoms": [],
+    "possible_false_positives": []
+  }
+}

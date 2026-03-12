@@ -1,0 +1,92 @@
+{
+  "batch": "convention_outlier",
+  "batch_index": 3,
+  "assessments": {"convention_outlier": 70.0},
+  "dimension_notes": {
+    "convention_outlier": {
+      "evidence": [
+        "Function naming is consistently snake_case across all modules (filter_and_compare, analyze_non_srp_by_cterm_distance, build_gene_set, etc.)",
+        "Column name conventions are inconsistent between modules: analysis/Uniprot_TMD_search.py uses 'Membrane_Domain_Count' (PascalCase_with_underscores), while protein_analysis_utils.py and app/app.py use 'membrane_domain_count' (lowercase) — both reference the same conceptual column",
+        "calc_min_cterm_distance (protein_analysis_utils.py) vs calculate_cterm_distance (Uniprot_TMD_search.py) — same operation, inconsistent naming style (abbreviated vs. spelled-out prefix)",
+        "analyze_non_srp_by_cterm_distance / analyze_srp_by_cterm_distance follow the same naming pattern, which is consistent within the pair",
+        "analysis/analysis_test.py uses the _test suffix pattern but is in analysis/ not tests/ — inconsistent with the project's convention of putting tests under tests/",
+        "IDR/nterm_analysis.py and IDR/idr_analysis.py follow the same module naming convention (lowercase with underscores)"
+      ],
+      "impact_scope": "subsystem",
+      "fix_scope": "multi_file_refactor",
+      "confidence": "high"
+    }
+  },
+  "dimension_judgment": {
+    "convention_outlier": {
+      "strengths": [
+        "All Python files use consistent snake_case for function and variable names",
+        "Module file naming is uniform: lowercase with underscores throughout",
+        "analyze_srp_by_cterm_distance and analyze_non_srp_by_cterm_distance are structurally parallel, demonstrating intentional sibling consistency"
+      ],
+      "issue_character": "The main outlier is column name inconsistency — Membrane_Domain_Count vs membrane_domain_count — which is a silent runtime risk, not just a style preference; and the calc_ vs calculate_ prefix divergence for semantically equivalent functions.",
+      "score_rationale": "The codebase is largely convention-consistent for code structure and naming. The primary concrete violations are the column name casing discrepancy (Membrane_Domain_Count vs membrane_domain_count) which can cause silent KeyErrors, and the calc_/calculate_ prefix inconsistency which reduces discoverability. These are real but narrow in scope, keeping the score in the upper-middle range."
+    }
+  },
+  "issues": [
+    {
+      "dimension": "convention_outlier",
+      "identifier": "membrane_domain_count_casing",
+      "summary": "Column name 'Membrane_Domain_Count' (PascalCase) in Uniprot_TMD_search.py conflicts with 'membrane_domain_count' (lowercase) used elsewhere",
+      "related_files": [
+        "analysis/Uniprot_TMD_search.py",
+        "protein_analysis_utils.py",
+        "app/app.py"
+      ],
+      "evidence": [
+        "Uniprot_TMD_search.py line: md_counts = filtered_df['Membrane_Domain_Count'].value_counts().sort_index()",
+        "app/app.py filter: result = result[result['membrane_domain_count'] < md_val]",
+        "protein_analysis_utils.py FilterConfig: compare_columns=['membrane_domain_count', ...]"
+      ],
+      "suggestion": "Standardize to 'membrane_domain_count' (lowercase) throughout; update Uniprot_TMD_search.py to assign that column name when computing it",
+      "confidence": "high",
+      "impact_scope": "subsystem",
+      "fix_scope": "multi_file_refactor"
+    },
+    {
+      "dimension": "convention_outlier",
+      "identifier": "calc_vs_calculate_prefix",
+      "summary": "Equivalent C-terminal distance functions use inconsistent name prefixes: calc_ vs calculate_",
+      "related_files": [
+        "protein_analysis_utils.py",
+        "analysis/Uniprot_TMD_search.py"
+      ],
+      "evidence": [
+        "protein_analysis_utils.py: def calc_min_cterm_distance(row: pd.Series)",
+        "analysis/Uniprot_TMD_search.py: def calculate_cterm_distance(row: pd.Series)"
+      ],
+      "suggestion": "After consolidating the two functions (see cross_module_architecture finding), use a single consistent name; 'calculate_cterm_distance' is clearer than the abbreviated form",
+      "confidence": "medium",
+      "impact_scope": "module",
+      "fix_scope": "multi_file_refactor"
+    },
+    {
+      "dimension": "convention_outlier",
+      "identifier": "analysis_test_naming_placement",
+      "summary": "analysis/analysis_test.py uses test-file naming convention but lives outside tests/",
+      "related_files": ["analysis/analysis_test.py"],
+      "evidence": [
+        "File is named analysis_test.py, matching pytest's discovery pattern (test_*.py or *_test.py)",
+        "All other test files are in tests/ (test_protein_analysis_utils.py, test_filter_analysis.py, etc.)",
+        "The file is not collected by pytest because it lacks the test_ prefix on its class/function names, but the naming creates confusion"
+      ],
+      "suggestion": "Rename to analysis/exploratory_workflow.py or move to notebooks/ to avoid confusion with the tests/ convention",
+      "confidence": "high",
+      "impact_scope": "module",
+      "fix_scope": "single_edit"
+    }
+  ],
+  "retrospective": {
+    "root_causes": [
+      "Column naming was set by the upstream Uniprot TSV format during early data loading and was not normalized when the shared utils layer was introduced",
+      "analysis_test.py predates the tests/ directory convention"
+    ],
+    "likely_symptoms": [],
+    "possible_false_positives": []
+  }
+}

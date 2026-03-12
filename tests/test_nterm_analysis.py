@@ -36,6 +36,7 @@ from nterm_analysis import (
     # FASTA
     format_fasta,
     # EBI MEME client
+    MemeConfig,
     submit_meme_ebi,
     poll_meme_ebi,
 )
@@ -447,10 +448,9 @@ class TestSubmitMemeEbi:
         fake_resp.raise_for_status = MagicMock()
         fake_resp.text = "meme-test-1234"
 
+        cfg = MemeConfig(url="http://mock-meme")
         with patch("nterm_analysis.requests.post", return_value=fake_resp) as mock_post:
-            job_id = submit_meme_ebi(
-                ">P001\nMKLV\n", "test@example.com", url="http://mock-meme"
-            )
+            job_id = submit_meme_ebi(">P001\nMKLV\n", "test@example.com", config=cfg)
 
         mock_post.assert_called_once()
         assert mock_post.call_args[0][0] == "http://mock-meme/run"
@@ -461,19 +461,35 @@ class TestSubmitMemeEbi:
         fake_resp.raise_for_status = MagicMock()
         fake_resp.text = "meme-abc"
 
+        cfg = MemeConfig(url="http://x")
         with patch("nterm_analysis.requests.post", return_value=fake_resp) as mock_post:
-            submit_meme_ebi(">P001\nMKLV\n", "user@domain.org", url="http://x")
+            submit_meme_ebi(">P001\nMKLV\n", "user@domain.org", config=cfg)
 
         payload = mock_post.call_args[1]["data"]
         assert payload["email"] == "user@domain.org"
+
+    def test_default_config_used_when_none(self):
+        """Passing no config should use MemeConfig defaults."""
+        fake_resp = MagicMock()
+        fake_resp.raise_for_status = MagicMock()
+        fake_resp.text = "meme-default"
+
+        with patch("nterm_analysis.requests.post", return_value=fake_resp) as mock_post:
+            submit_meme_ebi(">P001\nMKLV\n", "a@b.com")
+
+        payload = mock_post.call_args[1]["data"]
+        assert payload["nmotifs"] == "3"
+        assert payload["minw"] == "6"
+        assert payload["maxw"] == "15"
 
     def test_http_error_propagated(self):
         fake_resp = MagicMock()
         fake_resp.raise_for_status.side_effect = requests.HTTPError("500")
 
+        cfg = MemeConfig(url="http://x")
         with patch("nterm_analysis.requests.post", return_value=fake_resp):
             with pytest.raises(requests.HTTPError):
-                submit_meme_ebi(">P001\nMKLV\n", "a@b.com", url="http://x")
+                submit_meme_ebi(">P001\nMKLV\n", "a@b.com", config=cfg)
 
 
 # ── poll_meme_ebi ─────────────────────────────────────────────────────────────

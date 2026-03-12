@@ -1,0 +1,78 @@
+{
+  "batch": "abstraction_fitness",
+  "batch_index": 6,
+  "assessments": {"abstraction_fitness": 65.0},
+  "dimension_notes": {
+    "abstraction_fitness": {
+      "evidence": [
+        "filter_by_cterm_distance() in protein_analysis_utils.py is a pure convenience wrapper that calls filter_and_compare() with three fixed arguments and no added policy — it adds a named entry point for the common case, which is appropriate",
+        "analyze_non_srp_by_cterm_distance() and analyze_srp_by_cterm_distance() are near-identical functions that differ only in the protein category name used in print statements — the shared filtering logic is not abstracted, creating structural duplication",
+        "IDR/idr_analysis.py _PredictionWorker class wraps multiprocessing queue management and adds restart-on-crash logic — this is a genuine abstraction with real policy (timeout, restart)",
+        "app/app.py filtered_data() reactive is a large function (50+ lines) applying 6 independent filter conditions sequentially using a repeated if op != 'All' and op in [...] pattern — the pattern is data-driven but written out imperatively for each column",
+        "analysis/demo_fixed_workflow.py and analysis/improved_analysis.py both call filter_by_cterm_distance and summary_report in demonstration scripts — these files add no new abstractions, they are orchestration scripts",
+        "IDR/idr_analysis.py PipelineConfig dataclass cleanly encapsulates pipeline parameters — appropriate abstraction for a configurable pipeline",
+        "app/app.py visible_columns() reactive iterates ALL_COLUMNS with a dynamic input key construction (f'col_{col.replace(\".\", \"_\")}') — a fragile string-key pattern coupling UI and data columns implicitly"
+      ],
+      "impact_scope": "codebase",
+      "fix_scope": "multi_file_refactor",
+      "confidence": "high",
+      "sub_axes": {
+        "abstraction_leverage": 62.0,
+        "indirection_cost": 75.0,
+        "interface_honesty": 70.0,
+        "delegation_density": 60.0,
+        "definition_directness": 68.0,
+        "type_discipline": 65.0
+      }
+    }
+  },
+  "dimension_judgment": {
+    "abstraction_fitness": {
+      "strengths": [
+        "_PredictionWorker is a well-fit abstraction: it encapsulates process lifecycle (spawn, restart, shutdown) and adds genuine timeout-and-restart policy",
+        "PipelineConfig dataclass provides a clean abstraction over pipeline parameters with sensible defaults",
+        "FilterConfig dataclass in protein_analysis_utils.py is appropriately scoped — it captures the common filter-and-compare parameters without over-generalizing"
+      ],
+      "issue_character": "The main fitness problem is missed abstraction opportunity: srp_filter.py and non_srp_filter.py have structurally identical functions that differ only in domain-label strings, and app/app.py's filtered_data() repeats an apply-operator pattern for each column that should be data-driven.",
+      "score_rationale": "Abstraction is fit in the IDR pipeline (PipelineConfig, _PredictionWorker) and in the core utilities (filter_and_compare, FilterConfig). The weakness is in analysis/: the srp/non-srp pair is structurally identical but not unified, and the Shiny app repeats filter logic per column. These are practical maintainability defects, not architectural overengineering. Score is in the middle range."
+    }
+  },
+  "issues": [
+    {
+      "dimension": "abstraction_fitness",
+      "identifier": "srp_nonsrp_duplicate_abstraction",
+      "summary": "analyze_srp_by_cterm_distance and analyze_non_srp_by_cterm_distance are identical except for label strings — shared logic is not abstracted",
+      "related_files": ["analysis/srp_filter.py", "analysis/non_srp_filter.py"],
+      "evidence": [
+        "Both functions have identical body structure: df.copy(), apply calc_min_cterm_distance, filter by threshold, print domain distribution, save CSV",
+        "The only textual differences are 'SRP' vs 'non-SRP' in print strings and output filename"
+      ],
+      "suggestion": "Consolidate into a single analyze_proteins_by_cterm_distance(df, label, cterm_threshold) in protein_analysis_utils.py; the srp/non-srp modules call it with their respective labels",
+      "confidence": "high",
+      "impact_scope": "module",
+      "fix_scope": "multi_file_refactor"
+    },
+    {
+      "dimension": "abstraction_fitness",
+      "identifier": "app_filter_repeated_pattern",
+      "summary": "app/app.py filtered_data() applies an identical operator-dispatch pattern for each of 4 numeric columns without abstracting the pattern",
+      "related_files": ["app/app.py"],
+      "evidence": [
+        "Four consecutive blocks each follow: op = input.X_op(); val = input.X_val(); if op != 'All' and op in ['<', '>', '=']: if op == '<': result = result[result[col] < val] ...",
+        "The pattern is identical for cterm_distance, penultimate_distance, membrane_domain_count, N_term_md"
+      ],
+      "suggestion": "Extract a helper _apply_numeric_filter(df, col, op, val) and loop over a list of (col, input_op, input_val) tuples; this also makes it trivial to add new numeric filters",
+      "confidence": "high",
+      "impact_scope": "local",
+      "fix_scope": "single_edit"
+    }
+  ],
+  "retrospective": {
+    "root_causes": [
+      "srp_filter.py and non_srp_filter.py were created as separate scripts for separate pipeline stages before a shared utils layer existed",
+      "Shiny app filter logic was added incrementally per-column without refactoring to a data-driven pattern"
+    ],
+    "likely_symptoms": [],
+    "possible_false_positives": []
+  }
+}

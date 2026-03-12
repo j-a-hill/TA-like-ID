@@ -1,0 +1,74 @@
+{
+  "batch": "ai_generated_debt",
+  "batch_index": 10,
+  "assessments": {"ai_generated_debt": 62.0},
+  "dimension_notes": {
+    "ai_generated_debt": {
+      "evidence": [
+        "analysis/demo_fixed_workflow.py is a narrative script filled with print statements explaining 'BEFORE THE FIX' and 'AFTER THE FIX' with checkmarks (✅ FIXED) — this content reads as generated documentation prose rather than functional code",
+        "analysis/improved_analysis.py ends with: print('This addresses the category comparison issues mentioned in the GitHub issue.') — boilerplate sign-off that adds no information",
+        "analysis/non_srp_filter.py ends with print('=== Non-SRP Filter Analysis Complete ===') — generic completion banner with no information value",
+        "analysis/demo_fixed_workflow.py demonstrate_fixed_workflow() function has 8 lines of print() explaining what the 'fix' addresses before calling any real code — this is docstring-style explanation written as inline print statements",
+        "analysis/non_srp_filter.py and analysis/srp_filter.py: nearly identical structure including comments — the duplication across both files is consistent with a copy-paste-and-rename pattern",
+        "protein_analysis_utils.py: FilterConfig docstring lists all attributes with types and descriptions — appropriate and useful",
+        "IDR/idr_analysis.py: inline comments throughout are generally non-trivial (explaining torch.no_grad() memory behavior, why MobiDB-lite pip install omits bin/, why worker restarts are needed) — these are genuine explanatory comments",
+        "analysis/analysis_test.py: comment '# Test what might be the \"newline\" issue' followed by code checking for newlines — diagnostic narrative embedded as production code"
+      ],
+      "impact_scope": "codebase",
+      "fix_scope": "multi_file_refactor",
+      "confidence": "medium"
+    }
+  },
+  "dimension_judgment": {
+    "ai_generated_debt": {
+      "strengths": [
+        "IDR/idr_analysis.py comments explain genuine non-obvious constraints (torch.no_grad() for memory, bin/ install path for MobiDB-lite, worker restart logic)",
+        "protein_analysis_utils.py docstrings are informative and match the actual function behavior",
+        "IDR/nterm_analysis.py algorithm comments for compute_kappa/compute_omega cite the source paper and explain the mathematical steps"
+      ],
+      "issue_character": "The primary debt pattern is narrative print-based documentation embedded in runnable code — demonstration scripts contain paragraph-length explanations of 'what the fix does' as print() calls, which is more appropriate for a README or docstring than for runtime output.",
+      "score_rationale": "The codebase has a mixed signal: the IDR pipeline has genuinely useful comments, while the analysis/demo scripts have AI-generation markers (verbose explanatory print blocks, 'FIXED' checkmarks, GitHub issue sign-offs). The debt is concentrated in analysis/demo_fixed_workflow.py and the tail ends of non_srp_filter.py and srp_filter.py. It does not infect the core utility code. Score is in the middle range."
+    }
+  },
+  "issues": [
+    {
+      "dimension": "ai_generated_debt",
+      "identifier": "demo_workflow_narrative_prints",
+      "summary": "analysis/demo_fixed_workflow.py embeds multi-paragraph explanatory narrative as print() calls rather than as documentation",
+      "related_files": ["analysis/demo_fixed_workflow.py"],
+      "evidence": [
+        "demonstrate_fixed_workflow() prints 'BEFORE THE FIX:', '❌ Users had trouble...', 'AFTER THE FIX:', '✅ Easy filtering...' as runtime output",
+        "Eight-line print block in demonstrate_fixed_workflow() explains the purpose of the script — this information belongs in the module docstring, not as runtime print output",
+        "Ends with 'This addresses all issues mentioned in GitHub issue #3.' — a generic AI-style sign-off"
+      ],
+      "suggestion": "Move explanatory prose to the module docstring; keep print() calls limited to actual data output (counts, distributions); remove the BEFORE/AFTER/FIXED narrative blocks",
+      "confidence": "high",
+      "impact_scope": "local",
+      "fix_scope": "single_edit"
+    },
+    {
+      "dimension": "ai_generated_debt",
+      "identifier": "analysis_test_diagnostic_narrative",
+      "summary": "analysis/analysis_test.py contains diagnostic narrative comments embedded as inline comments in a script that should not exist in production",
+      "related_files": ["analysis/analysis_test.py"],
+      "evidence": [
+        "Comment: '# Test what might be the \"newline\" issue'",
+        "Comment: '# Test 2: Show what users actually want - filter first, then compare within subset'",
+        "Comment: '# Show what they actually want to do'",
+        "These are exploration-session commentary, not production documentation"
+      ],
+      "suggestion": "Remove analysis_test.py from the production codebase (move to notebooks/ or delete); it is a superseded exploratory session",
+      "confidence": "high",
+      "impact_scope": "local",
+      "fix_scope": "single_edit"
+    }
+  ],
+  "retrospective": {
+    "root_causes": [
+      "demonstration scripts were generated or written quickly to explain a 'fix' to a GitHub issue, with the narrative explanation embedded as print output rather than as documentation",
+      "analysis_test.py was a live debugging session that was committed and never cleaned up"
+    ],
+    "likely_symptoms": [],
+    "possible_false_positives": []
+  }
+}

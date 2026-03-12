@@ -1,7 +1,7 @@
 {
   "version": 8,
   "created": "2026-03-12T13:06:54+00:00",
-  "updated": "2026-03-12T13:08:46+00:00",
+  "updated": "2026-03-12T13:39:33+00:00",
   "queue_order": [
     "subjective::abstraction_fitness",
     "subjective::ai_generated_debt",
@@ -22,10 +22,211 @@
     "subjective::naming_quality",
     "subjective::package_organization",
     "subjective::test_strategy",
-    "subjective::type_safety"
+    "subjective::type_safety",
+    "review::.::holistic::abstraction_fitness::app_filter_repeated_pattern",
+    "review::.::holistic::abstraction_fitness::srp_nonsrp_duplicate_abstraction",
+    "review::.::holistic::ai_generated_debt::analysis_test_diagnostic_narrative",
+    "review::.::holistic::ai_generated_debt::demo_workflow_narrative_prints",
+    "review::.::holistic::api_surface_coherence::df_parameter_naming_inconsistency",
+    "review::.::holistic::api_surface_coherence::n_vs_max_distance_param",
+    "review::.::holistic::contract_coherence::compare_categories_union_return",
+    "review::.::holistic::contract_coherence::run_aiupred_empty_dict_failure_contract",
+    "review::.::holistic::convention_outlier::analysis_test_naming_placement",
+    "review::.::holistic::convention_outlier::calc_vs_calculate_prefix",
+    "review::.::holistic::convention_outlier::membrane_domain_count_casing",
+    "review::.::holistic::cross_module_architecture::analysis_test_stale_redefinition",
+    "review::.::holistic::cross_module_architecture::count_domains_duplication",
+    "review::.::holistic::cross_module_architecture::cterm_distance_duplication",
+    "review::.::holistic::dependency_health::idr_requirements_unverified_deps",
+    "review::.::holistic::dependency_health::xmltramp2_potentially_unused",
+    "review::.::holistic::design_coherence::filter_script_main_blocks",
+    "review::.::holistic::design_coherence::idr_main_multiple_responsibilities",
+    "review::.::holistic::error_consistency::fetch_sequence_bare_except",
+    "review::.::holistic::error_consistency::load_data_silent_failure",
+    "review::.::holistic::error_consistency::missing_column_validation",
+    "review::.::holistic::high_level_elegance::analysis_dir_role_mixing",
+    "review::.::holistic::high_level_elegance::analysis_test_misplaced",
+    "review::.::holistic::high_level_elegance::dual_app_ambiguity",
+    "review::.::holistic::incomplete_migration::count_domains_migration_incomplete",
+    "review::.::holistic::incomplete_migration::hardcoded_dev_paths",
+    "review::.::holistic::initialization_coupling::app_module_level_network_call",
+    "review::.::holistic::initialization_coupling::mobidb_bindir_import_time_detection",
+    "review::.::holistic::logic_clarity::unreachable_return_mobidb",
+    "review::.::holistic::low_level_elegance::iterrows_in_load_checkpoint",
+    "review::.::holistic::low_level_elegance::nonsrp_srp_main_block_inline",
+    "review::.::holistic::mid_level_elegance::analyze_by_cterm_distance_file_write_seam",
+    "review::.::holistic::mid_level_elegance::analyze_filtered_proteins_mixed_seam",
+    "review::.::holistic::mid_level_elegance::module_global_data_seam",
+    "review::.::holistic::naming_quality::quick_prefix_uninformative",
+    "review::.::holistic::naming_quality::single_letter_N_parameter",
+    "review::.::holistic::naming_quality::worker_fn_generic_name",
+    "review::.::holistic::package_organization::analysis_dir_mixed_roles",
+    "review::.::holistic::package_organization::disprot_tsv_at_root",
+    "review::.::holistic::package_organization::output_csvs_at_root",
+    "review::.::holistic::test_strategy::app_zero_test_coverage",
+    "review::.::holistic::test_strategy::no_idr_pipeline_integration_test",
+    "review::.::holistic::type_safety::aiupred_cache_untyped",
+    "review::.::holistic::type_safety::worker_fn_missing_annotations",
+    "triage::observe",
+    "triage::reflect",
+    "triage::organize",
+    "triage::enrich",
+    "triage::sense-check",
+    "triage::commit"
   ],
   "deferred": [],
-  "skipped": {},
+  "skipped": {
+    "orphaned::STANDALONE_APP.py": {
+      "issue_id": "orphaned::STANDALONE_APP.py",
+      "kind": "permanent",
+      "reason": null,
+      "note": "Standalone Shiny app; run directly, not imported",
+      "attestation": "I have reviewed this triage skip against the code and I am not gaming the score by suppressing a real defect.",
+      "created_at": "2026-03-12T13:21:22+00:00",
+      "review_after": null,
+      "skipped_at_scan": 9
+    },
+    "orphaned::analysis/demo_fixed_workflow.py": {
+      "issue_id": "orphaned::analysis/demo_fixed_workflow.py",
+      "kind": "permanent",
+      "reason": null,
+      "note": "Demo script; run directly",
+      "attestation": "I have reviewed this triage skip against the code and I am not gaming the score by suppressing a real defect.",
+      "created_at": "2026-03-12T13:21:23+00:00",
+      "review_after": null,
+      "skipped_at_scan": 9
+    },
+    "orphaned::analysis/improved_analysis.py": {
+      "issue_id": "orphaned::analysis/improved_analysis.py",
+      "kind": "permanent",
+      "reason": null,
+      "note": "Analysis script; run directly",
+      "attestation": "I have reviewed this triage skip against the code and I am not gaming the score by suppressing a real defect.",
+      "created_at": "2026-03-12T13:21:23+00:00",
+      "review_after": null,
+      "skipped_at_scan": 9
+    },
+    "orphaned::app/app.py": {
+      "issue_id": "orphaned::app/app.py",
+      "kind": "permanent",
+      "reason": null,
+      "note": "Shiny app entry point; not imported",
+      "attestation": "I have reviewed this triage skip against the code and I am not gaming the score by suppressing a real defect.",
+      "created_at": "2026-03-12T13:21:24+00:00",
+      "review_after": null,
+      "skipped_at_scan": 9
+    },
+    "orphaned::app/wsgi_pythonanywhere.py": {
+      "issue_id": "orphaned::app/wsgi_pythonanywhere.py",
+      "kind": "permanent",
+      "reason": null,
+      "note": "WSGI deployment entry point; not imported",
+      "attestation": "I have reviewed this triage skip against the code and I am not gaming the score by suppressing a real defect.",
+      "created_at": "2026-03-12T13:21:24+00:00",
+      "review_after": null,
+      "skipped_at_scan": 9
+    },
+    "orphaned::IDR/idr_analysis.py": {
+      "issue_id": "orphaned::IDR/idr_analysis.py",
+      "kind": "permanent",
+      "reason": null,
+      "note": "Script entry point run with python IDR/idr_analysis.py; zero importers is expected",
+      "attestation": "I have reviewed this triage skip against the code and I am not gaming the score by suppressing a real defect.",
+      "created_at": "2026-03-12T13:21:40+00:00",
+      "review_after": null,
+      "skipped_at_scan": 9
+    },
+    "orphaned::IDR/nterm_analysis.py": {
+      "issue_id": "orphaned::IDR/nterm_analysis.py",
+      "kind": "permanent",
+      "reason": null,
+      "note": "Library module; imported from notebooks. Desloppify cannot see notebook imports.",
+      "attestation": "I have reviewed this triage skip against the code and I am not gaming the score by suppressing a real defect.",
+      "created_at": "2026-03-12T13:21:40+00:00",
+      "review_after": null,
+      "skipped_at_scan": 9
+    },
+    "orphaned::analysis/signalp_6_filter.py": {
+      "issue_id": "orphaned::analysis/signalp_6_filter.py",
+      "kind": "permanent",
+      "reason": null,
+      "note": "Filter utility script with unit tests in tests/test_signalp6_filter.py",
+      "attestation": "I have reviewed this triage skip against the code and I am not gaming the score by suppressing a real defect.",
+      "created_at": "2026-03-12T13:21:41+00:00",
+      "review_after": null,
+      "skipped_at_scan": 9
+    },
+    "smells::STANDALONE_APP.py::nested_closure": {
+      "issue_id": "smells::STANDALONE_APP.py::nested_closure",
+      "kind": "permanent",
+      "reason": null,
+      "note": "Shiny framework requires reactive functions defined inside server(); this is idiomatic, not a code smell.",
+      "attestation": "I have reviewed this triage skip against the code and I am not gaming the score by suppressing a real defect.",
+      "created_at": "2026-03-12T13:21:41+00:00",
+      "review_after": null,
+      "skipped_at_scan": 9
+    },
+    "test_coverage::STANDALONE_APP.py::untested_critical": {
+      "issue_id": "test_coverage::STANDALONE_APP.py::untested_critical",
+      "kind": "permanent",
+      "reason": null,
+      "note": "Shiny app; requires Shiny runtime to test. Core filtering logic is tested via protein_analysis_utils tests.",
+      "attestation": "I have reviewed this triage skip against the code and I am not gaming the score by suppressing a real defect.",
+      "created_at": "2026-03-12T13:21:55+00:00",
+      "review_after": null,
+      "skipped_at_scan": 9
+    },
+    "test_coverage::analysis/demo_fixed_workflow.py::untested_module": {
+      "issue_id": "test_coverage::analysis/demo_fixed_workflow.py::untested_module",
+      "kind": "permanent",
+      "reason": null,
+      "note": "Demo workflow script; delegates to protein_analysis_utils which is separately tested.",
+      "attestation": "I have reviewed this triage skip against the code and I am not gaming the score by suppressing a real defect.",
+      "created_at": "2026-03-12T13:21:55+00:00",
+      "review_after": null,
+      "skipped_at_scan": 9
+    },
+    "test_coverage::analysis/improved_analysis.py::untested_module": {
+      "issue_id": "test_coverage::analysis/improved_analysis.py::untested_module",
+      "kind": "permanent",
+      "reason": null,
+      "note": "Analysis workflow script; delegates to protein_analysis_utils which is separately tested.",
+      "attestation": "I have reviewed this triage skip against the code and I am not gaming the score by suppressing a real defect.",
+      "created_at": "2026-03-12T13:21:56+00:00",
+      "review_after": null,
+      "skipped_at_scan": 9
+    },
+    "test_coverage::app/app.py::untested_critical": {
+      "issue_id": "test_coverage::app/app.py::untested_critical",
+      "kind": "permanent",
+      "reason": null,
+      "note": "Shiny app; requires Shiny runtime to test. Data filtering uses standard pandas operations.",
+      "attestation": "I have reviewed this triage skip against the code and I am not gaming the score by suppressing a real defect.",
+      "created_at": "2026-03-12T13:21:56+00:00",
+      "review_after": null,
+      "skipped_at_scan": 9
+    },
+    "test_coverage::app/wsgi_pythonanywhere.py::untested_module": {
+      "issue_id": "test_coverage::app/wsgi_pythonanywhere.py::untested_module",
+      "kind": "permanent",
+      "reason": null,
+      "note": "WSGI configuration shim; no testable business logic.",
+      "attestation": "I have reviewed this triage skip against the code and I am not gaming the score by suppressing a real defect.",
+      "created_at": "2026-03-12T13:21:57+00:00",
+      "review_after": null,
+      "skipped_at_scan": 9
+    },
+    "test_coverage::analysis/signalp_6_filter.py::untested_module": {
+      "issue_id": "test_coverage::analysis/signalp_6_filter.py::untested_module",
+      "kind": "permanent",
+      "reason": null,
+      "note": "Now covered by tests/test_signalp6_filter.py (15 tests)",
+      "attestation": "I have reviewed this triage skip against the code and I am not gaming the score by suppressing a real defect.",
+      "created_at": "2026-03-12T13:21:57+00:00",
+      "review_after": null,
+      "skipped_at_scan": 9
+    }
+  },
   "active_cluster": null,
   "overrides": {
     "orphaned::STANDALONE_APP.py": {
@@ -588,9 +789,7 @@
   "superseded": {},
   "promoted_ids": [],
   "plan_start_scores": {},
-  "refresh_state": {
-    "postflight_scan_completed_at_scan_count": 8
-  },
+  "refresh_state": {},
   "execution_log": [
     {
       "timestamp": "2026-03-12T13:06:54+00:00",
@@ -643,6 +842,392 @@
       "note": null,
       "detail": {
         "changes": true
+      }
+    },
+    {
+      "timestamp": "2026-03-12T13:20:46+00:00",
+      "action": "done",
+      "issue_ids": [
+        "smells::IDR/idr_analysis.py::silent_except"
+      ],
+      "cluster_name": null,
+      "actor": "user",
+      "note": "Added logger.debug call instead of bare pass in _detect_mobidb_bindir ImportError handler",
+      "detail": {}
+    },
+    {
+      "timestamp": "2026-03-12T13:20:46+00:00",
+      "action": "done",
+      "issue_ids": [
+        "smells::IDR/idr_analysis.py::hardcoded_url"
+      ],
+      "cluster_name": null,
+      "actor": "user",
+      "note": "Extracted UniProt FASTA URL to module constant _UNIPROT_FASTA_URL",
+      "detail": {}
+    },
+    {
+      "timestamp": "2026-03-12T13:20:47+00:00",
+      "action": "done",
+      "issue_ids": [
+        "smells::IDR/idr_analysis.py::annotation_quality"
+      ],
+      "cluster_name": null,
+      "actor": "user",
+      "note": "Replaced bare dict/list annotations with specific types (dict[str, float | None], list[float], etc.)",
+      "detail": {}
+    },
+    {
+      "timestamp": "2026-03-12T13:20:47+00:00",
+      "action": "done",
+      "issue_ids": [
+        "smells::IDR/idr_analysis.py::high_cyclomatic_complexity"
+      ],
+      "cluster_name": null,
+      "actor": "user",
+      "note": "Extracted _load_checkpoint, _append_checkpoint, _predict_one helper functions from run_disorder_predictions",
+      "detail": {}
+    },
+    {
+      "timestamp": "2026-03-12T13:20:48+00:00",
+      "action": "done",
+      "issue_ids": [
+        "smells::IDR/idr_analysis.py::optional_param_sprawl"
+      ],
+      "cluster_name": null,
+      "actor": "user",
+      "note": "Introduced PipelineConfig dataclass; main() now accepts a single config object",
+      "detail": {}
+    },
+    {
+      "timestamp": "2026-03-12T13:21:22+00:00",
+      "action": "skip",
+      "issue_ids": [
+        "orphaned::STANDALONE_APP.py"
+      ],
+      "cluster_name": null,
+      "actor": "user",
+      "note": "Standalone Shiny app; run directly, not imported",
+      "detail": {
+        "kind": "permanent",
+        "reason": null
+      }
+    },
+    {
+      "timestamp": "2026-03-12T13:21:23+00:00",
+      "action": "skip",
+      "issue_ids": [
+        "orphaned::analysis/demo_fixed_workflow.py"
+      ],
+      "cluster_name": null,
+      "actor": "user",
+      "note": "Demo script; run directly",
+      "detail": {
+        "kind": "permanent",
+        "reason": null
+      }
+    },
+    {
+      "timestamp": "2026-03-12T13:21:23+00:00",
+      "action": "skip",
+      "issue_ids": [
+        "orphaned::analysis/improved_analysis.py"
+      ],
+      "cluster_name": null,
+      "actor": "user",
+      "note": "Analysis script; run directly",
+      "detail": {
+        "kind": "permanent",
+        "reason": null
+      }
+    },
+    {
+      "timestamp": "2026-03-12T13:21:24+00:00",
+      "action": "skip",
+      "issue_ids": [
+        "orphaned::app/app.py"
+      ],
+      "cluster_name": null,
+      "actor": "user",
+      "note": "Shiny app entry point; not imported",
+      "detail": {
+        "kind": "permanent",
+        "reason": null
+      }
+    },
+    {
+      "timestamp": "2026-03-12T13:21:24+00:00",
+      "action": "skip",
+      "issue_ids": [
+        "orphaned::app/wsgi_pythonanywhere.py"
+      ],
+      "cluster_name": null,
+      "actor": "user",
+      "note": "WSGI deployment entry point; not imported",
+      "detail": {
+        "kind": "permanent",
+        "reason": null
+      }
+    },
+    {
+      "timestamp": "2026-03-12T13:21:40+00:00",
+      "action": "skip",
+      "issue_ids": [
+        "orphaned::IDR/idr_analysis.py"
+      ],
+      "cluster_name": null,
+      "actor": "user",
+      "note": "Script entry point run with python IDR/idr_analysis.py; zero importers is expected",
+      "detail": {
+        "kind": "permanent",
+        "reason": null
+      }
+    },
+    {
+      "timestamp": "2026-03-12T13:21:40+00:00",
+      "action": "skip",
+      "issue_ids": [
+        "orphaned::IDR/nterm_analysis.py"
+      ],
+      "cluster_name": null,
+      "actor": "user",
+      "note": "Library module; imported from notebooks. Desloppify cannot see notebook imports.",
+      "detail": {
+        "kind": "permanent",
+        "reason": null
+      }
+    },
+    {
+      "timestamp": "2026-03-12T13:21:41+00:00",
+      "action": "skip",
+      "issue_ids": [
+        "orphaned::analysis/signalp_6_filter.py"
+      ],
+      "cluster_name": null,
+      "actor": "user",
+      "note": "Filter utility script with unit tests in tests/test_signalp6_filter.py",
+      "detail": {
+        "kind": "permanent",
+        "reason": null
+      }
+    },
+    {
+      "timestamp": "2026-03-12T13:21:41+00:00",
+      "action": "skip",
+      "issue_ids": [
+        "smells::STANDALONE_APP.py::nested_closure"
+      ],
+      "cluster_name": null,
+      "actor": "user",
+      "note": "Shiny framework requires reactive functions defined inside server(); this is idiomatic, not a code smell.",
+      "detail": {
+        "kind": "permanent",
+        "reason": null
+      }
+    },
+    {
+      "timestamp": "2026-03-12T13:21:55+00:00",
+      "action": "skip",
+      "issue_ids": [
+        "test_coverage::STANDALONE_APP.py::untested_critical"
+      ],
+      "cluster_name": null,
+      "actor": "user",
+      "note": "Shiny app; requires Shiny runtime to test. Core filtering logic is tested via protein_analysis_utils tests.",
+      "detail": {
+        "kind": "permanent",
+        "reason": null
+      }
+    },
+    {
+      "timestamp": "2026-03-12T13:21:55+00:00",
+      "action": "skip",
+      "issue_ids": [
+        "test_coverage::analysis/demo_fixed_workflow.py::untested_module"
+      ],
+      "cluster_name": null,
+      "actor": "user",
+      "note": "Demo workflow script; delegates to protein_analysis_utils which is separately tested.",
+      "detail": {
+        "kind": "permanent",
+        "reason": null
+      }
+    },
+    {
+      "timestamp": "2026-03-12T13:21:56+00:00",
+      "action": "skip",
+      "issue_ids": [
+        "test_coverage::analysis/improved_analysis.py::untested_module"
+      ],
+      "cluster_name": null,
+      "actor": "user",
+      "note": "Analysis workflow script; delegates to protein_analysis_utils which is separately tested.",
+      "detail": {
+        "kind": "permanent",
+        "reason": null
+      }
+    },
+    {
+      "timestamp": "2026-03-12T13:21:56+00:00",
+      "action": "skip",
+      "issue_ids": [
+        "test_coverage::app/app.py::untested_critical"
+      ],
+      "cluster_name": null,
+      "actor": "user",
+      "note": "Shiny app; requires Shiny runtime to test. Data filtering uses standard pandas operations.",
+      "detail": {
+        "kind": "permanent",
+        "reason": null
+      }
+    },
+    {
+      "timestamp": "2026-03-12T13:21:57+00:00",
+      "action": "skip",
+      "issue_ids": [
+        "test_coverage::app/wsgi_pythonanywhere.py::untested_module"
+      ],
+      "cluster_name": null,
+      "actor": "user",
+      "note": "WSGI configuration shim; no testable business logic.",
+      "detail": {
+        "kind": "permanent",
+        "reason": null
+      }
+    },
+    {
+      "timestamp": "2026-03-12T13:21:57+00:00",
+      "action": "skip",
+      "issue_ids": [
+        "test_coverage::analysis/signalp_6_filter.py::untested_module"
+      ],
+      "cluster_name": null,
+      "actor": "user",
+      "note": "Now covered by tests/test_signalp6_filter.py (15 tests)",
+      "detail": {
+        "kind": "permanent",
+        "reason": null
+      }
+    },
+    {
+      "timestamp": "2026-03-12T13:39:33+00:00",
+      "action": "review_import_sync",
+      "issue_ids": [],
+      "cluster_name": null,
+      "actor": "system",
+      "note": null,
+      "detail": {
+        "trigger": "review_import",
+        "new_ids": [
+          "review::.::holistic::abstraction_fitness::app_filter_repeated_pattern",
+          "review::.::holistic::abstraction_fitness::srp_nonsrp_duplicate_abstraction",
+          "review::.::holistic::ai_generated_debt::analysis_test_diagnostic_narrative",
+          "review::.::holistic::ai_generated_debt::demo_workflow_narrative_prints",
+          "review::.::holistic::api_surface_coherence::df_parameter_naming_inconsistency",
+          "review::.::holistic::api_surface_coherence::n_vs_max_distance_param",
+          "review::.::holistic::contract_coherence::compare_categories_union_return",
+          "review::.::holistic::contract_coherence::run_aiupred_empty_dict_failure_contract",
+          "review::.::holistic::convention_outlier::analysis_test_naming_placement",
+          "review::.::holistic::convention_outlier::calc_vs_calculate_prefix",
+          "review::.::holistic::convention_outlier::membrane_domain_count_casing",
+          "review::.::holistic::cross_module_architecture::analysis_test_stale_redefinition",
+          "review::.::holistic::cross_module_architecture::count_domains_duplication",
+          "review::.::holistic::cross_module_architecture::cterm_distance_duplication",
+          "review::.::holistic::dependency_health::idr_requirements_unverified_deps",
+          "review::.::holistic::dependency_health::xmltramp2_potentially_unused",
+          "review::.::holistic::design_coherence::filter_script_main_blocks",
+          "review::.::holistic::design_coherence::idr_main_multiple_responsibilities",
+          "review::.::holistic::error_consistency::fetch_sequence_bare_except",
+          "review::.::holistic::error_consistency::load_data_silent_failure",
+          "review::.::holistic::error_consistency::missing_column_validation",
+          "review::.::holistic::high_level_elegance::analysis_dir_role_mixing",
+          "review::.::holistic::high_level_elegance::analysis_test_misplaced",
+          "review::.::holistic::high_level_elegance::dual_app_ambiguity",
+          "review::.::holistic::incomplete_migration::count_domains_migration_incomplete",
+          "review::.::holistic::incomplete_migration::hardcoded_dev_paths",
+          "review::.::holistic::initialization_coupling::app_module_level_network_call",
+          "review::.::holistic::initialization_coupling::mobidb_bindir_import_time_detection",
+          "review::.::holistic::logic_clarity::unreachable_return_mobidb",
+          "review::.::holistic::low_level_elegance::iterrows_in_load_checkpoint",
+          "review::.::holistic::low_level_elegance::nonsrp_srp_main_block_inline",
+          "review::.::holistic::mid_level_elegance::analyze_by_cterm_distance_file_write_seam",
+          "review::.::holistic::mid_level_elegance::analyze_filtered_proteins_mixed_seam",
+          "review::.::holistic::mid_level_elegance::module_global_data_seam",
+          "review::.::holistic::naming_quality::quick_prefix_uninformative",
+          "review::.::holistic::naming_quality::single_letter_N_parameter",
+          "review::.::holistic::naming_quality::worker_fn_generic_name",
+          "review::.::holistic::package_organization::analysis_dir_mixed_roles",
+          "review::.::holistic::package_organization::disprot_tsv_at_root",
+          "review::.::holistic::package_organization::output_csvs_at_root",
+          "review::.::holistic::test_strategy::app_zero_test_coverage",
+          "review::.::holistic::test_strategy::no_idr_pipeline_integration_test",
+          "review::.::holistic::type_safety::aiupred_cache_untyped",
+          "review::.::holistic::type_safety::worker_fn_missing_annotations"
+        ],
+        "added_to_queue": [
+          "review::.::holistic::abstraction_fitness::app_filter_repeated_pattern",
+          "review::.::holistic::abstraction_fitness::srp_nonsrp_duplicate_abstraction",
+          "review::.::holistic::ai_generated_debt::analysis_test_diagnostic_narrative",
+          "review::.::holistic::ai_generated_debt::demo_workflow_narrative_prints",
+          "review::.::holistic::api_surface_coherence::df_parameter_naming_inconsistency",
+          "review::.::holistic::api_surface_coherence::n_vs_max_distance_param",
+          "review::.::holistic::contract_coherence::compare_categories_union_return",
+          "review::.::holistic::contract_coherence::run_aiupred_empty_dict_failure_contract",
+          "review::.::holistic::convention_outlier::analysis_test_naming_placement",
+          "review::.::holistic::convention_outlier::calc_vs_calculate_prefix",
+          "review::.::holistic::convention_outlier::membrane_domain_count_casing",
+          "review::.::holistic::cross_module_architecture::analysis_test_stale_redefinition",
+          "review::.::holistic::cross_module_architecture::count_domains_duplication",
+          "review::.::holistic::cross_module_architecture::cterm_distance_duplication",
+          "review::.::holistic::dependency_health::idr_requirements_unverified_deps",
+          "review::.::holistic::dependency_health::xmltramp2_potentially_unused",
+          "review::.::holistic::design_coherence::filter_script_main_blocks",
+          "review::.::holistic::design_coherence::idr_main_multiple_responsibilities",
+          "review::.::holistic::error_consistency::fetch_sequence_bare_except",
+          "review::.::holistic::error_consistency::load_data_silent_failure",
+          "review::.::holistic::error_consistency::missing_column_validation",
+          "review::.::holistic::high_level_elegance::analysis_dir_role_mixing",
+          "review::.::holistic::high_level_elegance::analysis_test_misplaced",
+          "review::.::holistic::high_level_elegance::dual_app_ambiguity",
+          "review::.::holistic::incomplete_migration::count_domains_migration_incomplete",
+          "review::.::holistic::incomplete_migration::hardcoded_dev_paths",
+          "review::.::holistic::initialization_coupling::app_module_level_network_call",
+          "review::.::holistic::initialization_coupling::mobidb_bindir_import_time_detection",
+          "review::.::holistic::logic_clarity::unreachable_return_mobidb",
+          "review::.::holistic::low_level_elegance::iterrows_in_load_checkpoint",
+          "review::.::holistic::low_level_elegance::nonsrp_srp_main_block_inline",
+          "review::.::holistic::mid_level_elegance::analyze_by_cterm_distance_file_write_seam",
+          "review::.::holistic::mid_level_elegance::analyze_filtered_proteins_mixed_seam",
+          "review::.::holistic::mid_level_elegance::module_global_data_seam",
+          "review::.::holistic::naming_quality::quick_prefix_uninformative",
+          "review::.::holistic::naming_quality::single_letter_N_parameter",
+          "review::.::holistic::naming_quality::worker_fn_generic_name",
+          "review::.::holistic::package_organization::analysis_dir_mixed_roles",
+          "review::.::holistic::package_organization::disprot_tsv_at_root",
+          "review::.::holistic::package_organization::output_csvs_at_root",
+          "review::.::holistic::test_strategy::app_zero_test_coverage",
+          "review::.::holistic::test_strategy::no_idr_pipeline_integration_test",
+          "review::.::holistic::type_safety::aiupred_cache_untyped",
+          "review::.::holistic::type_safety::worker_fn_missing_annotations"
+        ],
+        "workflow_injected_ids": [],
+        "triage_injected": true,
+        "triage_injected_ids": [
+          "triage::observe",
+          "triage::reflect",
+          "triage::organize",
+          "triage::enrich",
+          "triage::sense-check",
+          "triage::commit"
+        ],
+        "triage_deferred": false,
+        "diff_new": 44,
+        "diff_reopened": 0,
+        "diff_auto_resolved": 15,
+        "stale_pruned_from_queue": [],
+        "covered_subjective": [],
+        "stale_sync_injected": [],
+        "stale_sync_pruned": []
       }
     }
   ],

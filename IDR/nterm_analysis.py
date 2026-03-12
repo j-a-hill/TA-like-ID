@@ -34,6 +34,7 @@ Usage example
 
 from __future__ import annotations
 
+import dataclasses
 import logging
 import re
 import time
@@ -469,7 +470,7 @@ def compute_omega(sequence: str) -> float:
     return cc_pairs / total if total > 0 else 0.0
 
 
-def cider_profile(sequence: str) -> dict:
+def cider_profile(sequence: str) -> dict[str, float]:
     """Compute all four CIDER-style metrics for *sequence*.
 
     Returns
@@ -543,14 +544,32 @@ def format_fasta(sequences: dict[str, str], line_width: int = 60) -> str:
 # ── EBI MEME REST client ──────────────────────────────────────────────────────
 
 
+@dataclasses.dataclass
+class MemeConfig:
+    """Configuration for EBI MEME REST API submissions.
+
+    Attributes
+    ----------
+    nmotifs:
+        Number of distinct motifs to find (default 3).
+    minw:
+        Minimum motif width in residues (default 6).
+    maxw:
+        Maximum motif width in residues (default 15).
+    url:
+        EBI MEME REST endpoint.  Override for testing or alternative servers.
+    """
+
+    nmotifs: int = 3
+    minw: int = 6
+    maxw: int = 15
+    url: str = _EBI_MEME_URL
+
+
 def submit_meme_ebi(
     fasta_text: str,
     email: str,
-    *,
-    nmotifs: int = 3,
-    minw: int = 6,
-    maxw: int = 15,
-    url: str = _EBI_MEME_URL,
+    config: Optional[MemeConfig] = None,
 ) -> str:
     """Submit a MEME motif-discovery job to the EBI JDispatcher REST API.
 
@@ -560,14 +579,9 @@ def submit_meme_ebi(
         Multi-FASTA formatted sequences (use :func:`format_fasta`).
     email:
         Submitter e-mail address (required by the EBI API).
-    nmotifs:
-        Number of distinct motifs to find (default 3).
-    minw:
-        Minimum motif width (default 6).
-    maxw:
-        Maximum motif width (default 15).
-    url:
-        EBI MEME endpoint; override for testing.
+    config:
+        A :class:`MemeConfig` instance controlling motif parameters and the
+        target URL.  Defaults to ``MemeConfig()`` (3 motifs, widths 6–15).
 
     Returns
     -------
@@ -579,14 +593,17 @@ def submit_meme_ebi(
     requests.HTTPError
         If the submission fails.
     """
+    if config is None:
+        config = MemeConfig()
+
     payload = {
         "email": email,
         "sequence": fasta_text,
-        "nmotifs": str(nmotifs),
-        "minw": str(minw),
-        "maxw": str(maxw),
+        "nmotifs": str(config.nmotifs),
+        "minw": str(config.minw),
+        "maxw": str(config.maxw),
     }
-    resp = requests.post(url + "/run", data=payload, timeout=30)
+    resp = requests.post(config.url + "/run", data=payload, timeout=30)
     resp.raise_for_status()
     return resp.text.strip()
 

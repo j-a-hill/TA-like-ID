@@ -250,7 +250,7 @@ def server(input: Inputs, output: Outputs, session: Session) -> None:
     
     @output
     @render.ui
-    def download_csv():
+    def download_csv() -> "ui.Tag":
         """Render a client-side download link (Shinylive compatible)"""
         import base64
         fdf = filtered_data()

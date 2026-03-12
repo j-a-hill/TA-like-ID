@@ -1,118 +1,18 @@
 {
   "command": "show",
-  "query": "test_coverage",
+  "query": "subjective",
   "status_filter": "open",
-  "total": 6,
-  "summary": {
-    "by_tier": {
-      "T2": 2,
-      "T3": 4
-    },
-    "by_detector": {
-      "test_coverage": 6
-    },
-    "files": 6
-  },
-  "by_file": {
-    "STANDALONE_APP.py": [
-      {
-        "id": "test_coverage::STANDALONE_APP.py::untested_critical",
-        "tier": 2,
-        "confidence": "high",
-        "summary": "Untested critical module (268 LOC, 0 importers) \u2014 high blast radius",
-        "detail": {
-          "kind": "untested_critical",
-          "loc": 268,
-          "importer_count": 0,
-          "loc_weight": 16.3707055437449,
-          "complexity_score": 35
-        }
-      }
-    ],
-    "analysis/demo_fixed_workflow.py": [
-      {
-        "id": "test_coverage::analysis/demo_fixed_workflow.py::untested_module",
-        "tier": 3,
-        "confidence": "high",
-        "summary": "Untested module (168 LOC, 0 importers)",
-        "detail": {
-          "kind": "untested_module",
-          "loc": 168,
-          "importer_count": 0,
-          "loc_weight": 12.96148139681572
-        }
-      }
-    ],
-    "analysis/improved_analysis.py": [
-      {
-        "id": "test_coverage::analysis/improved_analysis.py::untested_module",
-        "tier": 3,
-        "confidence": "high",
-        "summary": "Untested module (174 LOC, 0 importers)",
-        "detail": {
-          "kind": "untested_module",
-          "loc": 174,
-          "importer_count": 0,
-          "loc_weight": 13.19090595827292
-        }
-      }
-    ],
-    "analysis/signalp_6_filter.py": [
-      {
-        "id": "test_coverage::analysis/signalp_6_filter.py::untested_module",
-        "tier": 3,
-        "confidence": "high",
-        "summary": "Untested module (65 LOC, 0 importers)",
-        "detail": {
-          "kind": "untested_module",
-          "loc": 65,
-          "importer_count": 0,
-          "loc_weight": 8.06225774829855
-        }
-      }
-    ],
-    "app/app.py": [
-      {
-        "id": "test_coverage::app/app.py::untested_critical",
-        "tier": 2,
-        "confidence": "high",
-        "summary": "Untested critical module (269 LOC, 0 importers) \u2014 high blast radius",
-        "detail": {
-          "kind": "untested_critical",
-          "loc": 269,
-          "importer_count": 0,
-          "loc_weight": 16.401219466856727,
-          "complexity_score": 59
-        }
-      }
-    ],
-    "app/wsgi_pythonanywhere.py": [
-      {
-        "id": "test_coverage::app/wsgi_pythonanywhere.py::untested_module",
-        "tier": 3,
-        "confidence": "high",
-        "summary": "Untested module (23 LOC, 0 importers)",
-        "detail": {
-          "kind": "untested_module",
-          "loc": 23,
-          "importer_count": 0,
-          "loc_weight": 4.795831523312719
-        }
-      }
-    ]
-  },
-  "total_matching": 6,
-  "noise_budget": 10,
-  "noise_global_budget": 0,
+  "total": 0,
+  "issues": [],
   "narrative": {
-    "phase": "middle_grind",
-    "headline": "51 issues open. Abstraction fit (0.0%) needs attention \u2014 run `desloppify next` to start.",
+    "phase": "stagnation",
+    "headline": "Score plateaued at 18.8 for 5 scans. Abstraction fit (0.0%) is where the breakthrough is. 1 wontfix items may also be worth revisiting. (44 review issues \u2014 run `desloppify show review --status open`)",
     "dimensions": {
       "lowest_dimensions": [
         {
           "name": "Abstraction fit",
           "strict": 0.0,
-          "failing": 0,
+          "failing": 2,
           "impact": 0.0,
           "subjective": true,
           "impact_description": "re-review to improve"
@@ -120,7 +20,7 @@
         {
           "name": "AI generated debt",
           "strict": 0.0,
-          "failing": 0,
+          "failing": 2,
           "impact": 0.0,
           "subjective": true,
           "impact_description": "re-review to improve"
@@ -128,7 +28,7 @@
         {
           "name": "API coherence",
           "strict": 0.0,
-          "failing": 0,
+          "failing": 2,
           "impact": 0.0,
           "subjective": true,
           "impact_description": "re-review to improve"
@@ -137,9 +37,9 @@
       "biggest_gap_dimensions": [
         {
           "name": "Test health",
-          "lenient": 60.6,
+          "lenient": 98.0,
           "strict": 12.2,
-          "gap": 48.4,
+          "gap": 85.8,
           "wontfix_count": 0
         },
         {
@@ -151,10 +51,10 @@
         },
         {
           "name": "Code quality",
-          "lenient": 87.5,
+          "lenient": 94.1,
           "strict": 71.8,
-          "gap": 15.7,
-          "wontfix_count": 0
+          "gap": 22.3,
+          "wontfix_count": 1
         }
       ],
       "stagnant_dimensions": [
@@ -172,6 +72,21 @@
           "name": "AI generated debt",
           "strict": 0.0,
           "stuck_scans": 5
+        },
+        {
+          "name": "API coherence",
+          "strict": 0.0,
+          "stuck_scans": 3
+        },
+        {
+          "name": "Auth consistency",
+          "strict": 0.0,
+          "stuck_scans": 3
+        },
+        {
+          "name": "Contracts",
+          "strict": 0.0,
+          "stuck_scans": 3
         },
         {
           "name": "Convention drift",
@@ -204,6 +119,21 @@
           "stuck_scans": 5
         },
         {
+          "name": "Stale migration",
+          "strict": 0.0,
+          "stuck_scans": 3
+        },
+        {
+          "name": "Init coupling",
+          "strict": 0.0,
+          "stuck_scans": 3
+        },
+        {
+          "name": "Logic clarity",
+          "strict": 0.0,
+          "stuck_scans": 3
+        },
+        {
           "name": "Low elegance",
           "strict": 0.0,
           "stuck_scans": 5
@@ -214,6 +144,11 @@
           "stuck_scans": 5
         },
         {
+          "name": "Naming quality",
+          "strict": 0.0,
+          "stuck_scans": 3
+        },
+        {
           "name": "Structure nav",
           "strict": 0.0,
           "stuck_scans": 5
@@ -222,21 +157,15 @@
           "name": "Test strategy",
           "strict": 0.0,
           "stuck_scans": 5
+        },
+        {
+          "name": "Type safety",
+          "strict": 0.0,
+          "stuck_scans": 3
         }
       ]
     },
     "actions": [
-      {
-        "type": "reorganize",
-        "detector": "orphaned",
-        "count": 8,
-        "description": "8 orphaned issues \u2014 delete dead files or relocate with `desloppify move`",
-        "command": "desloppify show orphaned --status open",
-        "impact": 0.0,
-        "dimension": "Code quality",
-        "priority": 1,
-        "lane": "restructure"
-      },
       {
         "type": "refactor",
         "detector": "structural",
@@ -245,19 +174,8 @@
         "command": "desloppify show structural --status open",
         "impact": 0.0,
         "dimension": "File health",
-        "priority": 2,
-        "lane": "refactor"
-      },
-      {
-        "type": "refactor",
-        "detector": "test_coverage",
-        "count": 6,
-        "description": "6 test_coverage issues \u2014 add tests for untested production modules \u2014 prioritize by import count",
-        "command": "desloppify show test_coverage --status open",
-        "impact": 0.0,
-        "dimension": "Test health",
-        "priority": 3,
-        "lane": "test_coverage"
+        "priority": 1,
+        "lane": "refactor_0"
       },
       {
         "type": "refactor",
@@ -267,8 +185,8 @@
         "command": "desloppify show responsibility_cohesion --status open",
         "impact": 0.0,
         "dimension": "Code quality",
-        "priority": 4,
-        "lane": "refactor"
+        "priority": 2,
+        "lane": "refactor_0"
       },
       {
         "type": "refactor",
@@ -278,19 +196,30 @@
         "command": "desloppify show boilerplate_duplication --status open",
         "impact": 0.0,
         "dimension": "Duplication",
-        "priority": 5,
-        "lane": "refactor"
+        "priority": 3,
+        "lane": "refactor_0"
+      },
+      {
+        "type": "refactor",
+        "detector": "review",
+        "count": 44,
+        "description": "44 review issues need investigation \u2014 run `desloppify show review --status open` to see them",
+        "command": "desloppify show review --status open",
+        "impact": 0.0,
+        "dimension": "Unknown",
+        "priority": 4,
+        "lane": "refactor_1"
       },
       {
         "type": "manual_fix",
         "detector": "smells",
-        "count": 15,
-        "description": "15 smells issues \u2014 inspect with `desloppify next` and fix manually",
+        "count": 14,
+        "description": "14 smells issues \u2014 inspect with `desloppify next` and fix manually",
         "command": "desloppify show smells --status open",
         "impact": 0.0,
         "dimension": "Code quality",
-        "priority": 6,
-        "lane": "refactor"
+        "priority": 5,
+        "lane": "refactor_0"
       },
       {
         "type": "manual_fix",
@@ -300,74 +229,65 @@
         "command": "desloppify show global_mutable_config --status open",
         "impact": 0.0,
         "dimension": "Code quality",
-        "priority": 7,
-        "lane": "refactor"
+        "priority": 6,
+        "lane": "refactor_0"
       },
       {
         "type": "manual_fix",
         "detector": "subjective_review",
-        "count": 14,
-        "description": "14 files need design review \u2014 run holistic review to refresh subjective scores",
+        "count": 13,
+        "description": "13 files need design review \u2014 run holistic review to refresh subjective scores",
         "command": "desloppify review --prepare",
         "impact": 0.0,
         "dimension": "Test health",
-        "priority": 8,
-        "lane": "refactor"
+        "priority": 7,
+        "lane": "refactor_0"
       },
       {
         "type": "debt_review",
         "detector": null,
-        "description": "4.1 pts of wontfix debt \u2014 review stale decisions",
+        "description": "5.8 pts of wontfix debt \u2014 review stale decisions",
         "command": "desloppify show --status wontfix",
-        "gap": 4.1,
-        "priority": 9,
+        "gap": 5.8,
+        "priority": 8,
         "lane": "debt_review"
       }
     ],
     "strategy": {
       "fixer_leverage": {
         "auto_fixable_count": 0,
-        "total_count": 51,
+        "total_count": 167,
         "coverage": 0.0,
         "impact_ratio": 0.0,
         "recommendation": "none"
       },
       "lanes": {
-        "restructure": {
+        "refactor_0": {
           "actions": [
-            1
-          ],
-          "file_count": 8,
-          "total_impact": 0.0,
-          "automation": "manual",
-          "run_first": false
-        },
-        "refactor": {
-          "actions": [
+            1,
             2,
-            4,
+            3,
             5,
             6,
-            7,
-            8
+            7
           ],
-          "file_count": 15,
+          "file_count": 14,
           "total_impact": 0.0,
           "automation": "manual",
           "run_first": false
         },
-        "test_coverage": {
+        "refactor_1": {
           "actions": [
-            3
+            4
           ],
-          "file_count": 6,
+          "file_count": 1,
           "total_impact": 0.0,
           "automation": "manual",
           "run_first": false
         },
         "debt_review": {
           "actions": [
-            9
+            8
           ],
           "file_count": 0,
           "total_impact": 0.0,
@@ -375,15 +295,15 @@
           "run_first": false
         }
       },
-      "can_parallelize": true,
-      "hint": "3 independent workstreams, safe to parallelize. Rescan after each phase to verify."
+      "can_parallelize": false,
+      "hint": "Try a different dimension to break the plateau. Review: 44 issue(s) \u2014 `desloppify show review --status open`."
     },
     "tools": {
       "fixers": [],
       "move": {
         "available": true,
-        "relevant": true,
-        "reason": "8 orphaned files",
+        "relevant": false,
+        "reason": null,
         "usage": "desloppify move <source> <dest> [--dry-run]"
       },
       "plan": {
@@ -398,18 +318,18 @@
       }
     },
     "debt": {
-      "overall_gap": 4.1,
-      "wontfix_count": 0,
+      "overall_gap": 5.8,
+      "wontfix_count": 1,
       "worst_dimension": "Test health",
-      "worst_gap": 48.4,
+      "worst_gap": 85.8,
       "trend": "growing"
     },
     "milestone": null,
     "primary_action": {
-      "command": "desloppify show orphaned --status open",
-      "description": "8 orphaned issues \u2014 delete dead files or relocate with `desloppify move`"
+      "command": "desloppify show structural --status open",
+      "description": "4 structural issues \u2014 review large files \u2014 split only when responsibilities are clearly separable"
     },
-    "why_now": "3 independent workstreams, safe to parallelize. Rescan after each phase to verify.",
+    "why_now": "Try a different dimension to break the plateau. Review: 44 issue(s) \u2014 `desloppify show review --status open`.",
     "verification_step": {
       "command": "desloppify scan",
       "reason": "revalidate after changes"
@@ -417,8 +337,8 @@
     "risk_flags": [
       {
         "type": "wontfix_gap",
-        "severity": "medium",
-        "message": "Strict/lenient gap is 4.1 pts with 0 wontfix issues"
+        "severity": "high",
+        "message": "Strict/lenient gap is 5.8 pts with 1 wontfix issues"
       }
     ],
     "strict_target": {
@@ -429,6 +349,13 @@
       "warning": null
     },
     "reminders": [
+      {
+        "type": "review_issues_pending",
+        "message": "44 review issue(s) need investigation. Run `desloppify show review --status open` to see the work queue.",
+        "command": "desloppify show review --status open",
+        "priority": 1,
+        "severity": "high"
+      },
       {
         "type": "wontfix_growing",
         "message": "Wontfix debt is growing. Review stale decisions: `desloppify show --status wontfix`.",
@@ -442,7 +369,8 @@
       "report_scores": 9,
       "feedback_nudge": 3,
       "stagnant_nudge": 13,
-      "wontfix_growing": 3
+      "wontfix_growing": 3,
+      "review_issues_pending": 1
     }
   },
   "config": {

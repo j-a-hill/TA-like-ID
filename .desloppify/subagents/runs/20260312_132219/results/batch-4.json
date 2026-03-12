@@ -1,0 +1,86 @@
+{
+  "batch": "error_consistency",
+  "batch_index": 4,
+  "assessments": {"error_consistency": 55.0},
+  "dimension_notes": {
+    "error_consistency": {
+      "evidence": [
+        "IDR/idr_analysis.py fetch_sequence() returns None on any exception (bare except), swallowing HTTP errors, timeouts, and parse failures without context",
+        "IDR/idr_analysis.py run_aiupred_local() returns {} (empty dict) on failure; run_mobidb_lite_local() also returns {}; callers must infer failure from empty dict, not a raised exception or Result type",
+        "IDR/idr_analysis.py _load_checkpoint() catches all exceptions with '# noqa: BLE001' and returns {} — silent swallow of file corruption",
+        "analysis/non_srp_filter.py and analysis/srp_filter.py: the analyze_*_by_cterm_distance functions do not validate that required columns exist before accessing them; a missing 'Membrane_Domain_Count' or 'cterm_distance' column raises an uncontrolled KeyError",
+        "protein_analysis_utils.py filter_and_compare() raises ValueError on unsupported operator — explicit and good",
+        "app/app.py load_data(): catches Exception broadly and returns pd.DataFrame() — callers cannot distinguish 'no data' from 'load failed'",
+        "STANDALONE_APP.py: module-level load raises Exception(f'Could not load data: {e}') — inconsistent with app/app.py which swallows the error",
+        "IDR/nterm_analysis.py: compute_kappa(), compute_omega() return 0.0 for edge cases (empty sequence, single-residue sequence) without distinguishing 'undefined' from 'zero charge asymmetry'"
+      ],
+      "impact_scope": "codebase",
+      "fix_scope": "multi_file_refactor",
+      "confidence": "high"
+    }
+  },
+  "dimension_judgment": {
+    "error_consistency": {
+      "strengths": [
+        "protein_analysis_utils.py raises ValueError for invalid operator input — a correct, explicit error boundary",
+        "IDR/idr_analysis.py uses logging.warning() for tool failures consistently rather than silently passing",
+        "IDR/idr_analysis.py _PredictionWorker.predict() returns a well-defined _NULL_PRED sentinel on timeout, so callers get a consistent shape"
+      ],
+      "issue_character": "The dominant pattern is silent swallowing at I/O and external tool boundaries: functions return empty structures ({}, None, empty DataFrame) without signalling failure mode, making it impossible for callers to distinguish 'result is empty' from 'call failed'.",
+      "score_rationale": "The codebase has a mixed error strategy: core utilities raise exceptions correctly, but I/O boundaries (data loading, sequence fetching, tool invocation) consistently swallow errors into empty return values. The divergence between STANDALONE_APP.py (raises) and app/app.py (swallows silently) for the identical data-load operation is the clearest example of inconsistency. This is a real reliability concern for a research pipeline, placing the score in the lower-middle range."
+    }
+  },
+  "issues": [
+    {
+      "dimension": "error_consistency",
+      "identifier": "fetch_sequence_bare_except",
+      "summary": "fetch_sequence() silently returns None for all failure modes, losing error context",
+      "related_files": ["IDR/idr_analysis.py"],
+      "evidence": [
+        "def fetch_sequence(...): try: ... except Exception: return None finally: time.sleep(delay)",
+        "Callers check 'if sequence:' and skip the protein — HTTP 404, network timeout, and parse error are all indistinguishable"
+      ],
+      "suggestion": "Log the specific exception (status code, error message) before returning None so failed fetches are diagnosable; optionally distinguish retryable vs. permanent failures",
+      "confidence": "high",
+      "impact_scope": "module",
+      "fix_scope": "single_edit"
+    },
+    {
+      "dimension": "error_consistency",
+      "identifier": "load_data_silent_failure",
+      "summary": "app/app.py load_data() swallows all exceptions and returns empty DataFrame; STANDALONE_APP.py raises for the same operation",
+      "related_files": ["app/app.py", "STANDALONE_APP.py"],
+      "evidence": [
+        "app/app.py: except Exception as e: print(f'Error loading data: {e}'); return pd.DataFrame()",
+        "STANDALONE_APP.py: raise Exception(f'Could not load data: {e}')",
+        "app/app.py then populates ALL_COLUMNS from df.columns — if df is empty, ALL_COLUMNS is [] and the entire app renders nothing"
+      ],
+      "suggestion": "Align both apps to raise on load failure (or show a clear user-facing error message in the Shiny UI rather than silently showing an empty app)",
+      "confidence": "high",
+      "impact_scope": "module",
+      "fix_scope": "single_edit"
+    },
+    {
+      "dimension": "error_consistency",
+      "identifier": "missing_column_validation",
+      "summary": "analyze_non_srp_by_cterm_distance and analyze_srp_by_cterm_distance access columns without validation, raising uncontrolled KeyError",
+      "related_files": ["analysis/non_srp_filter.py", "analysis/srp_filter.py"],
+      "evidence": [
+        "non_srp_filter.py: md_dist = close_cterm['Membrane_Domain_Count'].value_counts() — no check that 'Membrane_Domain_Count' exists",
+        "analyze_non_srp_by_cterm_distance receives arbitrary DataFrame but assumes column presence"
+      ],
+      "suggestion": "Add a guard at function entry: check required columns and raise ValueError with a descriptive message listing the missing columns",
+      "confidence": "high",
+      "impact_scope": "module",
+      "fix_scope": "single_edit"
+    }
+  ],
+  "retrospective": {
+    "root_causes": [
+      "I/O-heavy research pipeline code was written defensively (return empty rather than crash) without considering that silence makes debugging harder than a clear error",
+      "app/ and STANDALONE_APP.py were developed independently, leading to divergent error handling for the same operation"
+    ],
+    "likely_symptoms": [],
+    "possible_false_positives": []
+  }
+}

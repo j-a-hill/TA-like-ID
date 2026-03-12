@@ -1,0 +1,100 @@
+{
+  "batch": "cross_module_architecture",
+  "batch_index": 1,
+  "assessments": {"cross_module_architecture": 62.0},
+  "dimension_notes": {
+    "cross_module_architecture": {
+      "evidence": [
+        "count_domains() is defined independently in analysis/tmd_count.py, analysis/non_srp_filter.py, analysis/srp_filter.py, and analysis/Uniprot_TMD_search.py — four copies of identical logic, indicating a missing shared boundary",
+        "calculate_cterm_distance() in analysis/Uniprot_TMD_search.py and calc_min_cterm_distance() in protein_analysis_utils.py are semantically equivalent functions that duplicate C-terminal distance logic across modules",
+        "analysis/analysis_test.py redefines filter_and_compare() inline — a local copy of the function that already exists in protein_analysis_utils.py",
+        "IDR/idr_analysis.py imports requests and uses it for UniProt API calls; analysis/Uniprot_TMD_search.py does not use requests but performs similar domain extraction — no shared boundary for data-fetch vs. analysis concerns",
+        "app/app.py and STANDALONE_APP.py both independently load the dataset at module level from the same GitHub URL — duplicated data-access boundary with no shared loader module",
+        "No __init__.py files in analysis/ or IDR/ — directories act as namespaces but lack formal package declarations, causing test files to rely on sys.path manipulation to import them"
+      ],
+      "impact_scope": "codebase",
+      "fix_scope": "multi_file_refactor",
+      "confidence": "high"
+    }
+  },
+  "dimension_judgment": {
+    "cross_module_architecture": {
+      "strengths": [
+        "protein_analysis_utils.py is a clear central utility module that analysis scripts import from, establishing a reasonable hub boundary",
+        "IDR/ is well-separated as a specialist subsystem with its own requirements.txt and does not import from analysis/",
+        "app/ is cleanly separated from analysis logic — it imports only from the GitHub data URL, not from analysis scripts"
+      ],
+      "issue_character": "The dominant issue is cross-package function duplication: count_domains and cterm_distance logic are copied verbatim across multiple analysis scripts instead of being consolidated in protein_analysis_utils.py, creating a codebase-wide blast radius for any logic change.",
+      "score_rationale": "The codebase has a sensible three-layer shape (app / analysis / IDR) but violates its own implied boundary by scattering identical utility functions across scripts. The count_domains duplication alone spans four files. The missing __init__.py files and sys.path hacks in tests signal that the package structure is informal. These are not severe cycles or hub explosions, but the duplicated boundary logic meaningfully degrades modularity — placing this in the lower-middle range."
+    }
+  },
+  "issues": [
+    {
+      "dimension": "cross_module_architecture",
+      "identifier": "count_domains_duplication",
+      "summary": "count_domains() defined identically in four separate modules",
+      "related_files": [
+        "analysis/tmd_count.py",
+        "analysis/non_srp_filter.py",
+        "analysis/srp_filter.py",
+        "analysis/Uniprot_TMD_search.py"
+      ],
+      "evidence": [
+        "analysis/tmd_count.py lines 12-15: def count_domains(domain_str: str | float) -> int: ... return len(re.findall(r'\\d+\\.\\.\\.\\d+', str(domain_str)))",
+        "Identical function body in non_srp_filter.py, srp_filter.py, and Uniprot_TMD_search.py"
+      ],
+      "suggestion": "Move count_domains() to protein_analysis_utils.py (or a new analysis/domain_utils.py), then import it in all four files",
+      "confidence": "high",
+      "impact_scope": "codebase",
+      "fix_scope": "multi_file_refactor",
+      "root_cause_cluster": "utility_duplication"
+    },
+    {
+      "dimension": "cross_module_architecture",
+      "identifier": "cterm_distance_duplication",
+      "summary": "C-terminal distance calculation duplicated as calculate_cterm_distance and calc_min_cterm_distance",
+      "related_files": [
+        "analysis/Uniprot_TMD_search.py",
+        "protein_analysis_utils.py"
+      ],
+      "evidence": [
+        "Uniprot_TMD_search.py defines calculate_cterm_distance(row) which iterates over Transmembrane and Intramembrane columns",
+        "protein_analysis_utils.py defines calc_min_cterm_distance(row) which iterates only over Transmembrane — semantically overlapping but different signatures and scope"
+      ],
+      "suggestion": "Unify into a single function in protein_analysis_utils.py that accepts an optional list of domain columns; import from there in Uniprot_TMD_search.py",
+      "confidence": "high",
+      "impact_scope": "subsystem",
+      "fix_scope": "multi_file_refactor",
+      "root_cause_cluster": "utility_duplication"
+    },
+    {
+      "dimension": "cross_module_architecture",
+      "identifier": "analysis_test_stale_redefinition",
+      "summary": "analysis/analysis_test.py redefines filter_and_compare() already present in protein_analysis_utils.py",
+      "related_files": [
+        "analysis/analysis_test.py",
+        "protein_analysis_utils.py"
+      ],
+      "evidence": [
+        "analysis_test.py defines a local filter_and_compare() with partial operator support inside main()",
+        "protein_analysis_utils.py exports the canonical version with full operator set"
+      ],
+      "suggestion": "Remove the local definition in analysis_test.py and import from protein_analysis_utils instead; this file appears to be a superseded exploratory script",
+      "confidence": "high",
+      "impact_scope": "module",
+      "fix_scope": "single_edit",
+      "root_cause_cluster": "utility_duplication"
+    }
+  ],
+  "retrospective": {
+    "root_causes": [
+      "Analysis scripts were written independently before protein_analysis_utils.py existed, and utility functions were never backported/consolidated",
+      "Absence of formal package __init__.py files makes cross-directory imports awkward, encouraging copy-paste over import"
+    ],
+    "likely_symptoms": [
+      "count_domains_duplication",
+      "cterm_distance_duplication"
+    ],
+    "possible_false_positives": []
+  }
+}

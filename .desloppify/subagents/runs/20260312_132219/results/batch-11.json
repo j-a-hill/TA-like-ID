@@ -1,0 +1,75 @@
+{
+  "batch": "incomplete_migration",
+  "batch_index": 11,
+  "assessments": {"incomplete_migration": 72.0},
+  "dimension_notes": {
+    "incomplete_migration": {
+      "evidence": [
+        "analysis/analysis_test.py contains a local reimplementation of filter_and_compare() — this is a stale pre-migration artifact from before protein_analysis_utils.py existed; it was never removed after the canonical version was introduced",
+        "analysis/non_srp_filter.py and analysis/srp_filter.py each define count_domains() locally instead of importing it from protein_analysis_utils.py or analysis/tmd_count.py — these are unconsolidated copies left from before the utility module existed",
+        "analysis/Uniprot_TMD_search.py also defines count_domains() locally and calculate_cterm_distance() which duplicates calc_min_cterm_distance in protein_analysis_utils.py — the same migration incompleteness",
+        "No deprecated markers (@deprecated, DEPRECATED comments) or TODO/FIXME migration comments found anywhere in the codebase",
+        "No mixed JS/TS or old/new API patterns — this is a Python-only project",
+        "The hard-coded path 'C:/Users/Jake/Desktop/non_biogrid.tsv' in non_srp_filter.py and srp_filter.py appears to be a development-machine path that was never migrated to a configurable path or command-line argument"
+      ],
+      "impact_scope": "codebase",
+      "fix_scope": "multi_file_refactor",
+      "confidence": "high"
+    }
+  },
+  "dimension_judgment": {
+    "incomplete_migration": {
+      "strengths": [
+        "No active deprecated API patterns or compatibility shims found",
+        "No TODO/FIXME migration markers indicating tracked-but-incomplete work",
+        "The move to protein_analysis_utils.py as a central utility module is effectively complete for the core filter functions"
+      ],
+      "issue_character": "The incomplete migration is the consolidation of count_domains() and cterm_distance logic: these utility functions were centralized in protein_analysis_utils.py but the old local copies in analysis scripts were never removed, leaving the codebase with parallel old and new versions.",
+      "score_rationale": "The migration to a shared utility module was largely completed for the core filter-and-compare workflow, but the lower-level utility functions (count_domains, cterm_distance) were not migrated, and a stale pre-migration script (analysis_test.py) was left in place. The hard-coded dev paths in filter scripts are also migration artifacts. These are real but bounded defects, placing the score in the upper-middle range."
+    }
+  },
+  "issues": [
+    {
+      "dimension": "incomplete_migration",
+      "identifier": "count_domains_migration_incomplete",
+      "summary": "count_domains() was not migrated to protein_analysis_utils.py; old local copies persist in three analysis scripts",
+      "related_files": [
+        "analysis/non_srp_filter.py",
+        "analysis/srp_filter.py",
+        "analysis/Uniprot_TMD_search.py",
+        "analysis/tmd_count.py",
+        "protein_analysis_utils.py"
+      ],
+      "evidence": [
+        "Identical count_domains() function defined locally in non_srp_filter.py, srp_filter.py, Uniprot_TMD_search.py, and tmd_count.py",
+        "protein_analysis_utils.py has no count_domains function — the consolidation was started (calc_min_cterm_distance was added) but count_domains was not moved"
+      ],
+      "suggestion": "Add count_domains() to protein_analysis_utils.py; remove local definitions; import from there in all four files",
+      "confidence": "high",
+      "impact_scope": "codebase",
+      "fix_scope": "multi_file_refactor"
+    },
+    {
+      "dimension": "incomplete_migration",
+      "identifier": "hardcoded_dev_paths",
+      "summary": "Hard-coded Windows dev paths in non_srp_filter.py and srp_filter.py were never migrated to configurable inputs",
+      "related_files": ["analysis/non_srp_filter.py", "analysis/srp_filter.py"],
+      "evidence": [
+        "non_srp_filter.py: non_biogrid_df = pd.read_csv('C:/Users/Jake/Desktop/non_biogrid.tsv', sep='\\t')",
+        "srp_filter.py: non_biogrid_df = pd.read_csv('C:/Users/Jake/Desktop/non_biogrid.tsv', sep='\\t')"
+      ],
+      "suggestion": "Replace hard-coded paths with argparse command-line arguments or environment variables, matching the pattern used in IDR/idr_analysis.py",
+      "confidence": "high",
+      "impact_scope": "module",
+      "fix_scope": "single_edit"
+    }
+  ],
+  "retrospective": {
+    "root_causes": [
+      "The migration to protein_analysis_utils.py was done incrementally — higher-level filter functions were moved first, lower-level helpers were not",
+      "Dev paths were committed during development and not cleaned up before the scripts were considered complete"
+    ],
+    "likely_symptoms": [],
+    "possible_false_positives": []
+  }
+}
