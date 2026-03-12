@@ -1,0 +1,72 @@
+{
+  "batch": "low_level_elegance",
+  "batch_index": 8,
+  "assessments": {"low_level_elegance": 67.0},
+  "dimension_notes": {
+    "low_level_elegance": {
+      "evidence": [
+        "protein_analysis_utils.py filter_and_compare(): the operator dispatch is a straightforward if/elif chain — clear but verbose; a dict mapping operators to lambdas would be more concise without obscuring intent",
+        "app/app.py filtered_data(): the six-block filter section is 60+ lines of near-identical operator-dispatch code; extraction to a helper would be cleaner without obscuring intent",
+        "IDR/idr_analysis.py _load_checkpoint(): iterates over all rows of a CSV with for _, r in ckpt.iterrows() to build a dict — pd.set_index + to_dict() would be idiomatic pandas and more efficient",
+        "IDR/idr_analysis.py run_disorder_predictions(): the main loop is clean and reads as sequential steps; the try/finally pattern to ensure worker.shutdown() is appropriate",
+        "IDR/nterm_analysis.py pairwise_identity_matrix(): the numpy-vectorized comparison (a[valid] == b[valid]) is efficient and idiomatic for the task",
+        "IDR/nterm_analysis.py compute_kappa(): the algorithm is complex but well-commented with algorithm reference and step-by-step inline comments; appropriately verbose for a non-trivial mathematical function",
+        "analysis/Uniprot_TMD_search.py: the lambda functions passed to apply() inside extract_near_c_terminus_domains() are defined inline with repeated re.findall calls — extracting these to named helpers (already done for domain_near_c_terminus) is correct pattern",
+        "protein_analysis_utils.py summary_report(): uses print() for output — side-effect-heavy function with no return value; appropriate for a reporting function but the loop structure (for col in cfg.compare_columns then head(10)) is a nested print pattern that could be a helper",
+        "analysis/non_srp_filter.py and analysis/srp_filter.py: __main__ blocks are long (40+ lines) with sequential data pipeline steps inline — the steps are clear but would benefit from named sub-functions (already done in analysis/improved_analysis.py)"
+      ],
+      "impact_scope": "codebase",
+      "fix_scope": "multi_file_refactor",
+      "confidence": "high"
+    }
+  },
+  "dimension_judgment": {
+    "low_level_elegance": {
+      "strengths": [
+        "IDR/nterm_analysis.py functions are focused, single-responsibility, and use idiomatic numpy vectorization",
+        "IDR/idr_analysis.py run_disorder_predictions() is clearly structured with named sub-steps and appropriate try/finally cleanup",
+        "protein_analysis_utils.py core functions (filter_and_compare, compare_categories) are compact and intention-revealing"
+      ],
+      "issue_character": "The main low-level issue is repetitive, unextracted patterns: the operator-dispatch in app/app.py filtered_data() and the iterrows-based dict construction in _load_checkpoint() could each be tightened without adding abstraction layers.",
+      "score_rationale": "Function bodies are generally clean and single-purpose. The IDR pipeline code is the most sophisticated and is handled well. The Shiny app's filtered_data() is the most egregious case of unextracted repetition. The iterrows pattern in _load_checkpoint() is an efficiency anti-pattern in pandas. Overall craft is adequate, with targeted improvement opportunities in a few functions."
+    }
+  },
+  "issues": [
+    {
+      "dimension": "low_level_elegance",
+      "identifier": "iterrows_in_load_checkpoint",
+      "summary": "_load_checkpoint() uses iterrows() to build a dict from a DataFrame — idiomatic pandas alternatives are more efficient",
+      "related_files": ["IDR/idr_analysis.py"],
+      "evidence": [
+        "for _, r in ckpt.iterrows(): completed[r['Entry']] = {'aiupred_mean_score': r['aiupred_mean_score'] if pd.notna(r['aiupred_mean_score']) else None, ...}",
+        "iterrows() is known to be slow for large DataFrames and requires per-cell notna checks"
+      ],
+      "suggestion": "Replace with: ckpt.set_index('Entry')[score_cols].where(ckpt[score_cols].notna(), None).to_dict('index') — or equivalent vectorized approach",
+      "confidence": "high",
+      "impact_scope": "local",
+      "fix_scope": "single_edit"
+    },
+    {
+      "dimension": "low_level_elegance",
+      "identifier": "nonsrp_srp_main_block_inline",
+      "summary": "analysis/non_srp_filter.py and analysis/srp_filter.py have 40+ line __main__ blocks with all pipeline steps written inline",
+      "related_files": ["analysis/non_srp_filter.py", "analysis/srp_filter.py"],
+      "evidence": [
+        "Both __main__ blocks load data, merge DataFrames, add columns, group-by, and save files — all inline without named functions",
+        "analysis/improved_analysis.py demonstrates the better pattern: _run_basic_comparisons, _run_advanced_analysis, _save_filtered_datasets as named helpers"
+      ],
+      "suggestion": "Extract the __main__ logic into named functions (load_and_merge, classify_by_membrane_count, save_groups) mirroring the pattern in improved_analysis.py",
+      "confidence": "medium",
+      "impact_scope": "local",
+      "fix_scope": "single_edit"
+    }
+  ],
+  "retrospective": {
+    "root_causes": [
+      "non_srp_filter.py and srp_filter.py predate the naming/extraction patterns established in improved_analysis.py",
+      "_load_checkpoint was written for correctness first and not revisited for idiomatic pandas patterns"
+    ],
+    "likely_symptoms": [],
+    "possible_false_positives": []
+  }
+}

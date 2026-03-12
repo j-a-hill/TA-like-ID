@@ -1,0 +1,73 @@
+{
+  "batch": "initialization_coupling",
+  "batch_index": 13,
+  "assessments": {"initialization_coupling": 55.0},
+  "dimension_notes": {
+    "initialization_coupling": {
+      "evidence": [
+        "app/app.py: df = load_data() at module level — executes a network HTTP request at import time; ALL_COLUMNS = list(df.columns) if len(df) > 0 else [] depends on df being populated before this line",
+        "STANDALONE_APP.py: df = pd.read_csv(DATA_URL) at module level with try/except fallback — same module-level network I/O pattern",
+        "IDR/idr_analysis.py: MOBIDB_BINDIR = _detect_mobidb_bindir() executes at module level — this attempts to import mobidb_lite and inspects its __file__ attribute at import time",
+        "IDR/idr_analysis.py: _aiupred_cache: dict = {} is a module-level mutable singleton — not problematic in itself but shared across all callers in the same process",
+        "IDR/idr_analysis.py: DATA_PATH and DISPROT_PATH are module-level strings computed using os.path; _HERE = os.path.dirname(os.path.abspath(__file__)) is standard and fine",
+        "IDR/idr_analysis.py: API_DELAY, AIUPRED_THRESHOLD, etc. are module-level constants reading from os.environ — AIUPRED_DIR = os.environ.get('AIUPRED_DIR', '') and MOBIDB_BINDIR = _detect_mobidb_bindir() read environment at import time, making the module's behavior depend on environment state at import",
+        "IDR/nterm_analysis.py: _EBI_MEME_URL is a constant string — fine; no side effects at import",
+        "analysis/non_srp_filter.py: no module-level code beyond imports and function definitions — clean"
+      ],
+      "impact_scope": "codebase",
+      "fix_scope": "multi_file_refactor",
+      "confidence": "high"
+    }
+  },
+  "dimension_judgment": {
+    "initialization_coupling": {
+      "strengths": [
+        "IDR/nterm_analysis.py has no module-level side effects — all computation happens inside functions",
+        "analysis/ scripts generally have clean module-level sections (imports + function definitions only)",
+        "IDR/idr_analysis.py uses os.environ.get() rather than reading environment variables from a file, which is at least fail-safe"
+      ],
+      "issue_character": "The dominant issue is module-level data loading and tool-detection that trigger network I/O and filesystem introspection at import time — both app files do this for data loading, and IDR/idr_analysis.py does it for tool path detection.",
+      "score_rationale": "Three modules (app/app.py, STANDALONE_APP.py, IDR/idr_analysis.py) perform non-trivial work at import time: network fetches and package introspection. This couples module initialization to external state (network availability, package installation), making tests slow and fragile. For a Shiny app some startup initialization is expected, but the pattern still reduces testability. Score is in the lower-middle range given the number of affected modules."
+    }
+  },
+  "issues": [
+    {
+      "dimension": "initialization_coupling",
+      "identifier": "app_module_level_network_call",
+      "summary": "app/app.py and STANDALONE_APP.py execute network data loading at module import time",
+      "related_files": ["app/app.py", "STANDALONE_APP.py"],
+      "evidence": [
+        "app/app.py: df = load_data() — load_data() performs pd.read_csv(DATA_URL) from GitHub at import time",
+        "ALL_COLUMNS = list(df.columns) if len(df) > 0 else [] — depends on df being populated",
+        "STANDALONE_APP.py: df = pd.read_csv(DATA_URL) at module scope with try/except fallback"
+      ],
+      "suggestion": "For testability, defer data loading to a function called at app startup (e.g., inside a Shiny app_init callback or a factory function) rather than at module level; this allows tests to mock the data source",
+      "confidence": "high",
+      "impact_scope": "module",
+      "fix_scope": "single_edit"
+    },
+    {
+      "dimension": "initialization_coupling",
+      "identifier": "mobidb_bindir_import_time_detection",
+      "summary": "IDR/idr_analysis.py executes _detect_mobidb_bindir() at module level, attempting to import mobidb_lite and inspect its path at import time",
+      "related_files": ["IDR/idr_analysis.py"],
+      "evidence": [
+        "MOBIDB_BINDIR: str = _detect_mobidb_bindir() at module scope",
+        "_detect_mobidb_bindir() contains: try: import mobidb_lite as _mobi; candidate = os.path.join(os.path.dirname(_mobi.__file__), 'bin')",
+        "If mobidb_lite is not installed, this logs a debug message and returns empty string; if installed, it performs filesystem checks at import time"
+      ],
+      "suggestion": "Move the detection call inside functions that need MOBIDB_BINDIR (run_mobidb_lite_local), or call it lazily on first use; alternatively, accept it as a function parameter with the os.environ.get as default",
+      "confidence": "medium",
+      "impact_scope": "module",
+      "fix_scope": "single_edit"
+    }
+  ],
+  "retrospective": {
+    "root_causes": [
+      "Shiny app pattern naturally encourages module-level app setup; the data loading was placed at module level for simplicity",
+      "MOBIDB_BINDIR detection was made a module constant for convenience so callers did not need to pass it explicitly"
+    ],
+    "likely_symptoms": [],
+    "possible_false_positives": []
+  }
+}

@@ -1,0 +1,87 @@
+{
+  "batch": "naming_quality",
+  "batch_index": 5,
+  "assessments": {"naming_quality": 72.0},
+  "dimension_notes": {
+    "naming_quality": {
+      "evidence": [
+        "analyze_non_srp_by_cterm_distance and analyze_srp_by_cterm_distance are descriptive and domain-aligned; the parameter 'cterm_threshold' is clear",
+        "filter_and_compare, filter_by_cterm_distance, compare_categories, summary_report, cross_tabulate_categories in protein_analysis_utils.py are all intention-revealing names",
+        "quick_cterm_analysis and quick_localization_analysis have 'quick_' prefix that adds no semantic value — 'quick' is not a domain concept and does not distinguish these from other analysis functions",
+        "IDR/idr_analysis.py: _aiupred_cache is a module-level dict — the name 'cache' is clear; _NULL_PRED is a sentinel tuple — the name is adequate",
+        "IDR/idr_analysis.py: _detect_mobidb_bindir() is clear; _load_aiupred_lib() is clear; _worker_fn() is generic — 'worker' and 'fn' are vague suffixes in a module context; a name like _prediction_worker_loop() would be more precise",
+        "IDR/nterm_analysis.py: _last_tmd_start() is clear; _AA_ORDER, _POSITIVE_AA, _NEGATIVE_AA are descriptive constants",
+        "app/app.py: visible_columns, filtered_data as Shiny reactive names are clear; server callback names like column_toggles, data_grid are appropriate",
+        "analysis/Uniprot_TMD_search.py: domain_near_c_terminus is a clear inline helper name; build_gene_set, token_match, build_gene_set are descriptive",
+        "N in extract_near_c_terminus_domains(uniprot_df, N=30) — single-letter parameter for a threshold that has domain meaning; should be 'max_distance' or 'n_residues' for consistency with the rest of the codebase"
+      ],
+      "impact_scope": "codebase",
+      "fix_scope": "multi_file_refactor",
+      "confidence": "high"
+    }
+  },
+  "dimension_judgment": {
+    "naming_quality": {
+      "strengths": [
+        "Domain vocabulary (cterm_distance, membrane_domain_count, transmembrane, tail-anchored) is used consistently throughout",
+        "Public API function names in protein_analysis_utils.py are precise verb-noun pairs that state what they do",
+        "Constants in IDR/nterm_analysis.py (_AA_ORDER, _POSITIVE_AA, AIUPRED_THRESHOLD) are descriptive and follow established bioinformatics vocabulary"
+      ],
+      "issue_character": "The main naming weaknesses are: the 'quick_' prefix that adds no semantic information, the single-letter 'N' parameter in a public function, and the generic '_worker_fn' name for a process-loop function.",
+      "score_rationale": "Naming quality is broadly good — the domain vocabulary is sound and most public functions have precise names. The defects are limited to a few cases of under-informative names (quick_, N, _worker_fn) that reduce discoverability without being seriously misleading. This places the score in the upper-middle range."
+    }
+  },
+  "issues": [
+    {
+      "dimension": "naming_quality",
+      "identifier": "quick_prefix_uninformative",
+      "summary": "quick_cterm_analysis and quick_localization_analysis use 'quick_' prefix that carries no semantic information",
+      "related_files": ["protein_analysis_utils.py"],
+      "evidence": [
+        "def quick_cterm_analysis(df: pd.DataFrame, distance: int = 30) -> None",
+        "def quick_localization_analysis(df: pd.DataFrame, distance: int = 30, localization_column: str = 'Reduced.CC.Terms') -> None",
+        "'quick' is not a domain concept; these are print-to-stdout summary functions"
+      ],
+      "suggestion": "Rename to print_cterm_summary and print_localization_summary (or report_*) to make the side-effect (printing) and scope (summary) explicit",
+      "confidence": "medium",
+      "impact_scope": "local",
+      "fix_scope": "single_edit"
+    },
+    {
+      "dimension": "naming_quality",
+      "identifier": "single_letter_N_parameter",
+      "summary": "Parameter 'N' in extract_near_c_terminus_domains() is a single-letter name inconsistent with the rest of the codebase",
+      "related_files": ["analysis/Uniprot_TMD_search.py"],
+      "evidence": [
+        "def extract_near_c_terminus_domains(uniprot_df: pd.DataFrame, N: int = 30) -> pd.DataFrame",
+        "All other similar parameters in the codebase use 'max_distance', 'cterm_threshold', or 'max_cterm'"
+      ],
+      "suggestion": "Rename parameter to 'max_distance' (matching filter_by_cterm_distance) for consistency across the codebase",
+      "confidence": "high",
+      "impact_scope": "local",
+      "fix_scope": "single_edit"
+    },
+    {
+      "dimension": "naming_quality",
+      "identifier": "worker_fn_generic_name",
+      "summary": "_worker_fn in IDR/idr_analysis.py is a generic name that does not describe the function's role",
+      "related_files": ["IDR/idr_analysis.py"],
+      "evidence": [
+        "def _worker_fn(job_q, result_q, aiupred_dir, mobidb_bindir): 'Long-running child process: loads AIUPred models once, then loops.'",
+        "'fn' suffix is a common anti-pattern — the name does not distinguish this from other worker functions"
+      ],
+      "suggestion": "Rename to _disorder_prediction_worker or _prediction_worker_loop to convey both the domain (disorder prediction) and lifecycle (loops until sentinel)",
+      "confidence": "medium",
+      "impact_scope": "local",
+      "fix_scope": "single_edit"
+    }
+  ],
+  "retrospective": {
+    "root_causes": [
+      "quick_ prefix was likely inherited from notebook-style helper functions where brevity was prioritized",
+      "_worker_fn follows a generic multiprocessing naming convention without domain adaptation"
+    ],
+    "likely_symptoms": [],
+    "possible_false_positives": []
+  }
+}

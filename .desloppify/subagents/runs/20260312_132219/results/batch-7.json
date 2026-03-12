@@ -1,0 +1,72 @@
+{
+  "batch": "dependency_health",
+  "batch_index": 7,
+  "assessments": {"dependency_health": 68.0},
+  "dimension_notes": {
+    "dependency_health": {
+      "evidence": [
+        "app/requirements.txt: shiny>=0.6.0, pandas>=2.0.0, matplotlib>=3.8.0, shinylive — all directly used; no extraneous dependencies",
+        "IDR/requirements.txt includes: joblib, numba, scikit-learn — these are listed but no direct usage of joblib, numba, or scikit-learn was found in IDR/idr_analysis.py or IDR/nterm_analysis.py; they may be transitive requirements for MobiDB-lite or AIUPred",
+        "IDR/requirements.txt pins torch>=2.6.0 with a comment about CVEs — evidence of active security awareness",
+        "IDR/requirements.txt includes xmltramp2 for EBI JDispatcher clients — the only EBI client visible in IDR/nterm_analysis.py uses requests directly (submit_meme_ebi, poll_meme_ebi), not xmltramp2; xmltramp2 may be unused",
+        "No project-level requirements.txt at the root; analysis/ scripts depend on protein_analysis_utils.py which imports pandas and re — no requirements file documents these dependencies for the analysis scripts",
+        "No lock file (requirements.txt uses >= not ==) — versions are not pinned, which is typical for research code but means reproducibility depends on testing",
+        "STANDALONE_APP.py imports matplotlib, io, pathlib — matplotlib is used for plots in STANDALONE_APP.py but not in app/app.py; the two apps have divergent dependency footprints"
+      ],
+      "impact_scope": "codebase",
+      "fix_scope": "single_edit",
+      "confidence": "medium"
+    }
+  },
+  "dimension_judgment": {
+    "dependency_health": {
+      "strengths": [
+        "app/requirements.txt is minimal and accurate — all listed dependencies are used",
+        "torch CVE pinning in IDR/requirements.txt shows security awareness",
+        "No duplicate libraries for the same purpose (e.g., no both requests and httpx)"
+      ],
+      "issue_character": "The main concern is unverified dependencies in IDR/requirements.txt (joblib, numba, scikit-learn, xmltramp2) that appear unused in the visible source, suggesting either they are transitive requirements that should not be in the top-level file or they are dead dependencies.",
+      "score_rationale": "Dependency hygiene is reasonable for a research project. The app requirements are lean and accurate. The IDR requirements include several packages whose direct usage is not visible in the source, creating ambiguity about whether they are needed. The absence of a root-level requirements.txt for analysis scripts is a mild documentation gap. These are modest concerns, placing the score in the upper-middle range."
+    }
+  },
+  "issues": [
+    {
+      "dimension": "dependency_health",
+      "identifier": "xmltramp2_potentially_unused",
+      "summary": "xmltramp2 listed in IDR/requirements.txt but no usage found in IDR source files",
+      "related_files": ["IDR/requirements.txt", "IDR/nterm_analysis.py"],
+      "evidence": [
+        "IDR/requirements.txt: xmltramp2>=3.1.1   # required by EBI JDispatcher Python clients",
+        "IDR/nterm_analysis.py submit_meme_ebi and poll_meme_ebi use requests directly with no import of xmltramp2",
+        "No grep match for xmltramp2 import in any .py file"
+      ],
+      "suggestion": "Verify whether xmltramp2 is used by any IDR script; if not, remove it from requirements.txt to avoid unnecessary installation",
+      "confidence": "medium",
+      "impact_scope": "local",
+      "fix_scope": "single_edit"
+    },
+    {
+      "dimension": "dependency_health",
+      "identifier": "idr_requirements_unverified_deps",
+      "summary": "joblib, numba, and scikit-learn are in IDR/requirements.txt but have no direct usage visible in IDR source",
+      "related_files": ["IDR/requirements.txt", "IDR/idr_analysis.py", "IDR/nterm_analysis.py"],
+      "evidence": [
+        "IDR/requirements.txt lists joblib>=1.3.0, numba>=0.59.0, scikit-learn>=1.4.0",
+        "No import of joblib, numba, or sklearn found in IDR/idr_analysis.py or IDR/nterm_analysis.py"
+      ],
+      "suggestion": "Add inline comments to IDR/requirements.txt documenting which tool (AIUPred, MobiDB-lite) requires each of these packages, or remove them if they are not transitive requirements and are not used",
+      "confidence": "medium",
+      "impact_scope": "local",
+      "fix_scope": "single_edit"
+    }
+  ],
+  "retrospective": {
+    "root_causes": [
+      "IDR requirements were likely assembled from the dependency lists of AIUPred and MobiDB-lite without verifying which packages are actually transitively required vs. directly needed"
+    ],
+    "likely_symptoms": [],
+    "possible_false_positives": [
+      "joblib/numba/scikit-learn may be genuine transitive requirements of MobiDB-lite's inference engine — this should be verified before removal"
+    ]
+  }
+}

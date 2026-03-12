@@ -1,0 +1,1067 @@
+{
+  "version": 8,
+  "created": "2026-03-12T13:06:54+00:00",
+  "updated": "2026-03-12T13:21:57+00:00",
+  "queue_order": [
+    "subjective::abstraction_fitness",
+    "subjective::ai_generated_debt",
+    "subjective::api_surface_coherence",
+    "subjective::authorization_consistency",
+    "subjective::contract_coherence",
+    "subjective::convention_outlier",
+    "subjective::cross_module_architecture",
+    "subjective::dependency_health",
+    "subjective::design_coherence",
+    "subjective::error_consistency",
+    "subjective::high_level_elegance",
+    "subjective::incomplete_migration",
+    "subjective::initialization_coupling",
+    "subjective::logic_clarity",
+    "subjective::low_level_elegance",
+    "subjective::mid_level_elegance",
+    "subjective::naming_quality",
+    "subjective::package_organization",
+    "subjective::test_strategy",
+    "subjective::type_safety"
+  ],
+  "deferred": [],
+  "skipped": {
+    "orphaned::STANDALONE_APP.py": {
+      "issue_id": "orphaned::STANDALONE_APP.py",
+      "kind": "permanent",
+      "reason": null,
+      "note": "Standalone Shiny app; run directly, not imported",
+      "attestation": "I have reviewed this triage skip against the code and I am not gaming the score by suppressing a real defect.",
+      "created_at": "2026-03-12T13:21:22+00:00",
+      "review_after": null,
+      "skipped_at_scan": 9
+    },
+    "orphaned::analysis/demo_fixed_workflow.py": {
+      "issue_id": "orphaned::analysis/demo_fixed_workflow.py",
+      "kind": "permanent",
+      "reason": null,
+      "note": "Demo script; run directly",
+      "attestation": "I have reviewed this triage skip against the code and I am not gaming the score by suppressing a real defect.",
+      "created_at": "2026-03-12T13:21:23+00:00",
+      "review_after": null,
+      "skipped_at_scan": 9
+    },
+    "orphaned::analysis/improved_analysis.py": {
+      "issue_id": "orphaned::analysis/improved_analysis.py",
+      "kind": "permanent",
+      "reason": null,
+      "note": "Analysis script; run directly",
+      "attestation": "I have reviewed this triage skip against the code and I am not gaming the score by suppressing a real defect.",
+      "created_at": "2026-03-12T13:21:23+00:00",
+      "review_after": null,
+      "skipped_at_scan": 9
+    },
+    "orphaned::app/app.py": {
+      "issue_id": "orphaned::app/app.py",
+      "kind": "permanent",
+      "reason": null,
+      "note": "Shiny app entry point; not imported",
+      "attestation": "I have reviewed this triage skip against the code and I am not gaming the score by suppressing a real defect.",
+      "created_at": "2026-03-12T13:21:24+00:00",
+      "review_after": null,
+      "skipped_at_scan": 9
+    },
+    "orphaned::app/wsgi_pythonanywhere.py": {
+      "issue_id": "orphaned::app/wsgi_pythonanywhere.py",
+      "kind": "permanent",
+      "reason": null,
+      "note": "WSGI deployment entry point; not imported",
+      "attestation": "I have reviewed this triage skip against the code and I am not gaming the score by suppressing a real defect.",
+      "created_at": "2026-03-12T13:21:24+00:00",
+      "review_after": null,
+      "skipped_at_scan": 9
+    },
+    "orphaned::IDR/idr_analysis.py": {
+      "issue_id": "orphaned::IDR/idr_analysis.py",
+      "kind": "permanent",
+      "reason": null,
+      "note": "Script entry point run with python IDR/idr_analysis.py; zero importers is expected",
+      "attestation": "I have reviewed this triage skip against the code and I am not gaming the score by suppressing a real defect.",
+      "created_at": "2026-03-12T13:21:40+00:00",
+      "review_after": null,
+      "skipped_at_scan": 9
+    },
+    "orphaned::IDR/nterm_analysis.py": {
+      "issue_id": "orphaned::IDR/nterm_analysis.py",
+      "kind": "permanent",
+      "reason": null,
+      "note": "Library module; imported from notebooks. Desloppify cannot see notebook imports.",
+      "attestation": "I have reviewed this triage skip against the code and I am not gaming the score by suppressing a real defect.",
+      "created_at": "2026-03-12T13:21:40+00:00",
+      "review_after": null,
+      "skipped_at_scan": 9
+    },
+    "orphaned::analysis/signalp_6_filter.py": {
+      "issue_id": "orphaned::analysis/signalp_6_filter.py",
+      "kind": "permanent",
+      "reason": null,
+      "note": "Filter utility script with unit tests in tests/test_signalp6_filter.py",
+      "attestation": "I have reviewed this triage skip against the code and I am not gaming the score by suppressing a real defect.",
+      "created_at": "2026-03-12T13:21:41+00:00",
+      "review_after": null,
+      "skipped_at_scan": 9
+    },
+    "smells::STANDALONE_APP.py::nested_closure": {
+      "issue_id": "smells::STANDALONE_APP.py::nested_closure",
+      "kind": "permanent",
+      "reason": null,
+      "note": "Shiny framework requires reactive functions defined inside server(); this is idiomatic, not a code smell.",
+      "attestation": "I have reviewed this triage skip against the code and I am not gaming the score by suppressing a real defect.",
+      "created_at": "2026-03-12T13:21:41+00:00",
+      "review_after": null,
+      "skipped_at_scan": 9
+    },
+    "test_coverage::STANDALONE_APP.py::untested_critical": {
+      "issue_id": "test_coverage::STANDALONE_APP.py::untested_critical",
+      "kind": "permanent",
+      "reason": null,
+      "note": "Shiny app; requires Shiny runtime to test. Core filtering logic is tested via protein_analysis_utils tests.",
+      "attestation": "I have reviewed this triage skip against the code and I am not gaming the score by suppressing a real defect.",
+      "created_at": "2026-03-12T13:21:55+00:00",
+      "review_after": null,
+      "skipped_at_scan": 9
+    },
+    "test_coverage::analysis/demo_fixed_workflow.py::untested_module": {
+      "issue_id": "test_coverage::analysis/demo_fixed_workflow.py::untested_module",
+      "kind": "permanent",
+      "reason": null,
+      "note": "Demo workflow script; delegates to protein_analysis_utils which is separately tested.",
+      "attestation": "I have reviewed this triage skip against the code and I am not gaming the score by suppressing a real defect.",
+      "created_at": "2026-03-12T13:21:55+00:00",
+      "review_after": null,
+      "skipped_at_scan": 9
+    },
+    "test_coverage::analysis/improved_analysis.py::untested_module": {
+      "issue_id": "test_coverage::analysis/improved_analysis.py::untested_module",
+      "kind": "permanent",
+      "reason": null,
+      "note": "Analysis workflow script; delegates to protein_analysis_utils which is separately tested.",
+      "attestation": "I have reviewed this triage skip against the code and I am not gaming the score by suppressing a real defect.",
+      "created_at": "2026-03-12T13:21:56+00:00",
+      "review_after": null,
+      "skipped_at_scan": 9
+    },
+    "test_coverage::app/app.py::untested_critical": {
+      "issue_id": "test_coverage::app/app.py::untested_critical",
+      "kind": "permanent",
+      "reason": null,
+      "note": "Shiny app; requires Shiny runtime to test. Data filtering uses standard pandas operations.",
+      "attestation": "I have reviewed this triage skip against the code and I am not gaming the score by suppressing a real defect.",
+      "created_at": "2026-03-12T13:21:56+00:00",
+      "review_after": null,
+      "skipped_at_scan": 9
+    },
+    "test_coverage::app/wsgi_pythonanywhere.py::untested_module": {
+      "issue_id": "test_coverage::app/wsgi_pythonanywhere.py::untested_module",
+      "kind": "permanent",
+      "reason": null,
+      "note": "WSGI configuration shim; no testable business logic.",
+      "attestation": "I have reviewed this triage skip against the code and I am not gaming the score by suppressing a real defect.",
+      "created_at": "2026-03-12T13:21:57+00:00",
+      "review_after": null,
+      "skipped_at_scan": 9
+    },
+    "test_coverage::analysis/signalp_6_filter.py::untested_module": {
+      "issue_id": "test_coverage::analysis/signalp_6_filter.py::untested_module",
+      "kind": "permanent",
+      "reason": null,
+      "note": "Now covered by tests/test_signalp6_filter.py (15 tests)",
+      "attestation": "I have reviewed this triage skip against the code and I am not gaming the score by suppressing a real defect.",
+      "created_at": "2026-03-12T13:21:57+00:00",
+      "review_after": null,
+      "skipped_at_scan": 9
+    }
+  },
+  "active_cluster": null,
+  "overrides": {
+    "orphaned::STANDALONE_APP.py": {
+      "issue_id": "orphaned::STANDALONE_APP.py",
+      "created_at": "2026-03-12T13:06:54+00:00",
+      "cluster": "auto/orphaned",
+      "updated_at": "2026-03-12T13:06:54+00:00"
+    },
+    "orphaned::app/app.py": {
+      "issue_id": "orphaned::app/app.py",
+      "created_at": "2026-03-12T13:06:54+00:00",
+      "cluster": "auto/orphaned",
+      "updated_at": "2026-03-12T13:06:54+00:00"
+    },
+    "orphaned::analysis/demo_fixed_workflow.py": {
+      "issue_id": "orphaned::analysis/demo_fixed_workflow.py",
+      "created_at": "2026-03-12T13:06:54+00:00",
+      "cluster": "auto/orphaned",
+      "updated_at": "2026-03-12T13:06:54+00:00"
+    },
+    "orphaned::analysis/improved_analysis.py": {
+      "issue_id": "orphaned::analysis/improved_analysis.py",
+      "created_at": "2026-03-12T13:06:54+00:00",
+      "cluster": "auto/orphaned",
+      "updated_at": "2026-03-12T13:06:54+00:00"
+    },
+    "orphaned::analysis/signalp_6_filter.py": {
+      "issue_id": "orphaned::analysis/signalp_6_filter.py",
+      "created_at": "2026-03-12T13:06:54+00:00",
+      "cluster": "auto/orphaned",
+      "updated_at": "2026-03-12T13:06:54+00:00"
+    },
+    "orphaned::app/wsgi_pythonanywhere.py": {
+      "issue_id": "orphaned::app/wsgi_pythonanywhere.py",
+      "created_at": "2026-03-12T13:06:54+00:00",
+      "cluster": "auto/orphaned",
+      "updated_at": "2026-03-12T13:06:54+00:00"
+    },
+    "orphaned::IDR/idr_analysis.py": {
+      "issue_id": "orphaned::IDR/idr_analysis.py",
+      "created_at": "2026-03-12T13:06:54+00:00",
+      "cluster": "auto/orphaned",
+      "updated_at": "2026-03-12T13:06:54+00:00"
+    },
+    "orphaned::IDR/nterm_analysis.py": {
+      "issue_id": "orphaned::IDR/nterm_analysis.py",
+      "created_at": "2026-03-12T13:06:54+00:00",
+      "cluster": "auto/orphaned",
+      "updated_at": "2026-03-12T13:06:54+00:00"
+    },
+    "test_coverage::STANDALONE_APP.py::untested_critical": {
+      "issue_id": "test_coverage::STANDALONE_APP.py::untested_critical",
+      "created_at": "2026-03-12T13:06:54+00:00",
+      "cluster": "auto/test_coverage",
+      "updated_at": "2026-03-12T13:06:54+00:00"
+    },
+    "test_coverage::app/app.py::untested_critical": {
+      "issue_id": "test_coverage::app/app.py::untested_critical",
+      "created_at": "2026-03-12T13:06:54+00:00",
+      "cluster": "auto/test_coverage",
+      "updated_at": "2026-03-12T13:06:54+00:00"
+    },
+    "test_coverage::analysis/demo_fixed_workflow.py::untested_module": {
+      "issue_id": "test_coverage::analysis/demo_fixed_workflow.py::untested_module",
+      "created_at": "2026-03-12T13:06:54+00:00",
+      "cluster": "auto/test_coverage",
+      "updated_at": "2026-03-12T13:06:54+00:00"
+    },
+    "test_coverage::app/wsgi_pythonanywhere.py::untested_module": {
+      "issue_id": "test_coverage::app/wsgi_pythonanywhere.py::untested_module",
+      "created_at": "2026-03-12T13:06:54+00:00",
+      "cluster": "auto/test_coverage",
+      "updated_at": "2026-03-12T13:06:54+00:00"
+    },
+    "test_coverage::analysis/improved_analysis.py::untested_module": {
+      "issue_id": "test_coverage::analysis/improved_analysis.py::untested_module",
+      "created_at": "2026-03-12T13:06:54+00:00",
+      "cluster": "auto/test_coverage",
+      "updated_at": "2026-03-12T13:06:54+00:00"
+    },
+    "test_coverage::analysis/signalp_6_filter.py::untested_module": {
+      "issue_id": "test_coverage::analysis/signalp_6_filter.py::untested_module",
+      "created_at": "2026-03-12T13:06:54+00:00",
+      "cluster": "auto/test_coverage",
+      "updated_at": "2026-03-12T13:06:54+00:00"
+    },
+    "smells::app/app.py::annotation_quality": {
+      "issue_id": "smells::app/app.py::annotation_quality",
+      "created_at": "2026-03-12T13:06:54+00:00",
+      "cluster": "auto/smells-annotation_quality",
+      "updated_at": "2026-03-12T13:06:54+00:00"
+    },
+    "smells::IDR/idr_analysis.py::annotation_quality": {
+      "issue_id": "smells::IDR/idr_analysis.py::annotation_quality",
+      "created_at": "2026-03-12T13:06:54+00:00",
+      "cluster": "auto/smells-annotation_quality",
+      "updated_at": "2026-03-12T13:06:54+00:00"
+    },
+    "smells::IDR/nterm_analysis.py::annotation_quality": {
+      "issue_id": "smells::IDR/nterm_analysis.py::annotation_quality",
+      "created_at": "2026-03-12T13:06:54+00:00",
+      "cluster": "auto/smells-annotation_quality",
+      "updated_at": "2026-03-12T13:06:54+00:00"
+    },
+    "subjective_review::STANDALONE_APP.py::unreviewed": {
+      "issue_id": "subjective_review::STANDALONE_APP.py::unreviewed",
+      "created_at": "2026-03-12T13:06:54+00:00",
+      "cluster": "auto/subjective_review",
+      "updated_at": "2026-03-12T13:06:54+00:00"
+    },
+    "subjective_review::analysis/Uniprot_TMD_search.py::unreviewed": {
+      "issue_id": "subjective_review::analysis/Uniprot_TMD_search.py::unreviewed",
+      "created_at": "2026-03-12T13:06:54+00:00",
+      "cluster": "auto/subjective_review",
+      "updated_at": "2026-03-12T13:06:54+00:00"
+    },
+    "subjective_review::analysis/demo_fixed_workflow.py::unreviewed": {
+      "issue_id": "subjective_review::analysis/demo_fixed_workflow.py::unreviewed",
+      "created_at": "2026-03-12T13:06:54+00:00",
+      "cluster": "auto/subjective_review",
+      "updated_at": "2026-03-12T13:06:54+00:00"
+    },
+    "subjective_review::analysis/improved_analysis.py::unreviewed": {
+      "issue_id": "subjective_review::analysis/improved_analysis.py::unreviewed",
+      "created_at": "2026-03-12T13:06:54+00:00",
+      "cluster": "auto/subjective_review",
+      "updated_at": "2026-03-12T13:06:54+00:00"
+    },
+    "subjective_review::analysis/non_srp_filter.py::unreviewed": {
+      "issue_id": "subjective_review::analysis/non_srp_filter.py::unreviewed",
+      "created_at": "2026-03-12T13:06:54+00:00",
+      "cluster": "auto/subjective_review",
+      "updated_at": "2026-03-12T13:06:54+00:00"
+    },
+    "subjective_review::analysis/signalp_6_filter.py::unreviewed": {
+      "issue_id": "subjective_review::analysis/signalp_6_filter.py::unreviewed",
+      "created_at": "2026-03-12T13:06:54+00:00",
+      "cluster": "auto/subjective_review",
+      "updated_at": "2026-03-12T13:06:54+00:00"
+    },
+    "subjective_review::analysis/srp_filter.py::unreviewed": {
+      "issue_id": "subjective_review::analysis/srp_filter.py::unreviewed",
+      "created_at": "2026-03-12T13:06:54+00:00",
+      "cluster": "auto/subjective_review",
+      "updated_at": "2026-03-12T13:06:54+00:00"
+    },
+    "subjective_review::analysis/tmd_count.py::unreviewed": {
+      "issue_id": "subjective_review::analysis/tmd_count.py::unreviewed",
+      "created_at": "2026-03-12T13:06:54+00:00",
+      "cluster": "auto/subjective_review",
+      "updated_at": "2026-03-12T13:06:54+00:00"
+    },
+    "subjective_review::app/app.py::unreviewed": {
+      "issue_id": "subjective_review::app/app.py::unreviewed",
+      "created_at": "2026-03-12T13:06:54+00:00",
+      "cluster": "auto/subjective_review",
+      "updated_at": "2026-03-12T13:06:54+00:00"
+    },
+    "subjective_review::app/wsgi_pythonanywhere.py::unreviewed": {
+      "issue_id": "subjective_review::app/wsgi_pythonanywhere.py::unreviewed",
+      "created_at": "2026-03-12T13:06:54+00:00",
+      "cluster": "auto/subjective_review",
+      "updated_at": "2026-03-12T13:06:54+00:00"
+    },
+    "subjective_review::protein_analysis_utils.py::unreviewed": {
+      "issue_id": "subjective_review::protein_analysis_utils.py::unreviewed",
+      "created_at": "2026-03-12T13:06:54+00:00",
+      "cluster": "auto/subjective_review",
+      "updated_at": "2026-03-12T13:06:54+00:00"
+    },
+    "subjective_review::.::holistic_unreviewed": {
+      "issue_id": "subjective_review::.::holistic_unreviewed",
+      "created_at": "2026-03-12T13:06:54+00:00",
+      "cluster": "auto/subjective_review",
+      "updated_at": "2026-03-12T13:06:54+00:00"
+    },
+    "subjective_review::IDR/idr_analysis.py::unreviewed": {
+      "issue_id": "subjective_review::IDR/idr_analysis.py::unreviewed",
+      "created_at": "2026-03-12T13:06:54+00:00",
+      "cluster": "auto/subjective_review",
+      "updated_at": "2026-03-12T13:06:54+00:00"
+    },
+    "subjective_review::IDR/nterm_analysis.py::unreviewed": {
+      "issue_id": "subjective_review::IDR/nterm_analysis.py::unreviewed",
+      "created_at": "2026-03-12T13:06:54+00:00",
+      "cluster": "auto/subjective_review",
+      "updated_at": "2026-03-12T13:06:54+00:00"
+    },
+    "smells::IDR/idr_analysis.py::high_cyclomatic_complexity": {
+      "issue_id": "smells::IDR/idr_analysis.py::high_cyclomatic_complexity",
+      "created_at": "2026-03-12T13:06:54+00:00",
+      "cluster": "auto/smells-high_cyclomatic_complexity",
+      "updated_at": "2026-03-12T13:06:54+00:00"
+    },
+    "smells::app/app.py::high_cyclomatic_complexity": {
+      "issue_id": "smells::app/app.py::high_cyclomatic_complexity",
+      "created_at": "2026-03-12T13:06:54+00:00",
+      "cluster": "auto/smells-high_cyclomatic_complexity",
+      "updated_at": "2026-03-12T13:06:54+00:00"
+    },
+    "smells::IDR/idr_analysis.py::hardcoded_url": {
+      "issue_id": "smells::IDR/idr_analysis.py::hardcoded_url",
+      "created_at": "2026-03-12T13:06:54+00:00",
+      "cluster": "auto/smells-hardcoded_url",
+      "updated_at": "2026-03-12T13:06:54+00:00"
+    },
+    "smells::IDR/nterm_analysis.py::hardcoded_url": {
+      "issue_id": "smells::IDR/nterm_analysis.py::hardcoded_url",
+      "created_at": "2026-03-12T13:06:54+00:00",
+      "cluster": "auto/smells-hardcoded_url",
+      "updated_at": "2026-03-12T13:06:54+00:00"
+    },
+    "smells::IDR/idr_analysis.py::optional_param_sprawl": {
+      "issue_id": "smells::IDR/idr_analysis.py::optional_param_sprawl",
+      "created_at": "2026-03-12T13:06:54+00:00",
+      "cluster": "auto/smells-optional_param_sprawl",
+      "updated_at": "2026-03-12T13:06:54+00:00"
+    },
+    "smells::IDR/nterm_analysis.py::optional_param_sprawl": {
+      "issue_id": "smells::IDR/nterm_analysis.py::optional_param_sprawl",
+      "created_at": "2026-03-12T13:06:54+00:00",
+      "cluster": "auto/smells-optional_param_sprawl",
+      "updated_at": "2026-03-12T13:06:54+00:00"
+    },
+    "smells::STANDALONE_APP.py::nested_closure": {
+      "issue_id": "smells::STANDALONE_APP.py::nested_closure",
+      "created_at": "2026-03-12T13:06:54+00:00",
+      "cluster": "auto/smells-nested_closure",
+      "updated_at": "2026-03-12T13:06:54+00:00"
+    },
+    "smells::app/app.py::nested_closure": {
+      "issue_id": "smells::app/app.py::nested_closure",
+      "created_at": "2026-03-12T13:06:54+00:00",
+      "cluster": "auto/smells-nested_closure",
+      "updated_at": "2026-03-12T13:06:54+00:00"
+    },
+    "smells::IDR/idr_analysis.py::deferred_import": {
+      "issue_id": "smells::IDR/idr_analysis.py::deferred_import",
+      "created_at": "2026-03-12T13:06:54+00:00",
+      "cluster": "auto/smells-deferred_import",
+      "updated_at": "2026-03-12T13:06:54+00:00"
+    },
+    "smells::IDR/nterm_analysis.py::deferred_import": {
+      "issue_id": "smells::IDR/nterm_analysis.py::deferred_import",
+      "created_at": "2026-03-12T13:06:54+00:00",
+      "cluster": "auto/smells-deferred_import",
+      "updated_at": "2026-03-12T13:06:54+00:00"
+    },
+    "smells::app/app.py::deferred_import": {
+      "issue_id": "smells::app/app.py::deferred_import",
+      "created_at": "2026-03-12T13:06:54+00:00",
+      "cluster": "auto/smells-deferred_import",
+      "updated_at": "2026-03-12T13:06:54+00:00"
+    },
+    "subjective::abstraction_fitness": {
+      "issue_id": "subjective::abstraction_fitness",
+      "created_at": "2026-03-12T13:06:54+00:00",
+      "cluster": "auto/initial-review",
+      "updated_at": "2026-03-12T13:06:54+00:00"
+    },
+    "subjective::ai_generated_debt": {
+      "issue_id": "subjective::ai_generated_debt",
+      "created_at": "2026-03-12T13:06:54+00:00",
+      "cluster": "auto/initial-review",
+      "updated_at": "2026-03-12T13:06:54+00:00"
+    },
+    "subjective::api_surface_coherence": {
+      "issue_id": "subjective::api_surface_coherence",
+      "created_at": "2026-03-12T13:06:54+00:00",
+      "cluster": "auto/initial-review",
+      "updated_at": "2026-03-12T13:06:54+00:00"
+    },
+    "subjective::authorization_consistency": {
+      "issue_id": "subjective::authorization_consistency",
+      "created_at": "2026-03-12T13:06:54+00:00",
+      "cluster": "auto/initial-review",
+      "updated_at": "2026-03-12T13:06:54+00:00"
+    },
+    "subjective::contract_coherence": {
+      "issue_id": "subjective::contract_coherence",
+      "created_at": "2026-03-12T13:06:54+00:00",
+      "cluster": "auto/initial-review",
+      "updated_at": "2026-03-12T13:06:54+00:00"
+    },
+    "subjective::convention_outlier": {
+      "issue_id": "subjective::convention_outlier",
+      "created_at": "2026-03-12T13:06:54+00:00",
+      "cluster": "auto/initial-review",
+      "updated_at": "2026-03-12T13:06:54+00:00"
+    },
+    "subjective::cross_module_architecture": {
+      "issue_id": "subjective::cross_module_architecture",
+      "created_at": "2026-03-12T13:06:54+00:00",
+      "cluster": "auto/initial-review",
+      "updated_at": "2026-03-12T13:06:54+00:00"
+    },
+    "subjective::dependency_health": {
+      "issue_id": "subjective::dependency_health",
+      "created_at": "2026-03-12T13:06:54+00:00",
+      "cluster": "auto/initial-review",
+      "updated_at": "2026-03-12T13:06:54+00:00"
+    },
+    "subjective::design_coherence": {
+      "issue_id": "subjective::design_coherence",
+      "created_at": "2026-03-12T13:06:54+00:00",
+      "cluster": "auto/initial-review",
+      "updated_at": "2026-03-12T13:06:54+00:00"
+    },
+    "subjective::error_consistency": {
+      "issue_id": "subjective::error_consistency",
+      "created_at": "2026-03-12T13:06:54+00:00",
+      "cluster": "auto/initial-review",
+      "updated_at": "2026-03-12T13:06:54+00:00"
+    },
+    "subjective::high_level_elegance": {
+      "issue_id": "subjective::high_level_elegance",
+      "created_at": "2026-03-12T13:06:54+00:00",
+      "cluster": "auto/initial-review",
+      "updated_at": "2026-03-12T13:06:54+00:00"
+    },
+    "subjective::incomplete_migration": {
+      "issue_id": "subjective::incomplete_migration",
+      "created_at": "2026-03-12T13:06:54+00:00",
+      "cluster": "auto/initial-review",
+      "updated_at": "2026-03-12T13:06:54+00:00"
+    },
+    "subjective::initialization_coupling": {
+      "issue_id": "subjective::initialization_coupling",
+      "created_at": "2026-03-12T13:06:54+00:00",
+      "cluster": "auto/initial-review",
+      "updated_at": "2026-03-12T13:06:54+00:00"
+    },
+    "subjective::logic_clarity": {
+      "issue_id": "subjective::logic_clarity",
+      "created_at": "2026-03-12T13:06:54+00:00",
+      "cluster": "auto/initial-review",
+      "updated_at": "2026-03-12T13:06:54+00:00"
+    },
+    "subjective::low_level_elegance": {
+      "issue_id": "subjective::low_level_elegance",
+      "created_at": "2026-03-12T13:06:54+00:00",
+      "cluster": "auto/initial-review",
+      "updated_at": "2026-03-12T13:06:54+00:00"
+    },
+    "subjective::mid_level_elegance": {
+      "issue_id": "subjective::mid_level_elegance",
+      "created_at": "2026-03-12T13:06:54+00:00",
+      "cluster": "auto/initial-review",
+      "updated_at": "2026-03-12T13:06:54+00:00"
+    },
+    "subjective::naming_quality": {
+      "issue_id": "subjective::naming_quality",
+      "created_at": "2026-03-12T13:06:54+00:00",
+      "cluster": "auto/initial-review",
+      "updated_at": "2026-03-12T13:06:54+00:00"
+    },
+    "subjective::package_organization": {
+      "issue_id": "subjective::package_organization",
+      "created_at": "2026-03-12T13:06:54+00:00",
+      "cluster": "auto/initial-review",
+      "updated_at": "2026-03-12T13:06:54+00:00"
+    },
+    "subjective::test_strategy": {
+      "issue_id": "subjective::test_strategy",
+      "created_at": "2026-03-12T13:06:54+00:00",
+      "cluster": "auto/initial-review",
+      "updated_at": "2026-03-12T13:06:54+00:00"
+    },
+    "subjective::type_safety": {
+      "issue_id": "subjective::type_safety",
+      "created_at": "2026-03-12T13:06:54+00:00",
+      "cluster": "auto/initial-review",
+      "updated_at": "2026-03-12T13:06:54+00:00"
+    }
+  },
+  "clusters": {
+    "auto/orphaned": {
+      "name": "auto/orphaned",
+      "description": "Fix 8 orphaned issues",
+      "issue_ids": [
+        "orphaned::STANDALONE_APP.py",
+        "orphaned::app/app.py",
+        "orphaned::analysis/demo_fixed_workflow.py",
+        "orphaned::analysis/improved_analysis.py",
+        "orphaned::analysis/signalp_6_filter.py",
+        "orphaned::app/wsgi_pythonanywhere.py",
+        "orphaned::IDR/idr_analysis.py",
+        "orphaned::IDR/nterm_analysis.py"
+      ],
+      "created_at": "2026-03-12T13:06:54+00:00",
+      "updated_at": "2026-03-12T13:06:54+00:00",
+      "auto": true,
+      "cluster_key": "detector::orphaned",
+      "action": "desloppify move",
+      "user_modified": false
+    },
+    "auto/test_coverage": {
+      "name": "auto/test_coverage",
+      "description": "Fix 6 test coverage issues",
+      "issue_ids": [
+        "test_coverage::STANDALONE_APP.py::untested_critical",
+        "test_coverage::app/app.py::untested_critical",
+        "test_coverage::analysis/demo_fixed_workflow.py::untested_module",
+        "test_coverage::app/wsgi_pythonanywhere.py::untested_module",
+        "test_coverage::analysis/improved_analysis.py::untested_module",
+        "test_coverage::analysis/signalp_6_filter.py::untested_module"
+      ],
+      "created_at": "2026-03-12T13:06:54+00:00",
+      "updated_at": "2026-03-12T13:06:54+00:00",
+      "auto": true,
+      "cluster_key": "detector::test_coverage",
+      "action": "add tests for untested production modules \u2014 prioritize by import count",
+      "user_modified": false
+    },
+    "auto/smells-annotation_quality": {
+      "name": "auto/smells-annotation_quality",
+      "description": "Fix 3 annotation quality issues",
+      "issue_ids": [
+        "smells::app/app.py::annotation_quality",
+        "smells::IDR/idr_analysis.py::annotation_quality",
+        "smells::IDR/nterm_analysis.py::annotation_quality"
+      ],
+      "created_at": "2026-03-12T13:06:54+00:00",
+      "updated_at": "2026-03-12T13:06:54+00:00",
+      "auto": true,
+      "cluster_key": "typed::smells::annotation_quality",
+      "action": "fix code smells",
+      "user_modified": false
+    },
+    "auto/subjective_review": {
+      "name": "auto/subjective_review",
+      "description": "Address 14 subjective_review review issues",
+      "issue_ids": [
+        "subjective_review::STANDALONE_APP.py::unreviewed",
+        "subjective_review::analysis/Uniprot_TMD_search.py::unreviewed",
+        "subjective_review::analysis/demo_fixed_workflow.py::unreviewed",
+        "subjective_review::analysis/improved_analysis.py::unreviewed",
+        "subjective_review::analysis/non_srp_filter.py::unreviewed",
+        "subjective_review::analysis/signalp_6_filter.py::unreviewed",
+        "subjective_review::analysis/srp_filter.py::unreviewed",
+        "subjective_review::analysis/tmd_count.py::unreviewed",
+        "subjective_review::app/app.py::unreviewed",
+        "subjective_review::app/wsgi_pythonanywhere.py::unreviewed",
+        "subjective_review::protein_analysis_utils.py::unreviewed",
+        "subjective_review::.::holistic_unreviewed",
+        "subjective_review::IDR/idr_analysis.py::unreviewed",
+        "subjective_review::IDR/nterm_analysis.py::unreviewed"
+      ],
+      "created_at": "2026-03-12T13:06:54+00:00",
+      "updated_at": "2026-03-12T13:06:54+00:00",
+      "auto": true,
+      "cluster_key": "detector::subjective_review",
+      "action": "run `desloppify review --prepare` to evaluate files against quality dimensions",
+      "user_modified": false
+    },
+    "auto/smells-high_cyclomatic_complexity": {
+      "name": "auto/smells-high_cyclomatic_complexity",
+      "description": "Fix 2 high cyclomatic complexity issues",
+      "issue_ids": [
+        "smells::IDR/idr_analysis.py::high_cyclomatic_complexity",
+        "smells::app/app.py::high_cyclomatic_complexity"
+      ],
+      "created_at": "2026-03-12T13:06:54+00:00",
+      "updated_at": "2026-03-12T13:06:54+00:00",
+      "auto": true,
+      "cluster_key": "typed::smells::high_cyclomatic_complexity",
+      "action": "fix code smells",
+      "user_modified": false
+    },
+    "auto/smells-hardcoded_url": {
+      "name": "auto/smells-hardcoded_url",
+      "description": "Fix 2 hardcoded url issues",
+      "issue_ids": [
+        "smells::IDR/idr_analysis.py::hardcoded_url",
+        "smells::IDR/nterm_analysis.py::hardcoded_url"
+      ],
+      "created_at": "2026-03-12T13:06:54+00:00",
+      "updated_at": "2026-03-12T13:06:54+00:00",
+      "auto": true,
+      "cluster_key": "typed::smells::hardcoded_url",
+      "action": "fix code smells",
+      "user_modified": false
+    },
+    "auto/smells-optional_param_sprawl": {
+      "name": "auto/smells-optional_param_sprawl",
+      "description": "Fix 2 optional param sprawl issues",
+      "issue_ids": [
+        "smells::IDR/idr_analysis.py::optional_param_sprawl",
+        "smells::IDR/nterm_analysis.py::optional_param_sprawl"
+      ],
+      "created_at": "2026-03-12T13:06:54+00:00",
+      "updated_at": "2026-03-12T13:06:54+00:00",
+      "auto": true,
+      "cluster_key": "typed::smells::optional_param_sprawl",
+      "action": "fix code smells",
+      "user_modified": false
+    },
+    "auto/smells-nested_closure": {
+      "name": "auto/smells-nested_closure",
+      "description": "Fix 2 nested closure issues",
+      "issue_ids": [
+        "smells::STANDALONE_APP.py::nested_closure",
+        "smells::app/app.py::nested_closure"
+      ],
+      "created_at": "2026-03-12T13:06:54+00:00",
+      "updated_at": "2026-03-12T13:06:54+00:00",
+      "auto": true,
+      "cluster_key": "typed::smells::nested_closure",
+      "action": "fix code smells",
+      "user_modified": false
+    },
+    "auto/smells-deferred_import": {
+      "name": "auto/smells-deferred_import",
+      "description": "Fix 3 deferred import issues",
+      "issue_ids": [
+        "smells::IDR/idr_analysis.py::deferred_import",
+        "smells::IDR/nterm_analysis.py::deferred_import",
+        "smells::app/app.py::deferred_import"
+      ],
+      "created_at": "2026-03-12T13:06:54+00:00",
+      "updated_at": "2026-03-12T13:06:54+00:00",
+      "auto": true,
+      "cluster_key": "typed::smells::deferred_import",
+      "action": "fix code smells",
+      "user_modified": false
+    },
+    "auto/initial-review": {
+      "name": "auto/initial-review",
+      "description": "Initial review of 20 unscored subjective dimensions",
+      "issue_ids": [
+        "subjective::abstraction_fitness",
+        "subjective::ai_generated_debt",
+        "subjective::api_surface_coherence",
+        "subjective::authorization_consistency",
+        "subjective::contract_coherence",
+        "subjective::convention_outlier",
+        "subjective::cross_module_architecture",
+        "subjective::dependency_health",
+        "subjective::design_coherence",
+        "subjective::error_consistency",
+        "subjective::high_level_elegance",
+        "subjective::incomplete_migration",
+        "subjective::initialization_coupling",
+        "subjective::logic_clarity",
+        "subjective::low_level_elegance",
+        "subjective::mid_level_elegance",
+        "subjective::naming_quality",
+        "subjective::package_organization",
+        "subjective::test_strategy",
+        "subjective::type_safety"
+      ],
+      "created_at": "2026-03-12T13:06:54+00:00",
+      "updated_at": "2026-03-12T13:06:54+00:00",
+      "auto": true,
+      "cluster_key": "subjective::unscored",
+      "action": "desloppify review --prepare --dimensions abstraction_fitness,ai_generated_debt,api_surface_coherence,authorization_consistency,contract_coherence,convention_outlier,cross_module_architecture,dependency_health,design_coherence,error_consistency,high_level_elegance,incomplete_migration,initialization_coupling,logic_clarity,low_level_elegance,mid_level_elegance,naming_quality,package_organization,test_strategy,type_safety",
+      "user_modified": false
+    }
+  },
+  "superseded": {},
+  "promoted_ids": [],
+  "plan_start_scores": {},
+  "refresh_state": {},
+  "execution_log": [
+    {
+      "timestamp": "2026-03-12T13:06:54+00:00",
+      "action": "sync_unscored",
+      "issue_ids": [],
+      "cluster_name": null,
+      "actor": "system",
+      "note": null,
+      "detail": {
+        "changes": true
+      }
+    },
+    {
+      "timestamp": "2026-03-12T13:06:54+00:00",
+      "action": "auto_cluster",
+      "issue_ids": [],
+      "cluster_name": null,
+      "actor": "system",
+      "note": null,
+      "detail": {
+        "changes": true
+      }
+    },
+    {
+      "timestamp": "2026-03-12T13:06:54+00:00",
+      "action": "seed_start_scores",
+      "issue_ids": [],
+      "cluster_name": null,
+      "actor": "system",
+      "note": null,
+      "detail": {}
+    },
+    {
+      "timestamp": "2026-03-12T13:06:54+00:00",
+      "action": "complete_postflight_scan",
+      "issue_ids": [],
+      "cluster_name": null,
+      "actor": "system",
+      "note": null,
+      "detail": {
+        "scan_count": 8
+      }
+    },
+    {
+      "timestamp": "2026-03-12T13:08:46+00:00",
+      "action": "sync_unscored",
+      "issue_ids": [],
+      "cluster_name": null,
+      "actor": "system",
+      "note": null,
+      "detail": {
+        "changes": true
+      }
+    },
+    {
+      "timestamp": "2026-03-12T13:20:46+00:00",
+      "action": "done",
+      "issue_ids": [
+        "smells::IDR/idr_analysis.py::silent_except"
+      ],
+      "cluster_name": null,
+      "actor": "user",
+      "note": "Added logger.debug call instead of bare pass in _detect_mobidb_bindir ImportError handler",
+      "detail": {}
+    },
+    {
+      "timestamp": "2026-03-12T13:20:46+00:00",
+      "action": "done",
+      "issue_ids": [
+        "smells::IDR/idr_analysis.py::hardcoded_url"
+      ],
+      "cluster_name": null,
+      "actor": "user",
+      "note": "Extracted UniProt FASTA URL to module constant _UNIPROT_FASTA_URL",
+      "detail": {}
+    },
+    {
+      "timestamp": "2026-03-12T13:20:47+00:00",
+      "action": "done",
+      "issue_ids": [
+        "smells::IDR/idr_analysis.py::annotation_quality"
+      ],
+      "cluster_name": null,
+      "actor": "user",
+      "note": "Replaced bare dict/list annotations with specific types (dict[str, float | None], list[float], etc.)",
+      "detail": {}
+    },
+    {
+      "timestamp": "2026-03-12T13:20:47+00:00",
+      "action": "done",
+      "issue_ids": [
+        "smells::IDR/idr_analysis.py::high_cyclomatic_complexity"
+      ],
+      "cluster_name": null,
+      "actor": "user",
+      "note": "Extracted _load_checkpoint, _append_checkpoint, _predict_one helper functions from run_disorder_predictions",
+      "detail": {}
+    },
+    {
+      "timestamp": "2026-03-12T13:20:48+00:00",
+      "action": "done",
+      "issue_ids": [
+        "smells::IDR/idr_analysis.py::optional_param_sprawl"
+      ],
+      "cluster_name": null,
+      "actor": "user",
+      "note": "Introduced PipelineConfig dataclass; main() now accepts a single config object",
+      "detail": {}
+    },
+    {
+      "timestamp": "2026-03-12T13:21:22+00:00",
+      "action": "skip",
+      "issue_ids": [
+        "orphaned::STANDALONE_APP.py"
+      ],
+      "cluster_name": null,
+      "actor": "user",
+      "note": "Standalone Shiny app; run directly, not imported",
+      "detail": {
+        "kind": "permanent",
+        "reason": null
+      }
+    },
+    {
+      "timestamp": "2026-03-12T13:21:23+00:00",
+      "action": "skip",
+      "issue_ids": [
+        "orphaned::analysis/demo_fixed_workflow.py"
+      ],
+      "cluster_name": null,
+      "actor": "user",
+      "note": "Demo script; run directly",
+      "detail": {
+        "kind": "permanent",
+        "reason": null
+      }
+    },
+    {
+      "timestamp": "2026-03-12T13:21:23+00:00",
+      "action": "skip",
+      "issue_ids": [
+        "orphaned::analysis/improved_analysis.py"
+      ],
+      "cluster_name": null,
+      "actor": "user",
+      "note": "Analysis script; run directly",
+      "detail": {
+        "kind": "permanent",
+        "reason": null
+      }
+    },
+    {
+      "timestamp": "2026-03-12T13:21:24+00:00",
+      "action": "skip",
+      "issue_ids": [
+        "orphaned::app/app.py"
+      ],
+      "cluster_name": null,
+      "actor": "user",
+      "note": "Shiny app entry point; not imported",
+      "detail": {
+        "kind": "permanent",
+        "reason": null
+      }
+    },
+    {
+      "timestamp": "2026-03-12T13:21:24+00:00",
+      "action": "skip",
+      "issue_ids": [
+        "orphaned::app/wsgi_pythonanywhere.py"
+      ],
+      "cluster_name": null,
+      "actor": "user",
+      "note": "WSGI deployment entry point; not imported",
+      "detail": {
+        "kind": "permanent",
+        "reason": null
+      }
+    },
+    {
+      "timestamp": "2026-03-12T13:21:40+00:00",
+      "action": "skip",
+      "issue_ids": [
+        "orphaned::IDR/idr_analysis.py"
+      ],
+      "cluster_name": null,
+      "actor": "user",
+      "note": "Script entry point run with python IDR/idr_analysis.py; zero importers is expected",
+      "detail": {
+        "kind": "permanent",
+        "reason": null
+      }
+    },
+    {
+      "timestamp": "2026-03-12T13:21:40+00:00",
+      "action": "skip",
+      "issue_ids": [
+        "orphaned::IDR/nterm_analysis.py"
+      ],
+      "cluster_name": null,
+      "actor": "user",
+      "note": "Library module; imported from notebooks. Desloppify cannot see notebook imports.",
+      "detail": {
+        "kind": "permanent",
+        "reason": null
+      }
+    },
+    {
+      "timestamp": "2026-03-12T13:21:41+00:00",
+      "action": "skip",
+      "issue_ids": [
+        "orphaned::analysis/signalp_6_filter.py"
+      ],
+      "cluster_name": null,
+      "actor": "user",
+      "note": "Filter utility script with unit tests in tests/test_signalp6_filter.py",
+      "detail": {
+        "kind": "permanent",
+        "reason": null
+      }
+    },
+    {
+      "timestamp": "2026-03-12T13:21:41+00:00",
+      "action": "skip",
+      "issue_ids": [
+        "smells::STANDALONE_APP.py::nested_closure"
+      ],
+      "cluster_name": null,
+      "actor": "user",
+      "note": "Shiny framework requires reactive functions defined inside server(); this is idiomatic, not a code smell.",
+      "detail": {
+        "kind": "permanent",
+        "reason": null
+      }
+    },
+    {
+      "timestamp": "2026-03-12T13:21:55+00:00",
+      "action": "skip",
+      "issue_ids": [
+        "test_coverage::STANDALONE_APP.py::untested_critical"
+      ],
+      "cluster_name": null,
+      "actor": "user",
+      "note": "Shiny app; requires Shiny runtime to test. Core filtering logic is tested via protein_analysis_utils tests.",
+      "detail": {
+        "kind": "permanent",
+        "reason": null
+      }
+    },
+    {
+      "timestamp": "2026-03-12T13:21:55+00:00",
+      "action": "skip",
+      "issue_ids": [
+        "test_coverage::analysis/demo_fixed_workflow.py::untested_module"
+      ],
+      "cluster_name": null,
+      "actor": "user",
+      "note": "Demo workflow script; delegates to protein_analysis_utils which is separately tested.",
+      "detail": {
+        "kind": "permanent",
+        "reason": null
+      }
+    },
+    {
+      "timestamp": "2026-03-12T13:21:56+00:00",
+      "action": "skip",
+      "issue_ids": [
+        "test_coverage::analysis/improved_analysis.py::untested_module"
+      ],
+      "cluster_name": null,
+      "actor": "user",
+      "note": "Analysis workflow script; delegates to protein_analysis_utils which is separately tested.",
+      "detail": {
+        "kind": "permanent",
+        "reason": null
+      }
+    },
+    {
+      "timestamp": "2026-03-12T13:21:56+00:00",
+      "action": "skip",
+      "issue_ids": [
+        "test_coverage::app/app.py::untested_critical"
+      ],
+      "cluster_name": null,
+      "actor": "user",
+      "note": "Shiny app; requires Shiny runtime to test. Data filtering uses standard pandas operations.",
+      "detail": {
+        "kind": "permanent",
+        "reason": null
+      }
+    },
+    {
+      "timestamp": "2026-03-12T13:21:57+00:00",
+      "action": "skip",
+      "issue_ids": [
+        "test_coverage::app/wsgi_pythonanywhere.py::untested_module"
+      ],
+      "cluster_name": null,
+      "actor": "user",
+      "note": "WSGI configuration shim; no testable business logic.",
+      "detail": {
+        "kind": "permanent",
+        "reason": null
+      }
+    },
+    {
+      "timestamp": "2026-03-12T13:21:57+00:00",
+      "action": "skip",
+      "issue_ids": [
+        "test_coverage::analysis/signalp_6_filter.py::untested_module"
+      ],
+      "cluster_name": null,
+      "actor": "user",
+      "note": "Now covered by tests/test_signalp6_filter.py (15 tests)",
+      "detail": {
+        "kind": "permanent",
+        "reason": null
+      }
+    }
+  ],
+  "epic_triage_meta": {},
+  "commit_log": [],
+  "uncommitted_issues": [],
+  "commit_tracking_branch": null
+}

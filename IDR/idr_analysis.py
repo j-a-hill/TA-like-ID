@@ -31,6 +31,7 @@ Outputs a DataFrame with all TA-protein columns plus appended disorder annotatio
 """
 
 import contextlib
+import dataclasses
 import gc
 import importlib.util
 import io
@@ -39,6 +40,7 @@ import multiprocessing as _mp
 import os
 import queue as _queue
 import time
+from typing import Any
 
 import pandas as pd
 import requests
@@ -57,6 +59,9 @@ AIUPRED_THRESHOLD: float = 0.5   # Per-residue score ≥ this → predicted diso
 API_DELAY: float = 0.3           # Seconds to pause between UniProt sequence fetches
 
 HUMAN_TAXON_ID: str = "9606"
+
+# UniProt REST API URL template for FASTA sequence retrieval
+_UNIPROT_FASTA_URL: str = "https://rest.uniprot.org/uniprotkb/{acc}.fasta"
 
 # ── Local tool paths (override via environment variables) ─────────────────────
 # Directory of the cloned doszilab/AIUPred repository.
@@ -77,7 +82,7 @@ def _detect_mobidb_bindir() -> str:
         if os.path.isdir(candidate):
             return os.path.abspath(candidate)
     except ImportError:
-        pass
+        logger.debug("MobiDB-lite package not installed; bindir auto-detection skipped.")
     return ""
 
 MOBIDB_BINDIR: str = _detect_mobidb_bindir()
@@ -183,7 +188,7 @@ def fetch_sequence(uniprot_acc: str, delay: float = API_DELAY) -> str | None:
 
     Returns the sequence string (no header) or ``None`` on failure.
     """
-    url = f"https://rest.uniprot.org/uniprotkb/{uniprot_acc}.fasta"
+    url = _UNIPROT_FASTA_URL.format(acc=uniprot_acc)
     try:
         resp = requests.get(url, timeout=15)
         resp.raise_for_status()
@@ -237,7 +242,7 @@ def _load_aiupred_lib(aiupred_dir: str):
         return None
 
 
-def run_aiupred_local(sequence: str, aiupred_dir: str = AIUPRED_DIR) -> dict:
+def run_aiupred_local(sequence: str, aiupred_dir: str = AIUPRED_DIR) -> dict[str, list[float]]:
     """Run AIUPred disorder prediction using the locally cloned standalone tool.
 
     Clone the repository and set ``AIUPRED_DIR`` (or pass *aiupred_dir*):
@@ -286,7 +291,7 @@ def run_aiupred_local(sequence: str, aiupred_dir: str = AIUPRED_DIR) -> dict:
         return {}
 
 
-def aiupred_summary(scores: list, threshold: float = AIUPRED_THRESHOLD) -> dict:
+def aiupred_summary(scores: list[float], threshold: float = AIUPRED_THRESHOLD) -> dict[str, float | None]:
     """Summarise per-residue AIUPred *scores* into scalar metrics.
 
     Returns
@@ -308,7 +313,7 @@ def aiupred_summary(scores: list, threshold: float = AIUPRED_THRESHOLD) -> dict:
 
 # ── MobiDB-lite (local) ───────────────────────────────────────────────────────
 
-def run_mobidb_lite_local(sequence: str, bindir: str = MOBIDB_BINDIR) -> dict:
+def run_mobidb_lite_local(sequence: str, bindir: str = MOBIDB_BINDIR) -> dict[str, Any]:
     """Run MobiDB-lite disorder prediction using the locally installed package.
 
     Install the package from a **local clone** so that the compiled
@@ -373,7 +378,7 @@ def run_mobidb_lite_local(sequence: str, bindir: str = MOBIDB_BINDIR) -> dict:
     return {}
 
 
-def mobidb_lite_summary(data: dict, protein_length: int) -> dict:
+def mobidb_lite_summary(data: dict[str, Any], protein_length: int) -> dict[str, float | None]:
     """Parse a MobiDB-lite result dict into a disordered-fraction metric.
 
     Returns
@@ -509,7 +514,7 @@ class _PredictionWorker:
             self._proc.join()
         self._proc = None
 
-    def predict(self, acc: str, sequence: "str | None", length: int) -> dict:
+    def predict(self, acc: str, sequence: str | None, length: int) -> dict[str, float | None]:
         """Return prediction dict for *sequence*.
 
         Sends the job to the worker and waits up to ``self.timeout`` seconds.
@@ -540,6 +545,61 @@ class _PredictionWorker:
             self._stop()
 
 
+# ── Checkpoint helpers ────────────────────────────────────────────────────────
+
+def _load_checkpoint(ckpt_file: str) -> dict[str, dict[str, float | None]]:
+    """Load previously-completed predictions from *ckpt_file*.
+
+    Returns a dict mapping accession → prediction dict, or an empty dict if
+    the file is absent or unreadable.
+    """
+    if not os.path.isfile(ckpt_file):
+        return {}
+    try:
+        ckpt = pd.read_csv(ckpt_file)
+        completed: dict[str, dict[str, float | None]] = {}
+        for _, r in ckpt.iterrows():
+            completed[r["Entry"]] = {
+                "aiupred_mean_score": r["aiupred_mean_score"] if pd.notna(r["aiupred_mean_score"]) else None,
+                "aiupred_disordered_fraction": r["aiupred_disordered_fraction"] if pd.notna(r["aiupred_disordered_fraction"]) else None,
+                "mobidb_lite_disordered_fraction": r["mobidb_lite_disordered_fraction"] if pd.notna(r["mobidb_lite_disordered_fraction"]) else None,
+            }
+        if completed:
+            print(f"  Resuming: {len(completed)} proteins already in checkpoint, skipping them.")
+        return completed
+    except Exception as exc:  # noqa: BLE001
+        logger.warning("Checkpoint load failed (%s) – starting from scratch.", exc)
+        return {}
+
+
+def _append_checkpoint(ckpt_file: str, acc: str, pred: dict[str, float | None]) -> None:
+    """Append a single prediction result to the *ckpt_file* CSV sidecar."""
+    ckpt_row = pd.DataFrame([{"Entry": acc, **pred}])
+    write_header = not os.path.isfile(ckpt_file)
+    ckpt_row.to_csv(ckpt_file, mode="a", index=False, header=write_header)
+
+
+def _predict_one(
+    worker: "_PredictionWorker",
+    acc: str,
+    length: int,
+    i: int,
+    total: int,
+) -> dict[str, float | None]:
+    """Fetch sequence and run predictions for a single protein.
+
+    Returns the prediction dict (values may be ``None`` on timeout/failure).
+    """
+    print(f"  [{i}/{total}] {acc} (len={length})", end=" ", flush=True)
+    sequence = fetch_sequence(acc)
+    t0 = time.monotonic()
+    pred = worker.predict(acc, sequence, length)
+    elapsed = time.monotonic() - t0
+    timed_out = all(v is None for v in pred.values())
+    print(f"TIMEOUT – skipped ({elapsed:.0f}s)" if timed_out else f"✓ ({elapsed:.0f}s)")
+    return pred
+
+
 def run_disorder_predictions(
     ta_df: pd.DataFrame,
     checkpoint_path: str | None = None,
@@ -556,25 +616,10 @@ def run_disorder_predictions(
     # Sidecar checkpoint – never shares a name with the output file
     ckpt_file = (checkpoint_path + ".ckpt") if checkpoint_path else None
 
-    # ── resume ────────────────────────────────────────────────────────────────
-    completed: dict[str, dict] = {}
-    if ckpt_file and os.path.isfile(ckpt_file):
-        try:
-            ckpt = pd.read_csv(ckpt_file)
-            for _, r in ckpt.iterrows():
-                completed[r["Entry"]] = {
-                    "aiupred_mean_score": r["aiupred_mean_score"] if pd.notna(r["aiupred_mean_score"]) else None,
-                    "aiupred_disordered_fraction": r["aiupred_disordered_fraction"] if pd.notna(r["aiupred_disordered_fraction"]) else None,
-                    "mobidb_lite_disordered_fraction": r["mobidb_lite_disordered_fraction"] if pd.notna(r["mobidb_lite_disordered_fraction"]) else None,
-                }
-            if completed:
-                print(f"  Resuming: {len(completed)} proteins already in checkpoint, skipping them.")
-        except Exception as exc:  # noqa: BLE001
-            logger.warning("Checkpoint load failed (%s) – starting from scratch.", exc)
-            completed = {}
+    completed = _load_checkpoint(ckpt_file) if ckpt_file else {}
 
     worker = _PredictionWorker(timeout=_PER_PROTEIN_TIMEOUT)
-    records = []
+    records: list[tuple[Any, dict[str, float | None]]] = []
     total = len(ta_df)
     try:
         for i, (idx, row) in enumerate(ta_df.iterrows(), start=1):
@@ -586,25 +631,11 @@ def run_disorder_predictions(
                 records.append((idx, completed[acc]))
                 continue
 
-            print(f"  [{i}/{total}] {acc} (len={length})", end=" ", flush=True)
-
-            # Sequence fetch stays in the main process (controls API rate)
-            sequence = fetch_sequence(acc)
-
-            t_pred = time.monotonic()
-            pred = worker.predict(acc, sequence, length)
-            elapsed_pred = time.monotonic() - t_pred
-
-            timed_out = all(v is None for v in pred.values())
-            status = f"TIMEOUT – skipped ({elapsed_pred:.0f}s)" if timed_out else f"✓ ({elapsed_pred:.0f}s)"
-            print(status)
-
+            pred = _predict_one(worker, acc, length, i, total)
             records.append((idx, pred))
 
             if ckpt_file:
-                ckpt_row = pd.DataFrame([{"Entry": acc, **pred}])
-                write_header = not os.path.isfile(ckpt_file)
-                ckpt_row.to_csv(ckpt_file, mode="a", index=False, header=write_header)
+                _append_checkpoint(ckpt_file, acc, pred)
 
     finally:
         worker.shutdown()
@@ -614,19 +645,54 @@ def run_disorder_predictions(
     return pd.concat([ta_df, pred_df], axis=1)
 
 
+# ── Pipeline configuration ────────────────────────────────────────────────────
+
+
+@dataclasses.dataclass
+class PipelineConfig:
+    """Configuration for the full IDR analysis pipeline.
+
+    Attributes
+    ----------
+    data_path:
+        Path to ``membrane_protein_analysis_with_reduced_cc.csv``.
+    disprot_path:
+        Path to the DisProt TSV file.
+    run_predictions:
+        When ``True``, run AIUPred and MobiDB-lite local tools for each protein.
+        Set to ``False`` for DisProt annotation only.
+    filter_ta:
+        When ``True`` (default), restrict to TA proteins before predictions.
+        When ``False``, process the whole dataset and add an ``is_ta`` column.
+    tmd_count:
+        Required total membrane-domain count for TA filtering.
+    max_n_term:
+        Maximum allowed N-terminal membrane domains.
+    max_cterm:
+        Maximum allowed residues between the TMD end and the protein C-terminus.
+    output_path:
+        Where to write the final CSV.  Defaults to ``ta_idr_results.csv`` (TA
+        mode) or ``all_idr_results.csv`` (whole-population mode) next to the
+        script.
+    resume:
+        When ``True`` (default), skip proteins already present in the output
+        file and append new predictions.
+    """
+
+    data_path: str = DATA_PATH
+    disprot_path: str = DISPROT_PATH
+    run_predictions: bool = True
+    filter_ta: bool = True
+    tmd_count: int = EXACT_TMD_COUNT
+    max_n_term: int = MAX_N_TERM_DOMAINS
+    max_cterm: int = MAX_CTERM_EXTENSION
+    output_path: str | None = None
+    resume: bool = True
+
+
 # ── Main entry point ──────────────────────────────────────────────────────────
 
-def main(
-    data_path: str = DATA_PATH,
-    disprot_path: str = DISPROT_PATH,
-    run_predictions: bool = True,
-    filter_ta: bool = True,
-    tmd_count: int = EXACT_TMD_COUNT,
-    max_n_term: int = MAX_N_TERM_DOMAINS,
-    max_cterm: int = MAX_CTERM_EXTENSION,
-    output_path: str | None = None,
-    resume: bool = True,
-) -> pd.DataFrame:
+def main(config: PipelineConfig | None = None, **kwargs: Any) -> pd.DataFrame:
     """Run the full IDR analysis pipeline.
 
     1. Load the membrane-protein DataFrame and the DisProt TSV.
@@ -637,30 +703,12 @@ def main(
 
     Parameters
     ----------
-    data_path:
-        Path to ``membrane_protein_analysis_with_reduced_cc.csv``.
-    disprot_path:
-        Path to the DisProt TSV file.
-    run_predictions:
-        When ``True``, run the AIUPred and MobiDB-lite local tools for each
-        protein.  Set to ``False`` to skip predictions (DisProt annotation only).
-    filter_ta:
-        When ``True`` (default), restrict to TA proteins before running
-        predictions.  Set to ``False`` to process every protein in *data_path*
-        — useful for building a whole-population baseline for enrichment
-        comparisons.  When ``False`` a boolean ``is_ta`` column is added so
-        that TA proteins can still be identified downstream.
-    tmd_count, max_n_term, max_cterm:
-        Override the module-level TA filtering constants.
-    output_path:
-        Where to write the final CSV.  Defaults to ``ta_idr_results.csv`` (TA
-        mode) or ``all_idr_results.csv`` (whole-population mode) next to this
-        script.  Also used as the per-protein checkpoint file so that
-        interrupted runs can be resumed automatically.
-    resume:
-        When ``True`` (default) and *output_path* already exists, skip proteins
-        that are already present in that file and append new predictions to it.
-        Set to ``False`` to force a clean run from scratch.
+    config:
+        A :class:`PipelineConfig` instance.  When ``None``, a default config is
+        constructed; any *kwargs* are forwarded to its constructor so callers
+        can still pass individual settings without building a config object:
+
+        >>> main(filter_ta=True, run_predictions=False)
 
     Returns
     -------
@@ -668,37 +716,49 @@ def main(
         Proteins with DisProt annotations and (if requested) disorder
         predictions appended as new columns.
     """
+    if config is None:
+        config = PipelineConfig(**kwargs)
+
+    output_path = config.output_path
     if output_path is None:
-        default_name = "ta_idr_results.csv" if filter_ta else "all_idr_results.csv"
+        default_name = "ta_idr_results.csv" if config.filter_ta else "all_idr_results.csv"
         output_path = os.path.join(_HERE, default_name)
 
     print("Loading data …")
-    df = pd.read_csv(data_path)
-    disprot_df = pd.read_csv(disprot_path, sep="\t", dtype=str)
+    df = pd.read_csv(config.data_path)
+    disprot_df = pd.read_csv(config.disprot_path, sep="\t", dtype=str)
 
     print(f"  {len(df):,} proteins in main dataset")
 
-    if filter_ta:
+    if config.filter_ta:
         print("Filtering TA proteins …")
-        working_df = filter_ta_proteins(df, tmd_count=tmd_count,
-                                        max_n_term=max_n_term, max_cterm=max_cterm)
-        print(f"  {len(working_df):,} TA proteins identified "
-              f"(TMD={tmd_count}, N-term≤{max_n_term}, C-ext≤{max_cterm})")
+        working_df = filter_ta_proteins(
+            df,
+            tmd_count=config.tmd_count,
+            max_n_term=config.max_n_term,
+            max_cterm=config.max_cterm,
+        )
+        print(
+            f"  {len(working_df):,} TA proteins identified "
+            f"(TMD={config.tmd_count}, N-term≤{config.max_n_term}, "
+            f"C-ext≤{config.max_cterm})"
+        )
     else:
         print("Processing whole dataset (no TA filter) …")
         working_df = df.copy()
-        # Label which proteins meet TA criteria so downstream analysis can filter
         for col in ("membrane_domain_count", "N_term_md", "cterm_distance"):
             working_df[col] = pd.to_numeric(working_df[col], errors="coerce")
         ta_mask = (
-            (working_df["membrane_domain_count"] == tmd_count)
-            & (working_df["N_term_md"] <= max_n_term)
-            & (working_df["cterm_distance"] <= max_cterm)
+            (working_df["membrane_domain_count"] == config.tmd_count)
+            & (working_df["N_term_md"] <= config.max_n_term)
+            & (working_df["cterm_distance"] <= config.max_cterm)
         )
         working_df["is_ta"] = ta_mask
-        ta_count = ta_mask.sum()
-        print(f"  {ta_count:,} proteins labelled is_ta=True "
-              f"(TMD={tmd_count}, N-term≤{max_n_term}, C-ext≤{max_cterm})")
+        print(
+            f"  {ta_mask.sum():,} proteins labelled is_ta=True "
+            f"(TMD={config.tmd_count}, N-term≤{config.max_n_term}, "
+            f"C-ext≤{config.max_cterm})"
+        )
 
     print("Matching against human DisProt entries …")
     disprot_human = filter_disprot_human(disprot_df)
@@ -706,13 +766,16 @@ def main(
     working_df = match_disprot(working_df, disprot_human)
     hits = working_df["disprot_id"].notna().sum()
     print(f"  {hits} proteins found in DisProt")
-    if hits and filter_ta:
-        print(working_df.loc[working_df["disprot_id"].notna(),
-                             ["Entry", "Entry.Name", "disprot_id",
-                              "disprot_disorder_content"]].to_string(index=False))
+    if hits and config.filter_ta:
+        print(
+            working_df.loc[
+                working_df["disprot_id"].notna(),
+                ["Entry", "Entry.Name", "disprot_id", "disprot_disorder_content"],
+            ].to_string(index=False)
+        )
 
-    if run_predictions:
-        checkpoint = output_path if resume else None
+    if config.run_predictions:
+        checkpoint = output_path if config.resume else None
         print(f"\nRunning disorder predictions for {len(working_df):,} proteins …")
         ckpt_sidecar = (output_path + ".ckpt") if checkpoint else None
         if ckpt_sidecar and os.path.isfile(ckpt_sidecar):
@@ -756,12 +819,13 @@ if __name__ == "__main__":
     if args.all_proteins and output == os.path.join(_HERE, "ta_idr_results.csv"):
         output = os.path.join(_HERE, "all_idr_results.csv")
 
-    result_df = main(
+    config = PipelineConfig(
         output_path=output,
         resume=not args.no_resume,
         run_predictions=not args.no_predictions,
         filter_ta=not args.all_proteins,
     )
+    result_df = main(config)
     result_df.to_csv(output, index=False)
     print(f"\nSaved {len(result_df):,} rows → {output}")
     print(f"Columns: {list(result_df.columns)}")

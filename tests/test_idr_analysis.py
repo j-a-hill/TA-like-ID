@@ -19,6 +19,9 @@ from idr_analysis import (
     run_aiupred_local,
     run_mobidb_lite_local,
     run_disorder_predictions,
+    PipelineConfig,
+    _load_checkpoint,
+    _append_checkpoint,
 )
 
 
@@ -406,3 +409,65 @@ class TestRunDisorderPredictions:
             run_disorder_predictions(ta_df)
 
         assert mock_fetch.call_count == len(ta_df)
+
+
+# ── PipelineConfig ────────────────────────────────────────────────────────────
+
+class TestPipelineConfig:
+    def test_defaults_match_module_constants(self):
+        """Default PipelineConfig fields should match the module-level constants."""
+        import idr_analysis
+        cfg = PipelineConfig()
+        assert cfg.filter_ta is True
+        assert cfg.run_predictions is True
+        assert cfg.resume is True
+        assert cfg.tmd_count == idr_analysis.EXACT_TMD_COUNT
+        assert cfg.max_n_term == idr_analysis.MAX_N_TERM_DOMAINS
+        assert cfg.max_cterm == idr_analysis.MAX_CTERM_EXTENSION
+
+    def test_custom_values_stored(self):
+        cfg = PipelineConfig(filter_ta=False, max_cterm=50, run_predictions=False)
+        assert cfg.filter_ta is False
+        assert cfg.max_cterm == 50
+        assert cfg.run_predictions is False
+
+    def test_output_path_defaults_to_none(self):
+        cfg = PipelineConfig()
+        assert cfg.output_path is None
+
+
+# ── _load_checkpoint / _append_checkpoint ────────────────────────────────────
+
+class TestCheckpointHelpers:
+    def test_load_missing_file_returns_empty(self, tmp_path):
+        result = _load_checkpoint(str(tmp_path / "no_such_file.ckpt"))
+        assert result == {}
+
+    def test_append_then_load_round_trip(self, tmp_path):
+        ckpt = str(tmp_path / "test.ckpt")
+        pred = {
+            "aiupred_mean_score": 0.42,
+            "aiupred_disordered_fraction": 0.3,
+            "mobidb_lite_disordered_fraction": 0.1,
+        }
+        _append_checkpoint(ckpt, "P001", pred)
+        loaded = _load_checkpoint(ckpt)
+        assert "P001" in loaded
+        assert abs(loaded["P001"]["aiupred_mean_score"] - 0.42) < 1e-6
+
+    def test_append_multiple_entries(self, tmp_path):
+        ckpt = str(tmp_path / "multi.ckpt")
+        for acc in ("P001", "P002", "P003"):
+            _append_checkpoint(ckpt, acc, {"aiupred_mean_score": 0.5,
+                                           "aiupred_disordered_fraction": 0.5,
+                                           "mobidb_lite_disordered_fraction": None})
+        loaded = _load_checkpoint(ckpt)
+        assert set(loaded.keys()) == {"P001", "P002", "P003"}
+
+    def test_none_values_preserved_as_none(self, tmp_path):
+        ckpt = str(tmp_path / "none.ckpt")
+        _append_checkpoint(ckpt, "P001", {"aiupred_mean_score": None,
+                                          "aiupred_disordered_fraction": None,
+                                          "mobidb_lite_disordered_fraction": None})
+        loaded = _load_checkpoint(ckpt)
+        assert loaded["P001"]["aiupred_mean_score"] is None

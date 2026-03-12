@@ -1,0 +1,70 @@
+{
+  "batch": "design_coherence",
+  "batch_index": 14,
+  "assessments": {"design_coherence": 65.0},
+  "dimension_notes": {
+    "design_coherence": {
+      "evidence": [
+        "IDR/idr_analysis.py main() function is 80+ lines and handles: config resolution, file-path defaulting, data loading, TA filtering, whole-dataset processing, DisProt matching, checkpoint detection, disorder prediction — multiple distinct responsibilities in one body",
+        "app/app.py filtered_data() reactive applies 6 independent filter conditions sequentially in 60+ lines; each condition block repeats the same operator-dispatch pattern — the function does one thing (filter) but its implementation does not leverage the repeated structure",
+        "analysis/non_srp_filter.py and analysis/srp_filter.py __main__ blocks: 40+ lines each handling load, merge, filter, group-by, save — all inline, no sub-functions",
+        "protein_analysis_utils.py summary_report() has a reasonable single responsibility: print a summary report; the inner loop (for col in compare_columns) is appropriate nesting",
+        "IDR/nterm_analysis.py functions are consistently single-responsibility and compact; compute_kappa() and compute_omega() are long but genuinely complex mathematical functions with a single purpose",
+        "IDR/idr_analysis.py _predict_one() is a clean single-responsibility function: fetch sequence + run worker prediction + print status",
+        "app/app.py server() function defines all Shiny callbacks inline as nested functions — appropriate for Shiny's reactive paradigm; the nesting is framework-required"
+      ],
+      "impact_scope": "codebase",
+      "fix_scope": "multi_file_refactor",
+      "confidence": "high"
+    }
+  },
+  "dimension_judgment": {
+    "design_coherence": {
+      "strengths": [
+        "IDR/nterm_analysis.py is the best-designed module: functions are single-purpose, parameter lists are minimal, and the analysis pipeline composes cleanly",
+        "protein_analysis_utils.py core functions (filter_and_compare, filter_by_cterm_distance, compare_categories) are coherently scoped",
+        "_predict_one() in IDR/idr_analysis.py is a well-extracted single-responsibility function"
+      ],
+      "issue_character": "The design coherence issue is concentrated in orchestration entry points: IDR/idr_analysis.py main() conflates configuration resolution, data loading, and branched processing into a single 80+ line function; the non_srp/srp __main__ blocks are similarly undecomposed.",
+      "score_rationale": "At the function/class level, the codebase is mostly coherent. The IDR nterm_analysis.py module is well-designed. The problem is at the orchestration layer: main() in IDR/idr_analysis.py and the __main__ blocks in the filter scripts take on too many responsibilities without decomposition. The design coherence of analysis scripts also suffers from the print-mixed-with-computation pattern. Score is in the middle range."
+    }
+  },
+  "issues": [
+    {
+      "dimension": "design_coherence",
+      "identifier": "idr_main_multiple_responsibilities",
+      "summary": "IDR/idr_analysis.py main() handles config resolution, data loading, TA filtering, whole-dataset labelling, DisProt matching, and disorder predictions in a single 80+ line function",
+      "related_files": ["IDR/idr_analysis.py"],
+      "evidence": [
+        "main() resolves config and output_path, calls pd.read_csv twice (data + disprot), conditionally calls filter_ta_proteins or adds is_ta column, calls match_disprot, conditionally calls run_disorder_predictions — 5 distinct concerns",
+        "The if/else branch for filter_ta vs whole-dataset adds ~20 lines of divergent logic inside the function"
+      ],
+      "suggestion": "Extract a _load_inputs(config) function returning (df, disprot_df), a _apply_ta_filter(df, config) function, and keep main() as a thin orchestrator calling them in sequence",
+      "confidence": "high",
+      "impact_scope": "module",
+      "fix_scope": "single_edit"
+    },
+    {
+      "dimension": "design_coherence",
+      "identifier": "filter_script_main_blocks",
+      "summary": "non_srp_filter.py and srp_filter.py __main__ blocks inline all pipeline steps without decomposition",
+      "related_files": ["analysis/non_srp_filter.py", "analysis/srp_filter.py"],
+      "evidence": [
+        "40+ line __main__ block in each file: load CSV, rename columns, merge, filter Prediction, add TMD/IMD counts, groupby, save multiple CSVs — all inline",
+        "analysis/improved_analysis.py demonstrates the better pattern with named helper functions (_run_basic_comparisons, _save_filtered_datasets)"
+      ],
+      "suggestion": "Extract named functions for each pipeline step (load_and_merge, classify_by_membrane_count, save_by_group) following the pattern established in improved_analysis.py",
+      "confidence": "medium",
+      "impact_scope": "local",
+      "fix_scope": "single_edit"
+    }
+  ],
+  "retrospective": {
+    "root_causes": [
+      "main() in IDR/idr_analysis.py grew by accretion as new pipeline stages were added without refactoring the entry point",
+      "filter script __main__ blocks were written as single-use pipeline scripts where decomposition was not prioritized"
+    ],
+    "likely_symptoms": [],
+    "possible_false_positives": []
+  }
+}

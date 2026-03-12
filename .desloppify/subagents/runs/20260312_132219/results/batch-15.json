@@ -1,0 +1,74 @@
+{
+  "batch": "contract_coherence",
+  "batch_index": 15,
+  "assessments": {"contract_coherence": 70.0},
+  "dimension_notes": {
+    "contract_coherence": {
+      "evidence": [
+        "protein_analysis_utils.py filter_and_compare() returns tuple[pd.DataFrame, pd.Series] — consistent with actual return paths; always returns a tuple",
+        "protein_analysis_utils.py calc_min_cterm_distance() returns float | None — the function returns None when no domain found or length is zero; the annotation is accurate",
+        "protein_analysis_utils.py compare_categories() return annotation is pd.Series | pd.DataFrame — the Union return type is correct but callers must check which type they received; a narrower API would be preferable",
+        "IDR/idr_analysis.py fetch_sequence() -> str | None: accurately annotated; returns None on any exception",
+        "IDR/idr_analysis.py aiupred_summary() -> dict[str, float | None]: accurate; returns {'aiupred_mean_score': None, 'aiupred_disordered_fraction': None} when scores is empty",
+        "IDR/idr_analysis.py run_aiupred_local() -> dict[str, list[float]]: returns {} on failure — the return type annotation claims dict[str, list[float]] but returns {} (empty dict) on failure; callers that index into the result may get KeyError if they don't check",
+        "IDR/nterm_analysis.py compute_kappa() and compute_omega() return 0.0 for edge cases — the return type is float, accurate, but the semantics of 0.0 ('undefined' vs 'zero asymmetry') is conflated; no docstring note distinguishes these",
+        "app/app.py server() has no return type annotation; Shiny convention allows this but inconsistent with the rest of the module",
+        "IDR/nterm_analysis.py plot_sequence_logo() return annotation uses string forward reference 'matplotlib.axes.Axes' with # type: ignore[name-defined] — technically correct for optional matplotlib dependency but opaque"
+      ],
+      "impact_scope": "codebase",
+      "fix_scope": "multi_file_refactor",
+      "confidence": "high"
+    }
+  },
+  "dimension_judgment": {
+    "contract_coherence": {
+      "strengths": [
+        "Core utility functions in protein_analysis_utils.py have accurate return type annotations",
+        "IDR/idr_analysis.py consistently uses str | None return types for functions that can fail",
+        "Docstrings in protein_analysis_utils.py and IDR/idr_analysis.py accurately describe Args and Returns"
+      ],
+      "issue_character": "The main contract gap is run_aiupred_local() and run_mobidb_lite_local() returning {} (empty dict) on failure while their type annotation promises dict[str, list[float]] or dict[str, Any] — the empty dict is contractually valid but semantically a failure signal that is not part of the declared contract.",
+      "score_rationale": "Most function contracts are accurate. The primary issue is the use of empty dict as a failure sentinel in tool-invocation functions — the return type annotation is technically valid (empty dict satisfies dict[str, X]) but the semantic contract (empty means failed, non-empty means success) is implicit and undocumented. The compare_categories Union return type is a minor ergonomic issue. Overall contract quality is adequate, scoring in the upper-middle range."
+    }
+  },
+  "issues": [
+    {
+      "dimension": "contract_coherence",
+      "identifier": "run_aiupred_empty_dict_failure_contract",
+      "summary": "run_aiupred_local() and run_mobidb_lite_local() return {} on failure, conflating 'empty result' with 'tool invocation failed' in their return contract",
+      "related_files": ["IDR/idr_analysis.py"],
+      "evidence": [
+        "def run_aiupred_local(...) -> dict[str, list[float]]: ... return {} when dir missing or lib failed",
+        "def run_mobidb_lite_local(...) -> dict[str, Any]: ... return {} on all failure paths",
+        "Callers check 'if sequence:' but do not have a way to distinguish 'ran successfully but produced no scores' from 'failed to run'"
+      ],
+      "suggestion": "Add a docstring note that {} signals invocation failure, and/or use Optional[dict] return type with None meaning failed — or add a 'success' key to the return dict; at minimum document the contract explicitly",
+      "confidence": "high",
+      "impact_scope": "module",
+      "fix_scope": "single_edit"
+    },
+    {
+      "dimension": "contract_coherence",
+      "identifier": "compare_categories_union_return",
+      "summary": "compare_categories() return type pd.Series | pd.DataFrame is determined by the group_by parameter, but the annotation does not reflect this dependency",
+      "related_files": ["protein_analysis_utils.py"],
+      "evidence": [
+        "def compare_categories(..., group_by: str | None = None, ...) -> pd.Series | pd.DataFrame:",
+        "Returns pd.Series when group_by is None; returns pd.DataFrame when group_by is provided",
+        "Callers cannot know the return type without reading the implementation"
+      ],
+      "suggestion": "Use @overload to provide two typed signatures: one for group_by=None returning pd.Series, one for group_by=str returning pd.DataFrame",
+      "confidence": "medium",
+      "impact_scope": "local",
+      "fix_scope": "single_edit"
+    }
+  ],
+  "retrospective": {
+    "root_causes": [
+      "Empty dict failure sentinel is a common defensive pattern in research code that avoids raising exceptions; the semantic ambiguity is a side effect",
+      "compare_categories Union return was acceptable for research use but becomes a contract issue when the function is part of a public API"
+    ],
+    "likely_symptoms": [],
+    "possible_false_positives": []
+  }
+}

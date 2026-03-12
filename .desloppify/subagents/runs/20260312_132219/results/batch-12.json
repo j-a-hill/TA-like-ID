@@ -1,0 +1,90 @@
+{
+  "batch": "package_organization",
+  "batch_index": 12,
+  "assessments": {"package_organization": 63.0},
+  "dimension_notes": {
+    "package_organization": {
+      "evidence": [
+        "Root-level files: protein_analysis_utils.py (imported by analysis/ scripts — high fan-in, appropriate at root), STANDALONE_APP.py (not imported anywhere — low fan-in but large standalone file), DisProt_release_2025_12.tsv (data file at root), scorecard.png (artifact at root), non_srp_cterm_30.csv and srp_cterm_30.csv (output data files at root)",
+        "analysis/ directory contains: canonical pipeline scripts (signalp_6_filter.py, Uniprot_TMD_search.py, tmd_count.py, non_srp_filter.py, srp_filter.py), demonstration scripts (demo_fixed_workflow.py, improved_analysis.py), and a stale exploratory script (analysis_test.py) — mixed roles without subdivision",
+        "app/ is well-organized: app.py, wsgi_pythonanywhere.py, requirements.txt — all related to web deployment, clear single purpose",
+        "IDR/ is well-organized: idr_analysis.py, nterm_analysis.py, requirements.txt — all related to IDR analysis, appropriate boundary",
+        "tests/ mirrors the production modules with test_ prefix files — appropriate structure",
+        "Output CSV files (non_srp_cterm_30.csv, srp_cterm_30.csv) at the project root create clutter; these should be in filtered_datasets/ which already exists",
+        "DisProt_release_2025_12.tsv is a data file at project root; raw_data/ directory already exists for such files"
+      ],
+      "impact_scope": "codebase",
+      "fix_scope": "multi_file_refactor",
+      "confidence": "high"
+    }
+  },
+  "dimension_judgment": {
+    "package_organization": {
+      "strengths": [
+        "app/ and IDR/ are well-bounded directories with clear single responsibilities",
+        "tests/ mirrors production structure cleanly",
+        "protein_analysis_utils.py at root is justified: it is imported by both analysis/ scripts and is the shared utility hub"
+      ],
+      "issue_character": "The main organization issues are: data/artifact files scattered at the root that belong in existing subdirectories (filtered_datasets/, raw_data/), and analysis/ mixing pipeline scripts with demonstration scripts and a stale exploration file.",
+      "score_rationale": "The three main subdirectories (app/, IDR/, tests/) are well-organized. The project root and analysis/ directory have organizational debt: output CSVs and data files are at the root despite dedicated directories existing, and analysis/ mixes production and non-production files. These are practical navigation impediments, keeping the score in the lower-middle range."
+    }
+  },
+  "issues": [
+    {
+      "dimension": "package_organization",
+      "identifier": "output_csvs_at_root",
+      "summary": "non_srp_cterm_30.csv and srp_cterm_30.csv (pipeline outputs) are at the project root instead of filtered_datasets/",
+      "related_files": ["non_srp_cterm_30.csv", "srp_cterm_30.csv"],
+      "evidence": [
+        "non_srp_cterm_30.csv and srp_cterm_30.csv exist at project root",
+        "filtered_datasets/ directory already exists and contains similar output files (proteins_cterm_distance_30.csv etc.)",
+        "analysis/non_srp_filter.py writes to the working directory: close_cterm.to_csv(f'non_srp_cterm_{cterm_threshold}.csv') — relative path that lands at root when run from project root"
+      ],
+      "suggestion": "Update analyze_non_srp_by_cterm_distance and analyze_srp_by_cterm_distance to write outputs to filtered_datasets/; move existing root-level CSVs there",
+      "confidence": "high",
+      "impact_scope": "local",
+      "fix_scope": "single_edit"
+    },
+    {
+      "dimension": "package_organization",
+      "identifier": "disprot_tsv_at_root",
+      "summary": "DisProt_release_2025_12.tsv (a data input file) is at the project root rather than raw_data/",
+      "related_files": ["DisProt_release_2025_12.tsv"],
+      "evidence": [
+        "DisProt_release_2025_12.tsv is at project root",
+        "IDR/idr_analysis.py DISPROT_PATH: os.path.join(_HERE, '..', 'DisProt_release_2025_12.tsv') — path resolves to project root",
+        "raw_data/ directory exists and contains similar input files"
+      ],
+      "suggestion": "Move DisProt_release_2025_12.tsv to raw_data/; update DISPROT_PATH in IDR/idr_analysis.py accordingly",
+      "confidence": "high",
+      "impact_scope": "local",
+      "fix_scope": "single_edit"
+    },
+    {
+      "dimension": "package_organization",
+      "identifier": "analysis_dir_mixed_roles",
+      "summary": "analysis/ mixes canonical pipeline modules with demonstration and stale exploration scripts",
+      "related_files": [
+        "analysis/demo_fixed_workflow.py",
+        "analysis/improved_analysis.py",
+        "analysis/analysis_test.py"
+      ],
+      "evidence": [
+        "demo_fixed_workflow.py and improved_analysis.py are demonstration/narrative scripts; signalp_6_filter.py and Uniprot_TMD_search.py are canonical parsers",
+        "analysis_test.py is an exploratory script using *_test naming but not collected by pytest"
+      ],
+      "suggestion": "Remove analysis_test.py; create analysis/demos/ for demonstration scripts (demo_fixed_workflow.py, improved_analysis.py) to separate them from reusable pipeline modules",
+      "confidence": "medium",
+      "impact_scope": "module",
+      "fix_scope": "multi_file_refactor"
+    }
+  ],
+  "retrospective": {
+    "root_causes": [
+      "Output files were written to the working directory (project root) by scripts that predate the filtered_datasets/ convention",
+      "Analysis scripts were added to analysis/ without a subdivision policy as the project grew"
+    ],
+    "likely_symptoms": [],
+    "possible_false_positives": []
+  }
+}
