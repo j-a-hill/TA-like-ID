@@ -101,13 +101,15 @@ def _last_tmd_start(transmembrane_str: str) -> Optional[int]:
 def extract_nterm_window(
     sequence: str,
     tmd_start: int,
-    window_size: int = 30,
+    window_size: Optional[int] = None,
 ) -> str:
-    """Return the *window_size* residues immediately upstream of the TMD.
+    """Return the N-terminal residues immediately upstream of the TMD.
 
     The window is anchored at the TMD N-terminal boundary (``tmd_start``,
-    1-based).  If the N-terminal domain is shorter than *window_size*, the
-    entire available N-terminal sequence is returned.
+    1-based).  If *window_size* is ``None`` (the default), the entire
+    N-terminal region preceding the TMD is returned.  If *window_size* is an
+    integer, at most that many residues are returned (the stretch immediately
+    adjacent to the TMD).
 
     Parameters
     ----------
@@ -116,24 +118,29 @@ def extract_nterm_window(
     tmd_start:
         1-based position of the first TMD residue.
     window_size:
-        Maximum number of N-terminal residues to include (default 30).
+        Maximum number of N-terminal residues to include.  ``None`` (default)
+        returns the complete N-terminal region up to the TMD.
 
     Returns
     -------
     str
-        Sequence fragment, at most *window_size* characters long.
+        Sequence fragment, length ≤ *window_size* (or the full N-terminal
+        region when *window_size* is ``None``).
     """
     if not sequence or tmd_start < 1:
         return ""
     nterm_end = tmd_start - 1           # index of last N-term residue (1-based)
-    start_idx = max(0, nterm_end - window_size)
+    if window_size is None:
+        start_idx = 0
+    else:
+        start_idx = max(0, nterm_end - window_size)
     return sequence[start_idx:nterm_end].upper()
 
 
 def extract_windows_from_df(
     df: pd.DataFrame,
     sequences: dict[str, str],
-    window_size: int = 30,
+    window_size: Optional[int] = None,
 ) -> dict[str, str]:
     """Extract N-terminal windows for each protein in *df*.
 
@@ -144,7 +151,8 @@ def extract_windows_from_df(
     sequences:
         Mapping of UniProt accession → full protein sequence.
     window_size:
-        Passed through to :func:`extract_nterm_window`.
+        Passed through to :func:`extract_nterm_window`.  ``None`` (default)
+        returns the complete sequence before the last TMD.
 
     Returns
     -------
@@ -541,6 +549,93 @@ def format_fasta(sequences: dict[str, str], line_width: int = 60) -> str:
     return "\n".join(lines) + "\n"
 
 
+# ── K-mer enrichment ──────────────────────────────────────────────────────────
+
+
+def _aa_frequencies(sequences: list[str]) -> dict[str, float]:
+    """Compute single amino-acid frequencies over all sequences."""
+    counts: dict[str, int] = {}
+    total = 0
+    for seq in sequences:
+        for aa in seq.upper():
+            if aa in _AA_ORDER:
+                counts[aa] = counts.get(aa, 0) + 1
+                total += 1
+    if total == 0:
+        return {aa: 1 / 20 for aa in _AA_ORDER}
+    return {aa: counts.get(aa, 0) / total for aa in _AA_ORDER}
+
+
+def kmer_enrichment(
+    sequences: list[str],
+    k: int = 3,
+    top_n: int = 20,
+    min_count: int = 3,
+) -> pd.DataFrame:
+    """Find over-represented k-mers in *sequences* relative to a background
+    model built from the observed single amino-acid frequencies.
+
+    Enrichment = observed_freq / expected_freq.
+    Significance is assessed with a one-sided binomial test (SciPy).
+
+    Parameters
+    ----------
+    sequences:
+        List of amino-acid strings (variable length).
+    k:
+        K-mer length (default 3).
+    top_n:
+        Number of top enriched k-mers to return (default 20).
+    min_count:
+        Minimum number of occurrences required to report a k-mer (default 3).
+
+    Returns
+    -------
+    pd.DataFrame sorted by enrichment (descending) with columns:
+    ``kmer``, ``count``, ``observed_freq``, ``expected_freq``,
+    ``enrichment``, ``pvalue``.
+    """
+    from scipy.stats import binomtest  # noqa: PLC0415
+
+    aa_freq = _aa_frequencies(sequences)
+
+    kmer_counts: dict[str, int] = {}
+    total_kmers = 0
+    for seq in sequences:
+        s = seq.upper()
+        for i in range(len(s) - k + 1):
+            kmer = s[i : i + k]
+            if all(aa in _AA_ORDER for aa in kmer):
+                kmer_counts[kmer] = kmer_counts.get(kmer, 0) + 1
+                total_kmers += 1
+
+    if total_kmers == 0:
+        return pd.DataFrame(columns=["kmer", "count", "observed_freq",
+                                     "expected_freq", "enrichment", "pvalue"])
+
+    rows = []
+    for kmer, count in kmer_counts.items():
+        if count < min_count:
+            continue
+        obs_freq = count / total_kmers
+        exp_freq = 1.0
+        for aa in kmer:
+            exp_freq *= aa_freq.get(aa, 1e-6)
+        enrichment = obs_freq / exp_freq if exp_freq > 0 else float("inf")
+        result = binomtest(count, total_kmers, exp_freq, alternative="greater")
+        rows.append({
+            "kmer": kmer,
+            "count": count,
+            "observed_freq": obs_freq,
+            "expected_freq": exp_freq,
+            "enrichment": enrichment,
+            "pvalue": result.pvalue,
+        })
+
+    df = pd.DataFrame(rows).sort_values("enrichment", ascending=False)
+    return df.head(top_n).reset_index(drop=True)
+
+
 # ── EBI MEME REST client ──────────────────────────────────────────────────────
 
 
@@ -570,6 +665,10 @@ def submit_meme_ebi(
     fasta_text: str,
     email: str,
     config: Optional[MemeConfig] = None,
+    *,
+    nmotifs: Optional[int] = None,
+    minw: Optional[int] = None,
+    maxw: Optional[int] = None,
 ) -> str:
     """Submit a MEME motif-discovery job to the EBI JDispatcher REST API.
 
@@ -581,7 +680,13 @@ def submit_meme_ebi(
         Submitter e-mail address (required by the EBI API).
     config:
         A :class:`MemeConfig` instance controlling motif parameters and the
-        target URL.  Defaults to ``MemeConfig()`` (3 motifs, widths 6–15).
+        target URL.  Defaults to ``MemeConfig()``.
+    nmotifs:
+        Number of motifs to find.  Overrides ``config.nmotifs`` when provided.
+    minw:
+        Minimum motif width.  Overrides ``config.minw`` when provided.
+    maxw:
+        Maximum motif width.  Overrides ``config.maxw`` when provided.
 
     Returns
     -------
@@ -595,10 +700,17 @@ def submit_meme_ebi(
     """
     if config is None:
         config = MemeConfig()
+    if nmotifs is not None:
+        config = dataclasses.replace(config, nmotifs=nmotifs)
+    if minw is not None:
+        config = dataclasses.replace(config, minw=minw)
+    if maxw is not None:
+        config = dataclasses.replace(config, maxw=maxw)
 
     payload = {
         "email": email,
         "sequence": fasta_text,
+        "stype": "protein",
         "nmotifs": str(config.nmotifs),
         "minw": str(config.minw),
         "maxw": str(config.maxw),
